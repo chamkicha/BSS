@@ -53,7 +53,7 @@ Josh Admin Template
                             </div>
                             <div class="row">
                                 <div class="col-6">
-                                    <small class="stat-label">Last Week</small>
+                                    <small class="stat-label">Last Weekes</small>
                                     <h4 id="myTargetElement1.1"></h4>
                                 </div>
                                 <div class="col-6 text-right">
