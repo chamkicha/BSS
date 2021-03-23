@@ -83,3 +83,33 @@
     <p>{!! $serviceOrders->created_by !!}</p>
     <hr>
 </div>
+
+
+<div class="form-group row">
+    <div class="col-sm-12">
+      <label for="status">Change Status:</label>
+        <select id="req_status" name="req_status">
+          <option disabled selected value> -- select status -- </option>
+          
+          @if (Sentinel::inRole('commercial-manager') && $serviceOrders->next_handler==='commercial manager')
+               <option value="verified">Verify</option>
+                <option value="cancelled">Cancel</option>
+          @elseif (Sentinel::inRole('user') && $request->next_handler==='finance')
+              <option value="approved">Approve</option>
+              <option value="cancelled">Cancel</option>
+          @elseif (Sentinel::inRole('user') && $request->next_handler==='store')
+              <option value="issued">Issue</option>
+              <option value="cancelled">Cancel</option>
+          @elseif (Sentinel::inRole('user') && $request->next_handler==='sales')
+              <option value="delivered">Deliver</option>
+              <option value="cancelled">Cancel</option>
+          @elseif (Sentinel::inRole('admin'))
+              <option value="verified">Verify</option>
+              <option value="approve">Approve</option>
+              <option value="issued">Issue</option>
+              <option value="delivered">Deliver</option>
+              <option value="cancelled">Cancel</option>
+          @endif
+          </select>
+</div>
+</div>
