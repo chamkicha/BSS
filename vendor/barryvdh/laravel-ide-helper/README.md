@@ -206,7 +206,7 @@ Or can be ignored by setting the `ignored_models` config
 
 #### Magic `where*` methods
 
-Eloquent allows calling `where<Attribute>` on your modes, e.g. `Post::whereTitle(…)` and automatically translates this to e.g. `Post::where('title', '=', '…')`.
+Eloquent allows calling `where<Attribute>` on your models, e.g. `Post::whereTitle(…)` and automatically translates this to e.g. `Post::where('title', '=', '…')`.
 
 If for some reason it's undesired to have them generated (one for each column), you can disable this via config `write_model_magic_where` and setting it to `false`.
 
@@ -215,6 +215,33 @@ If for some reason it's undesired to have them generated (one for each column), 
 You may use the [`::withCount`](https://laravel.com/docs/master/eloquent-relationships#counting-related-models) method to count the number results from a relationship without actually loading them. Those results are then placed in attributes following the `<columname>_count` convention.
 
 By default, these attributes are generated in the phpdoc. You can turn them off by setting the config `write_model_relation_count_properties` to `false`.
+
+#### Support `@comment` based on DocBlock
+
+In order to better support IDEs, relations and getters/setters can also add a comment to a property like table columns. Therefore a custom docblock `@comment` is used:
+```php
+class Users extends Model
+{
+    /**
+     * @comment Get User's full name
+     *
+     * @return string
+     */
+    public function getFullNameAttribute(): string
+    {
+        return $this->first_name . ' ' .$this->last_name ;
+    }
+}
+
+// => after generate models
+
+/**
+ * App\Models\Users
+ * 
+ * @property-read string $full_name Get User's full name
+ * …
+ */
+```
 
 #### Dedicated Eloquent Builder methods
 

@@ -6,7 +6,7 @@
         <th>Customer Name</th>
         <th>Payment Mode</th>
         <th>Service Status</th>
-        <th>Price</th>
+        <th>Grand Total</th>
         <th>Service Starting Date</th>
         <th>Service Ending Date</th>
         <th>Service Descriptions</th>
@@ -23,7 +23,7 @@
             <td><?php echo $serviceOrders->customer_name; ?></td>
             <td><?php echo $serviceOrders->payment_mode; ?></td>
             <td><?php echo $serviceOrders->service_status; ?></td>
-            <td><?php echo $serviceOrders->price; ?></td>
+            <td><?php echo $serviceOrders->grand_total; ?></td>
             <td><?php echo $serviceOrders->service_starting_date; ?></td>
             <td><?php echo $serviceOrders->service_ending_date; ?></td>
             <td><?php echo $serviceOrders->service_descriptions; ?></td>

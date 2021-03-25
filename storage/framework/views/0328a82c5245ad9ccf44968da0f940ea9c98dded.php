@@ -31,7 +31,7 @@ ServiceOrders
             <?php echo Form::open(['route' => 'admin.serviceOrders.serviceOrders.store']); ?>
 
 
-                <?php echo $__env->make('admin.serviceOrders.serviceOrders.fields', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+                <?php echo $__env->make('admin.serviceOrders.serviceOrders.field_create', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 
             <?php echo Form::close(); ?>
 

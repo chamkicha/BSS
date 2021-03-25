@@ -74,22 +74,50 @@ class ServiceOrdersController extends InfyOmBaseController
     {          
         
         $input = $request->all();
-        $price = $request->service_lists;
-        $price=DB::table('products')->whereIn('product_name', $price)
+        $sub_total = $request->service_lists;
+        $sub_total = DB::table('products')->whereIn('product_name', $sub_total)
                   ->sum('price');
-        
-        
+        $customer_name = $request->customer_name;
+        $customer_no = DB::table('customers')->where('customername', $customer_name)->get();
+        $customer_no = $customer_no[0]->id;
+        // tax amount
+
+        $tax_amount =$request->tax_amount;
+        $tax_amount = $tax_amount * 0.01;
+        $tax_amount = $tax_amount * $sub_total;
+
+        // ED AMOUNT
+
+        $ed_amount =$request->ed_amount;
+        $ed_amount = $ed_amount * 0.01;
+        $ed_amount = $ed_amount * $sub_total;
+
+        // DISCOUNT
+
+        $discount =$request->discount;
+
+        // GRAND TOTAL
+
+        $grand_total =$sub_total + $tax_amount + $ed_amount - $discount;
+       
         $object = array(
             'order_i_d' => $request->order_i_d,
             'customer_name' => $request->customer_name,
+            'customer_no' => $customer_no,
             'payment_mode' => $request->payment_mode,
             'service_status' => $request->service_status,
-            'price' => $price,
+            'sub_total' => $sub_total,
+            'grand_total' => $grand_total,
+            'tax_amount' => $tax_amount,
+            'ed_amount' => $ed_amount,
+            'discount' => $request->discount,
             'service_starting_date' => $request->service_starting_date,
             'service_ending_date' => $request->service_ending_date,
             'service_descriptions' => $request->service_descriptions,
             'service_lists' => $request->service_lists,
             'next_handler' => $request->next_handler,
+            'next_handler_role' => $request->next_handler_role,
+            'next_handler_role_id' => $request->next_handler_role_id,
             'created_by' => $request->created_by
         );
 
@@ -200,5 +228,8 @@ class ServiceOrdersController extends InfyOmBaseController
            return redirect(route('admin.serviceOrders.serviceOrders.index'))->with('success', Lang::get('message.success.delete'));
 
        }
+
+
+       
 
 }

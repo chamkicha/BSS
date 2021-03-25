@@ -32,7 +32,7 @@ ServiceOrders
             <div class="card-body">
             {!! Form::open(['route' => 'admin.serviceOrders.serviceOrders.store']) !!}
 
-                @include('admin.serviceOrders.serviceOrders.fields')
+                @include('admin.serviceOrders.serviceOrders.field_create')
 
             {!! Form::close() !!}
         </div>

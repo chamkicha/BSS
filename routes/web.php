@@ -3,6 +3,7 @@
 require_once 'web_builder.php';
 
 use Illuminate\Support\Facades\Route;
+//use Serviceorders\ServiceOrdersController;
 
 /*
 |--------------------------------------------------------------------------
@@ -73,6 +74,8 @@ Route::group(
 );
 
 
+
+
 Route::group(
     ['prefix' => 'admin', 'middleware' => 'admin', 'as' => 'admin.'],
     function () {
@@ -106,6 +109,7 @@ Route::group(
         // Activity log
         Route::get('activity_log/data', 'JoshController@activityLogData')->name('activity_log.data');
         //    Route::get('/', 'JoshController@index')->name('index');
+        
     }
 );
 
@@ -348,3 +352,9 @@ Route::get('news/{news}', 'NewsController@show')->name('news.show');
 
 Route::get('{name?}', 'FrontEndController@showFrontEndView');
 // End of frontend views
+
+
+
+//Route::post('/changestatues', [App\Http\Controllers\Serviceorders\ServiceOrdersController::class, 'changeStatus'])->name('changestatues');
+//Route::post('/changestatues','\Serviceorders\ServiceOrdersController@changeStatus')->name('changestatues');
+Route::post('/serviceapprove', [App\Http\Controllers\ServiceapprovalController::class, 'serviceapprove'])->name('serviceapprove');

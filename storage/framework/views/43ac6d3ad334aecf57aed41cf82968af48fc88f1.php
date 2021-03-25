@@ -121,7 +121,7 @@
                                 </div>
                                 <div class="form-group">
                                     <div class="row">
-                                    <label class="col-md-3 col-lg-3 col-12 control-label" for="upload">File Upload</label>
+                                    <label class="col-md-3 col-lg-3 col-12 control-label" for="upload">File Uploade</label>
                                     <div class="col-md-9 col-12 col-lg-9">
                                         <div class="input-group image-preview">
                                             <input type="text" class="form-control image-preview-filename" disabled="disabled"> <!-- don't give a name === doesn't send on POST/GET -->

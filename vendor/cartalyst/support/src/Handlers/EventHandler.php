@@ -11,10 +11,10 @@
  * bundled with this package in the LICENSE file.
  *
  * @package    Support
- * @version    5.1.0
+ * @version    5.1.2
  * @author     Cartalyst LLC
  * @license    BSD License (3-clause)
- * @copyright  (c) 2011-2020, Cartalyst LLC
+ * @copyright  (c) 2011-2021, Cartalyst LLC
  * @link       https://cartalyst.com
  */
 
@@ -30,6 +30,13 @@ class EventHandler
      * @var \Illuminate\Contracts\Container\Container
      */
     protected $app;
+
+    /**
+     * Dispatch after all db transactions are committed.
+     *
+     * @var bool|null
+     */
+    public $afterCommit = null;
 
     /**
      * Constructor.

@@ -286,3 +286,18 @@ Route::get('servicestatuses/{servicestatuses}', ['as'=> 'servicestatuses.show', 
 Route::get('servicestatuses/{servicestatuses}/edit', ['as'=> 'servicestatuses.edit', 'uses' => 'Servicestatus\ServicestatusController@edit']);
 
 });
+
+
+Route::group(array('prefix' => 'admin/serviceBilling/','namespace' => 'Admin','middleware' => 'admin','as'=>'admin.serviceBilling.'), function () {
+
+Route::get('serviceBillings', ['as'=> 'serviceBillings.index', 'uses' => 'Servicebilling\ServiceBillingController@index']);
+Route::post('serviceBillings', ['as'=> 'serviceBillings.store', 'uses' => 'Servicebilling\ServiceBillingController@store']);
+Route::get('serviceBillings/create', ['as'=> 'serviceBillings.create', 'uses' => 'Servicebilling\ServiceBillingController@create']);
+Route::put('serviceBillings/{serviceBillings}', ['as'=> 'serviceBillings.update', 'uses' => 'Servicebilling\ServiceBillingController@update']);
+Route::patch('serviceBillings/{serviceBillings}', ['as'=> 'serviceBillings.update', 'uses' => 'Servicebilling\ServiceBillingController@update']);
+Route::get('serviceBillings/{id}/delete', ['as' => 'serviceBillings.delete', 'uses' => 'Servicebilling\ServiceBillingController@getDelete']);
+Route::get('serviceBillings/{id}/confirm-delete', ['as' => 'serviceBillings.confirm-delete', 'uses' => 'Servicebilling\ServiceBillingController@getModalDelete']);
+Route::get('serviceBillings/{serviceBillings}', ['as'=> 'serviceBillings.show', 'uses' => 'Servicebilling\ServiceBillingController@show']);
+Route::get('serviceBillings/{serviceBillings}/edit', ['as'=> 'serviceBillings.edit', 'uses' => 'Servicebilling\ServiceBillingController@edit']);
+
+});

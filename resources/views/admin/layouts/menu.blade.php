@@ -70,3 +70,11 @@
     </a>
 </li>
 
+<li class="{{ Request::is('admin/serviceBilling/serviceBillings*') ? 'active' : '' }}">
+    <a href="{!! route('admin.serviceBilling.serviceBillings.index') !!}">
+    <i class="livicon" data-c="#31B0D5" data-hc="#31B0D5" data-name="bank" data-size="18"
+               data-loop="true"></i>
+               ServiceBillings
+    </a>
+</li>
+

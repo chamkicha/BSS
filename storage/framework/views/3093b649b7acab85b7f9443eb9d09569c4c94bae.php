@@ -70,4 +70,12 @@
     </a>
 </li>
 
+<li class="<?php echo e(Request::is('admin/serviceBilling/serviceBillings*') ? 'active' : ''); ?>">
+    <a href="<?php echo route('admin.serviceBilling.serviceBillings.index'); ?>">
+    <i class="livicon" data-c="#31B0D5" data-hc="#31B0D5" data-name="bank" data-size="18"
+               data-loop="true"></i>
+               ServiceBillings
+    </a>
+</li>
+
 <?php /**PATH C:\xampp\htdocs\BSS\resources\views/admin/layouts/menu.blade.php ENDPATH**/ ?>

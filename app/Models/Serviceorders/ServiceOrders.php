@@ -16,15 +16,24 @@ class ServiceOrders extends Model
     public $fillable = [
         'order_i_d',
         'customer_name',
+        'customer_no',
         'payment_mode',
         'service_status',
-        'price',
+        'grand_total',
+        'sub_total',
+        'tax_amount',
+        'ed_amount',
+        'discount',
         'service_starting_date',
         'service_ending_date',
         'service_descriptions',
         'service_lists',
         'next_handler',
-        'created_by'
+        'next_handler_role',
+        'next_handler_role_id',
+        'created_by',
+        'activated_by',
+        'activation_date'
     ];
 
     /**
@@ -35,12 +44,21 @@ class ServiceOrders extends Model
     protected $casts = [
         'order_i_d' => 'string',
         'customer_name' => 'string',
+        'customer_no' => 'string',
         'payment_mode' => 'string',
         'service_status' => 'string',
-        'price' => 'string',
+        'grand_total' => 'string',
+        'sub_total' => 'string',
+        'tax_amount' => 'string',
+        'ed_amount' => 'string',
+        'discount' => 'string',
         'service_lists' => 'array',
         'next_handler' => 'string',
-        'created_by' => 'string'
+        'next_handler_role' => 'string',
+        'next_handler_role_id' => 'string',
+        'created_by' => 'string',
+        'activated_by' => 'string',
+        'activation_date' => 'string'
     ];
 
     /**

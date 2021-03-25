@@ -43,7 +43,7 @@ function createdby()
 function nexthandler()
 {      
     
-    $nexthandler = DB::table('role_users')->where('role_id','7')->get();
+    $nexthandler = DB::table('role_users')->where('role_id','3')->get();
     $nexthandler = DB::table('users')->where('id',$nexthandler[0]->user_id)->get();
     $nexthandler1 = $nexthandler[0]->first_name;
     $nexthandler2 = $nexthandler[0]->last_name;
@@ -196,6 +196,36 @@ function serviceprice()
         
     <input type="hidden" id="created_by" name="created_by" class="form-control" value = "<?php echo e(createdby()); ?>">
     
+</div>
+
+
+<div class="form-group row">
+    <div class="col-sm-12">
+      <label for="status">Change Status:</label>
+        <select id="req_status" name="req_status">
+          <option disabled selected value> -- select status -- </option>
+          
+          <?php if(Sentinel::inRole('commercial-manager') ): ?>
+               <option value="verified">Verify</option>
+                <option value="cancelled">Cancel</option>
+          <?php elseif(Sentinel::inRole('user') && $request->next_handler==='finance'): ?>
+              <option value="approved">Approve</option>
+              <option value="cancelled">Cancel</option>
+          <?php elseif(Sentinel::inRole('user') && $request->next_handler==='store'): ?>
+              <option value="issued">Issue</option>
+              <option value="cancelled">Cancel</option>
+          <?php elseif(Sentinel::inRole('user') && $request->next_handler==='sales'): ?>
+              <option value="delivered">Deliver</option>
+              <option value="cancelled">Cancel</option>
+          <?php elseif(Sentinel::inRole('admin')): ?>
+              <option value="verified">Verify</option>
+              <option value="approve">Approve</option>
+              <option value="issued">Issue</option>
+              <option value="delivered">Deliver</option>
+              <option value="cancelled">Cancel</option>
+          <?php endif; ?>
+          </select>
+</div>
 </div>
 
 
