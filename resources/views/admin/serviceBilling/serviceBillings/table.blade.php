@@ -5,11 +5,11 @@
         <th>Bill No</th>
         <th>Customer Name</th>
         <th>Service Order No</th>
-        <th>Sub Total</th>
-        <th>TAX Amount</th>
-        <th>ED Amount</th>
-        <th>Discount</th>
-        <th>Grand Total</th>
+        <th>Sub Total(TZS)</th>
+        <th>TAX Amount(TZS)</th>
+        <th>ED Amount(TZS)</th>
+        <th>Discount(TZS)</th>
+        <th>Grand Total(TZS)</th>
         <th>Billing Date</th>
         <th >Action</th>
      </tr>
