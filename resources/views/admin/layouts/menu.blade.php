@@ -78,3 +78,27 @@
     </a>
 </li>
 
+<li class="{{ Request::is('admin/serviceInvoice/serviceInvoices*') ? 'active' : '' }}">
+    <a href="{!! route('admin.serviceInvoice.serviceInvoices.index') !!}">
+    <i class="livicon" data-c="#31B0D5" data-hc="#31B0D5" data-name="bank" data-size="18"
+               data-loop="true"></i>
+               ServiceInvoices
+    </a>
+</li>
+
+<li class="{{ Request::is('admin/paymentType/paymentTypes*') ? 'active' : '' }}">
+    <a href="{!! route('admin.paymentType.paymentTypes.index') !!}">
+    <i class="livicon" data-c="#31B0D5" data-hc="#31B0D5" data-name="bank" data-size="18"
+               data-loop="true"></i>
+               PaymentTypes
+    </a>
+</li>
+
+<li class="{{ Request::is('admin/paymentAndDue/paymentAndDues*') ? 'active' : '' }}">
+    <a href="{!! route('admin.paymentAndDue.paymentAndDues.index') !!}">
+    <i class="livicon" data-c="#31B0D5" data-hc="#31B0D5" data-name="bank" data-size="18"
+               data-loop="true"></i>
+               PaymentAndDues
+    </a>
+</li>
+

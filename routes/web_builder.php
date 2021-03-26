@@ -301,3 +301,48 @@ Route::get('serviceBillings/{serviceBillings}', ['as'=> 'serviceBillings.show', 
 Route::get('serviceBillings/{serviceBillings}/edit', ['as'=> 'serviceBillings.edit', 'uses' => 'Servicebilling\ServiceBillingController@edit']);
 
 });
+
+
+Route::group(array('prefix' => 'admin/serviceInvoice/','namespace' => 'Admin','middleware' => 'admin','as'=>'admin.serviceInvoice.'), function () {
+
+Route::get('serviceInvoices', ['as'=> 'serviceInvoices.index', 'uses' => 'Serviceinvoice\ServiceInvoiceController@index']);
+Route::post('serviceInvoices', ['as'=> 'serviceInvoices.store', 'uses' => 'Serviceinvoice\ServiceInvoiceController@store']);
+Route::get('serviceInvoices/create', ['as'=> 'serviceInvoices.create', 'uses' => 'Serviceinvoice\ServiceInvoiceController@create']);
+Route::put('serviceInvoices/{serviceInvoices}', ['as'=> 'serviceInvoices.update', 'uses' => 'Serviceinvoice\ServiceInvoiceController@update']);
+Route::patch('serviceInvoices/{serviceInvoices}', ['as'=> 'serviceInvoices.update', 'uses' => 'Serviceinvoice\ServiceInvoiceController@update']);
+Route::get('serviceInvoices/{id}/delete', ['as' => 'serviceInvoices.delete', 'uses' => 'Serviceinvoice\ServiceInvoiceController@getDelete']);
+Route::get('serviceInvoices/{id}/confirm-delete', ['as' => 'serviceInvoices.confirm-delete', 'uses' => 'Serviceinvoice\ServiceInvoiceController@getModalDelete']);
+Route::get('serviceInvoices/{serviceInvoices}', ['as'=> 'serviceInvoices.show', 'uses' => 'Serviceinvoice\ServiceInvoiceController@show']);
+Route::get('serviceInvoices/{serviceInvoices}/edit', ['as'=> 'serviceInvoices.edit', 'uses' => 'Serviceinvoice\ServiceInvoiceController@edit']);
+
+});
+
+
+Route::group(array('prefix' => 'admin/paymentType/','namespace' => 'Admin','middleware' => 'admin','as'=>'admin.paymentType.'), function () {
+
+Route::get('paymentTypes', ['as'=> 'paymentTypes.index', 'uses' => 'Paymenttype\PaymentTypeController@index']);
+Route::post('paymentTypes', ['as'=> 'paymentTypes.store', 'uses' => 'Paymenttype\PaymentTypeController@store']);
+Route::get('paymentTypes/create', ['as'=> 'paymentTypes.create', 'uses' => 'Paymenttype\PaymentTypeController@create']);
+Route::put('paymentTypes/{paymentTypes}', ['as'=> 'paymentTypes.update', 'uses' => 'Paymenttype\PaymentTypeController@update']);
+Route::patch('paymentTypes/{paymentTypes}', ['as'=> 'paymentTypes.update', 'uses' => 'Paymenttype\PaymentTypeController@update']);
+Route::get('paymentTypes/{id}/delete', ['as' => 'paymentTypes.delete', 'uses' => 'Paymenttype\PaymentTypeController@getDelete']);
+Route::get('paymentTypes/{id}/confirm-delete', ['as' => 'paymentTypes.confirm-delete', 'uses' => 'Paymenttype\PaymentTypeController@getModalDelete']);
+Route::get('paymentTypes/{paymentTypes}', ['as'=> 'paymentTypes.show', 'uses' => 'Paymenttype\PaymentTypeController@show']);
+Route::get('paymentTypes/{paymentTypes}/edit', ['as'=> 'paymentTypes.edit', 'uses' => 'Paymenttype\PaymentTypeController@edit']);
+
+});
+
+
+Route::group(array('prefix' => 'admin/paymentAndDue/','namespace' => 'Admin','middleware' => 'admin','as'=>'admin.paymentAndDue.'), function () {
+
+Route::get('paymentAndDues', ['as'=> 'paymentAndDues.index', 'uses' => 'Paymentanddue\PaymentAndDueController@index']);
+Route::post('paymentAndDues', ['as'=> 'paymentAndDues.store', 'uses' => 'Paymentanddue\PaymentAndDueController@store']);
+Route::get('paymentAndDues/create', ['as'=> 'paymentAndDues.create', 'uses' => 'Paymentanddue\PaymentAndDueController@create']);
+Route::put('paymentAndDues/{paymentAndDues}', ['as'=> 'paymentAndDues.update', 'uses' => 'Paymentanddue\PaymentAndDueController@update']);
+Route::patch('paymentAndDues/{paymentAndDues}', ['as'=> 'paymentAndDues.update', 'uses' => 'Paymentanddue\PaymentAndDueController@update']);
+Route::get('paymentAndDues/{id}/delete', ['as' => 'paymentAndDues.delete', 'uses' => 'Paymentanddue\PaymentAndDueController@getDelete']);
+Route::get('paymentAndDues/{id}/confirm-delete', ['as' => 'paymentAndDues.confirm-delete', 'uses' => 'Paymentanddue\PaymentAndDueController@getModalDelete']);
+Route::get('paymentAndDues/{paymentAndDues}', ['as'=> 'paymentAndDues.show', 'uses' => 'Paymentanddue\PaymentAndDueController@show']);
+Route::get('paymentAndDues/{paymentAndDues}/edit', ['as'=> 'paymentAndDues.edit', 'uses' => 'Paymentanddue\PaymentAndDueController@edit']);
+
+});

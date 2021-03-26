@@ -176,15 +176,81 @@ class ServiceapprovalController extends Controller
                       'discount' => $discount,
                       'grand_total' => $grand_total]);
 
-        
-            Flash::success('ServiceOrders updated successfully.');
-            return redirect(route('admin.serviceOrders.serviceOrders.index'));
+
+                      
+            // Payment and Due creation
             
-        }elseif(Auth::user()->user_role == 'store') {
-            $next_handler = 'sales';
-        }elseif(Auth::user()->user_role == 'sales') {
-            $next_handler = '';
-        }
+            $customer_no = $request->customer_no;
+            $payment_due = DB::table('paymentanddues')->where('customer_no', $customer_no)->first();
+
+            if(is_null($payment_due)){
+
+            // PAYMENT AND DUE insert into database
+            $grand_total =$request->grand_total;
+            $bill_creation = DB::table('paymentanddues')
+            ->insert(['customer_name' => $customer_name,
+                     'total_amount' => $grand_total,
+                     'balance' => $grand_total,
+                      'customer_no' => $customer_no,]);
+
+
+            }else{
+                
+                // PAYMENT AND DUE update into database
+                $grand_total3 = DB::table('paymentanddues')->where('customer_no', $customer_no)->get();
+                $grand_total2 = $grand_total3[0]->total_amount;
+                $grand_total1 = $request->grand_total;
+                $grand_total = $grand_total1 + $grand_total2;
+                $balance = $grand_total3[0]->balance;
+                $balance = $balance + $grand_total1;
+                
+                
+                $bill_creation = DB::table('paymentanddues')
+                ->where('customer_no', $customer_no)
+                ->update(['total_amount' => $grand_total,
+                         'balance' => $balance]);
+            } // END PAYMEND AND DUE CREATIONM
+
+            
+
+            // INVOICE creation
+            $invoice_number = DB::table('serviceinvoices')->orderBy('invoice_number', 'desc')->first();
+            if(is_null($invoice_number)){
+           $invoice_number = 1000;
+            }else{
+                $invoice_number = $invoice_number->invoice_number + 1;
+            }
+            
+            $cusromer_name = $request->customer_name;
+            $customer_no = $request->customer_no;
+            $service_order_no =$request->order_i_d;
+            $due_balance = DB::table('paymentanddues')->where('customer_no', $customer_no)->first();
+            
+            $due_balance = $due_balance->total_amount;
+            $current_charges =$request->grand_total;
+            $payment_amount =$request->grand_total;
+            $payment_status =DB::table('paymenttypes')->where('id', '2')->get();
+            $payment_status = $payment_status[0]->payment_type_name;
+            $current_charges =$request->grand_total;
+
+            // INVOICE insert into database
+            $invoice_creation = DB::table('serviceinvoices')
+            ->insert(['invoice_number' => $invoice_number,
+                      'cusromer_name' => $cusromer_name, 
+                      'customer_no' => $customer_no, 
+                      'current_charges' => $current_charges, 
+                      'service_order_no' => $service_order_no,
+                      'invoice_created_date' => $activationdate,
+                      'due_balance' => $due_balance,
+                      'payment_amount' => $payment_amount,
+                      'payment_status' => $payment_status,]);
+
+
+
+        Flash::success('ServiceOrders updated successfully.');
+        return redirect(route('admin.serviceOrders.serviceOrders.index'));
+            
+                    } // end IF kubwa
 
 
        // dd($nexthandler_role);
