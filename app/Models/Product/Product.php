@@ -20,7 +20,8 @@ class Product extends Model
         'v_a_t',
         'e_d',
         'price',
-        'discount'
+        'discount',
+        'description'
     ];
 
     /**
@@ -31,6 +32,7 @@ class Product extends Model
     protected $casts = [
         'product_name' => 'string',
         'product_unit' => 'string',
+        'description' => 'string',
         'product_type' => 'string',
         'v_a_t(%)' => 'integer',
         'e_d(%)' => 'integer',

@@ -31,7 +31,8 @@ class Customer extends Model
         'region',
         'district',
         'fax',
-        'customer_type'
+        'customer_type',
+        'country'
     ];
 
     /**
@@ -53,6 +54,7 @@ class Customer extends Model
         'region' => 'string',
         'district' => 'string',
         'fax' => 'string',
+        'country' => 'string',
         'customer_type' => 'string'
     ];
 

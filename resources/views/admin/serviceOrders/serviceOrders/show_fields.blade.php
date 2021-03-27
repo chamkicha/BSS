@@ -216,6 +216,14 @@
     <input type="hidden" id="grand_total" name="grand_total" class="form-control" value = "{{$serviceOrders->grand_total}}">
 </div>
 
+<!-- Service Lists Field -->
+<div class="form-group col-sm-12">
+    <input type="hidden" id="service_lists" name="service_lists" class="form-control" value="{{json_encode($serviceOrders->service_lists,TRUE)}}" >
+
+</div>
+
+
+
 
 
 <button type="submit" id=""name="" class="btn btn-success  waves-light" style="float: right;"><i class="icofont icofont-check-circled"></i>Save and Submit</button>

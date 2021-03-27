@@ -13,6 +13,7 @@ use App\Models\Serviceinvoice\ServiceInvoice;
 use Flash;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
+use DB;
 
 class ServiceInvoiceController extends InfyOmBaseController
 {
@@ -77,6 +78,47 @@ class ServiceInvoiceController extends InfyOmBaseController
     public function show($id)
     {
         $serviceInvoice = $this->serviceInvoiceRepository->findWithoutFail($id);
+        $customer_details = DB::table('customers')->where('id', $serviceInvoice->customer_no)->first();
+        $postal_address = $customer_details->postal_address;
+        $district = $customer_details->district;
+        $region = $customer_details->region;
+        $country = $customer_details->country;
+        $t_i_n_number = $customer_details->t_i_n_number;
+        $v_a_t_registration_number = $customer_details->v_a_t_registration_number;
+        $previous_dept = DB::table('paymentanddues')->where('customer_no', $serviceInvoice->customer_no)->first();
+        $previous_dept = $previous_dept->total_amount;
+        $service_name = (array)json_decode($serviceInvoice['service_name'], true);
+        //$service_name=implode(",",$service_name);
+        //$service_name = $serviceInvoice->service_name;
+        $service_name_description = DB::table('products')->whereIn('product_name', $service_name)->get();
+        //dd($service_name_description);
+        
+        $serviceInvoice = array(
+            "id" => $serviceInvoice->id,
+            "invoice_number" => $serviceInvoice->invoice_number,
+            "customer_no" => $serviceInvoice->customer_no,
+            "invoice_created_date" => $serviceInvoice->invoice_created_date,
+            "invoice_due_date" => $serviceInvoice->invoice_due_date,
+            "cusromer_name" => $serviceInvoice->cusromer_name,
+            "service_order_no" => $serviceInvoice->service_order_no,
+            "due_balance" => $serviceInvoice->due_balance,
+            "current_charges" => $serviceInvoice->current_charges,
+            "payment_amount" => $serviceInvoice->payment_amount,
+            "payment_status" => $serviceInvoice->payment_status,
+            "service_name" => $service_name,
+            "service_name_description" => $service_name_description,
+            "created_at" => $serviceInvoice->created_at,
+            "updated_at" => $serviceInvoice->updated_at,
+            "deleted_at" => $serviceInvoice->deleted_at,
+            "postal_address" => $postal_address,
+            "previous_dept" => $previous_dept,
+            "district" => $district,
+            "region" => $region,
+            "country" => $country,
+            "t_i_n_number" => $t_i_n_number,
+            "v_a_t_registration_number" => $v_a_t_registration_number,
+        );
+        //dd($serviceInvoice);
 
         if (empty($serviceInvoice)) {
             Flash::error('ServiceInvoice not found');

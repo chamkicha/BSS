@@ -3,6 +3,7 @@
     <thead>
      <tr>
         <th>Product Name</th>
+        <th>Product Description</th>
         <th>Product Unit</th>
         <th>Product Type</th>
         <th>V A T(%)</th>
@@ -16,6 +17,7 @@
     @foreach($products as $product)
         <tr>
             <td>{!! $product->product_name !!}</td>
+            <td>{!! $product->description !!}</td>
             <td>{!! $product->product_unit !!}</td>
             <td>{!! $product->product_type !!}</td>
             <td>{!! $product->v_a_t !!}</td>

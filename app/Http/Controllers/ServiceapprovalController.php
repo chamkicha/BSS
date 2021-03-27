@@ -232,6 +232,7 @@ class ServiceapprovalController extends Controller
             $payment_status =DB::table('paymenttypes')->where('id', '2')->get();
             $payment_status = $payment_status[0]->payment_type_name;
             $current_charges =$request->grand_total;
+            $service_name =$request->service_lists;
 
             // INVOICE insert into database
             $invoice_creation = DB::table('serviceinvoices')
@@ -242,6 +243,7 @@ class ServiceapprovalController extends Controller
                       'service_order_no' => $service_order_no,
                       'invoice_created_date' => $activationdate,
                       'due_balance' => $due_balance,
+                      'service_name' => $service_name,
                       'payment_amount' => $payment_amount,
                       'payment_status' => $payment_status,]);
 

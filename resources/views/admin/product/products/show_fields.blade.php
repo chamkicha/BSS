@@ -12,6 +12,13 @@
     <hr>
 </div>
 
+<!-- Product Description Field -->
+<div class="form-group">
+    {!! Form::label('description', 'Description:') !!}
+    <p>{!! $product->description !!}</p>
+    <hr>
+</div>
+
 <!-- Product Unit Field -->
 <div class="form-group">
     {!! Form::label('product_unit', 'Product Unit:') !!}

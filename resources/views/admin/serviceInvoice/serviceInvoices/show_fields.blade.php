@@ -1,80 +1,3 @@
-<!-- Id Field -->
-<div class="form-group">
-    {!! Form::label('id', 'Id:') !!}
-    <p>{!! $serviceInvoice->id !!}</p>
-    <hr>
-</div>
-
-<!-- Invoice Created Date Field -->
-<div class="form-group">
-    {!! Form::label('invoice_created_date', 'Invoice Created Date:') !!}
-    <p>{!! $serviceInvoice->invoice_created_date !!}</p>
-    <hr>
-</div>
-
-<!-- Invoice Due Date Field -->
-<div class="form-group">
-    {!! Form::label('invoice_due_date', 'Invoice Due Date:') !!}
-    <p>{!! $serviceInvoice->invoice_due_date !!}</p>
-    <hr>
-</div>
-
-<!-- Service Order No Field -->
-<div class="form-group">
-    {!! Form::label('service_order_no', 'Service Order No:') !!}
-    <p>{!! $serviceInvoice->service_order_no !!}</p>
-    <hr>
-</div>
-
-<!-- Due Balance Field -->
-<div class="form-group">
-    {!! Form::label('due_balance', 'Due Balance:') !!}
-    <p>{!! $serviceInvoice->due_balance !!}</p>
-    <hr>
-</div>
-
-<!-- Current Charges Field -->
-<div class="form-group">
-    {!! Form::label('current_charges', 'Current Charges:') !!}
-    <p>{!! $serviceInvoice->current_charges !!}</p>
-    <hr>
-</div>
-
-<!-- Payment Amount Field -->
-<div class="form-group">
-    {!! Form::label('payment_amount', 'Payment Amount:') !!}
-    <p>{!! $serviceInvoice->payment_amount !!}</p>
-    <hr>
-</div>
-
-<!-- Payment Status Field -->
-<div class="form-group">
-    {!! Form::label('payment_status', 'Payment Status:') !!}
-    <p>{!! $serviceInvoice->payment_status !!}</p>
-    <hr>
-</div>
-
-<!-- Invoice Number Field -->
-<div class="form-group">
-    {!! Form::label('invoice_number', 'Invoice Number:') !!}
-    <p>{!! $serviceInvoice->invoice_number !!}</p>
-    <hr>
-</div>
-
-<!-- Service Name Field -->
-<div class="form-group">
-    {!! Form::label('service_name', 'Service Name:') !!}
-    <p>{!! $serviceInvoice->service_name !!}</p>
-    <hr>
-</div>
-
-<!-- Cusromer Name Field -->
-<div class="form-group">
-    {!! Form::label('cusromer_name', 'Cusromer Name:') !!}
-    <p>{!! $serviceInvoice->cusromer_name !!}</p>
-    <hr>
-</div>
-
 
 
 
@@ -105,53 +28,92 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="card ">
-                            <div class="card-header bg-success text-white">
-                                <span><i class="livicon" data-name="tablet" data-size="16" data-loop="true" data-c="#fff" data-hc="#fff"></i> Invoice from <bold>JOSH</bold></span>
-                             <span class="float-right colors_right">
-                                 <ul class="list-inline colors">
-                                     <li class="bg-default text-white"></li>
-                                     <li class="bg-primary text-white"></li>
-                                     <li class="bg-success text-white"></li>
-                                     <li class="bg-warning text-white"></li>
-                                     <li class="bg-danger text-white"> </li>
-                                     <li class="bg-info text-white"></li>
-                                 </ul>
-                                    </span>
-                            </div>
-                            <div class="card-body" style="border:1px solid #ccc;padding:0;margin:0;">
+                            <div class="card-header bg-success text-white"> </div>
+                           
+                         <div class="card-body" style="border:1px solid #ccc;padding:0;margin:0;">
+
+                            {{--  MAIN CONTENT  BEGIN  --}}
+                            <div style="padding-left: 60px; padding-right: 60px;">
+                            <div class="text-center" style="padding-top: 70px;">
+                            <p><strong>TANZANIA TELECOMMUNICSTIONS CORPORATION </strong></p>
+                            <p><strong>National Internet Data Center</strong></p>
+                             </div>  
+
+
+                                <div class="row" >
+                                <div class="col-md-6 col-lg-6 col-12">
                                 <div class="row" style="padding: 15px;margin-top:5px;">
-                                    <div class="col-md-6 col-lg-6 col-12">
-                                        <img src="{{ asset('img/logo2.png') }}" alt="logo" class="img-fluid">
-                                    </div>
-                                    <div class="col-md-6 col-lg-6 col-12">
-                                        <div class="float-right">
-                                            <strong>Pay To:</strong><br>
-                                            <strong>JOSH</strong><br>
-                                            3946 Penn Street<br>
-                                            Birmingham, AL 35209<br>
-                                            josh@example.com<br>
-                                            SALES TAX:254876
+                                        <div >
+                                            <img src="{{ asset('images/ttcl.png') }}" style="width:80px;height:80px;" alt="logo" class="img-fluid">
                                         </div>
+                                        <div class="float-left" style="margin-left:10px;">
+                                            Telephone:+255(0)22 292 6402<br>
+                                            Email:commercial@nidc.co.tz<br>
+                                            Website:www.nidc.co.tz
+                                        </div>
+                                    
+                                 </div>  
+                                 </div>
+                                    <div class="col-md-6 col-lg-6 col-12" style="display: flex; justify-content: flex-end">
+                                        <div class="row" style="padding: 15px;margin-top:5px;">
+                                        
+                                        <div class="float-right">
+                                        National Internet Data Center<br>
+                                        Kijitonyama Area<br>
+                                        P.O BOX 31611<br>
+                                        Dar es salaam
+                                        </div>
+                                        <div >
+                                            <img src="{{ asset('images/nidc.png') }}" style="width:160px;height:80px;" alt="logo" class="img-fluid">
+                                        </div>
+                                    
+                                 </div>
                                     </div>
                                 </div>
+
+                                <div class="text-center" style="padding-top: 10px;">
+                                        <p><strong>TAX INVOICE</strong></p>
+                                 </div>
+                                 <hr style="width:100%;text-align:left;margin-left:0">
+
                                 <div class="row" style="padding: 15px;">
-                                    <div class="col-md-9 col-6 col-lg-9" style="margin-top:5px;">
-                                        <strong>Invoice To:</strong><br>
-                                        Bryan C. Kurtz<br>
-                                        3848 Lunetta Street<br>
-                                        Denton, TX 76201<br>
-                                        LOCALITY<br>
-                                        Region MV28SX<br>
-                                        SALES TAX: 21456783
+                                    <div class="col-md-4 col-4 col-lg-4" style="margin-top:5px;">
+                                        <strong>Tax Invoice To:</strong><br>
+                                        <p>{!! $serviceInvoice['cusromer_name'] !!}<br>
+                                        {!! $serviceInvoice['postal_address'] !!}<br>
+                                        {!! $serviceInvoice['district'] !!}<br>
+                                        {!! $serviceInvoice['region'] !!}<br>
+                                        {!! $serviceInvoice['country'] !!}<br>
+                                        <strong>TIN: </strong>{!! $serviceInvoice['t_i_n_number'] !!}<br>
+                                        <strong>VRN: </strong>{!! $serviceInvoice['v_a_t_registration_number'] !!}</p><br>
                                     </div>
-                                    <div class="col-md-3 col-6 col-lg-3" style="padding-right:0">
-                                        <div id="invoice" style="background-color: #eee;text-align:right;padding: 15px;padding-bottom:23px;border-bottom-left-radius: 6px;border-top-left-radius: 6px;">
-                                            <h4><strong>Invoice INV001</strong></h4>
-                                            <h4><strong>20 DEC 2015</strong></h4>
-                                            Payment Terms: 15days<br>
-                                            Payment Due by 01 Jan 2016<br>
-                                        </div>
+                                    <div class="col-md-4 col-4 col-lg-4" style="margin-top:5px;">
+                                        <br><br><br><br><br><br>
+                                        <strong>Total Previous Debt:</strong><br>
+                                        {!! $serviceInvoice['previous_dept'] !!}<strong> TZS</strong></p><br>
                                     </div>
+                                    <div class="col-md-4 col-4 col-lg-4" style="padding-right:0">
+                                        <strong>TIN: 100-102-927</strong><br>
+                                        <strong>VRN: 10-000002 S</strong><br><br>
+                
+                                    <table class="table table-bordered table-hover">
+                                        <thead>
+                                        <tr>
+                                            <th>Tax Invoice No.</th>
+                                            <th>Date.</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td>{!! $serviceInvoice['invoice_number'] !!}</td>
+                                            <td>{!! $serviceInvoice['invoice_created_date'] !!}</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+
+
+                                    </div>
+                                    
                                 </div>
                                 <div class="row" style="padding:15px;">
                                     <div class="col-md-12 col-12 col-lg-12">
@@ -160,48 +122,30 @@
                                                 <thead>
                                                 <tr>
                                                     <th>SI No.</th>
-                                                    <th>Details</th>
-                                                    <th>Quantity</th>
-                                                    <th>Unit Price($)</th>
-                                                    <th>Tax</th>
-                                                    <th>NetSubtotal($)</th>
+                                                    <th>Item</th>
+                                                    <th>Item Descriptions</th>
+                                                    <th>Amount</th>
+                                                    <th>Total</th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
+                                                @foreach($serviceInvoice['service_name_description'] as $serviceInvoices)
                                                 <tr>
-                                                    <td>1.</td>
-                                                    <td>Volex 13A 2G DP White Chrome angled Edge</td>
-                                                    <td>3</td>
-                                                    <td>165.00</td>
-                                                    <td>10.0%</td>
-                                                    <td>500.00</td>
+                                                    <td>{{ $serviceInvoices->product_name }}</td>
+                                                    <td>{{ $serviceInvoices->product_name }}</td>
+                                                    <td>{{ $serviceInvoices->description }}</td>
+                                                    <td>{{ $serviceInvoices->price }}</td>
+                                                    <td>{{ $serviceInvoices->price }}</td>
                                                 </tr>
-                                                <tr>
-                                                    <td>2.</td>
-                                                    <td>Volex 1G 400W M/Lv Chrme Angled Edge</td>
-                                                    <td>5</td>
-                                                    <td>198.00</td>
-                                                    <td>14.1%</td>
-                                                    <td>1000.00</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>3.</td>
-                                                    <td>Halolite Polished Chrome Circular Cabinet Downlight pack of 3</td>
-                                                    <td>2</td>
-                                                    <td>374.00</td>
-                                                    <td>5.5%</td>
-                                                    <td>750.00</td>
-                                                </tr>
+                                                @endforeach
                                                 <tr>
                                                     <td></td>
                                                     <td></td>
                                                     <td></td>
-                                                    <td></td>
-                                                    <td>10% Discount</td>
+                                                    <td><strong>Sub-Total(TZS)</strong></td>
                                                     <td>225</td>
                                                 </tr>
                                                 <tr>
-                                                    <td></td>
                                                     <td></td>
                                                     <td></td>
                                                     <td></td>
@@ -212,12 +156,10 @@
                                                     <td></td>
                                                     <td></td>
                                                     <td></td>
-                                                    <td></td>
                                                     <td>tax</td>
                                                     <td>599.40</td>
                                                 </tr>
                                                 <tr>
-                                                    <td></td>
                                                     <td></td>
                                                     <td></td>
                                                     <td></td>
@@ -268,6 +210,7 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
                         </div>
                     </div>
                 </div>

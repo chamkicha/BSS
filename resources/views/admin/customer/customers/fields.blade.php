@@ -64,6 +64,13 @@
     {!! Form::text('region', null, ['class' => 'form-control']) !!}
 </div>
 
+<!-- Country Field -->
+<div class="form-group col-sm-12">
+    {!! Form::label('country', 'Country:') !!}
+    {!! Form::text('country', null, ['class' => 'form-control']) !!}
+</div>
+
+
 <!-- District Field -->
 <div class="form-group col-sm-12">
     {!! Form::label('district', 'District:') !!}

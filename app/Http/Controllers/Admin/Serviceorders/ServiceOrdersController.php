@@ -75,6 +75,7 @@ class ServiceOrdersController extends InfyOmBaseController
         
         $input = $request->all();
         $sub_total = $request->service_lists;
+        
         $sub_total = DB::table('products')->whereIn('product_name', $sub_total)
                   ->sum('price');
         $customer_name = $request->customer_name;
@@ -83,14 +84,14 @@ class ServiceOrdersController extends InfyOmBaseController
         // tax amount
 
         $tax_amount =$request->tax_amount;
-        $tax_amount = $tax_amount * 0.01;
-        $tax_amount = $tax_amount * $sub_total;
+        $tax_amount2 = $tax_amount * 0.01;
+        $tax_amount1 = $tax_amount2 * $sub_total;
 
         // ED AMOUNT
 
         $ed_amount =$request->ed_amount;
-        $ed_amount = $ed_amount * 0.01;
-        $ed_amount = $ed_amount * $sub_total;
+        $ed_amount2 = $ed_amount * 0.01;
+        $ed_amount1 = $ed_amount2 * $sub_total;
 
         // DISCOUNT
 
@@ -108,8 +109,10 @@ class ServiceOrdersController extends InfyOmBaseController
             'service_status' => $request->service_status,
             'sub_total' => $sub_total,
             'grand_total' => $grand_total,
-            'tax_amount' => $tax_amount,
-            'ed_amount' => $ed_amount,
+            'tax_amount' => $tax_amount1,
+            'ed_amount' => $ed_amount1,
+            'ed_value' => $request->ed_amount,
+            'tax_value' => $request->tax_amount,
             'discount' => $request->discount,
             'service_starting_date' => $request->service_starting_date,
             'service_ending_date' => $request->service_ending_date,
