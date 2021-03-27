@@ -99,7 +99,8 @@ class ServiceOrdersController extends InfyOmBaseController
 
         // GRAND TOTAL
 
-        $grand_total =$sub_total + $tax_amount + $ed_amount - $discount;
+        $grand_total = $sub_total + $tax_amount1 + $ed_amount1 - $discount;
+        
        
         $object = array(
             'order_i_d' => $request->order_i_d,

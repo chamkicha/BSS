@@ -78,6 +78,7 @@ class ServiceInvoiceController extends InfyOmBaseController
     public function show($id)
     {
         $serviceInvoice = $this->serviceInvoiceRepository->findWithoutFail($id);
+        
         $customer_details = DB::table('customers')->where('id', $serviceInvoice->customer_no)->first();
         $postal_address = $customer_details->postal_address;
         $district = $customer_details->district;
@@ -101,6 +102,11 @@ class ServiceInvoiceController extends InfyOmBaseController
             "invoice_due_date" => $serviceInvoice->invoice_due_date,
             "cusromer_name" => $serviceInvoice->cusromer_name,
             "service_order_no" => $serviceInvoice->service_order_no,
+            "sub_total" => $serviceInvoice->sub_total,
+            "tax_amount" => $serviceInvoice->tax_amount,
+            "ed_amount" => $serviceInvoice->ed_amount,
+            "discount" => $serviceInvoice->discount,
+            "grand_total" => $serviceInvoice->grand_total,
             "due_balance" => $serviceInvoice->due_balance,
             "current_charges" => $serviceInvoice->current_charges,
             "payment_amount" => $serviceInvoice->payment_amount,

@@ -24,7 +24,7 @@
 <body class="skin-josh">
 <header class="header">
     <a href="{{ route('admin.dashboard') }}" class="logo">
-        <img src="{{ asset('img/logo.png') }}" alt="logo">
+        <img src="{{ asset('images/nidc.png') }}" alt="logo" style="height:80px; padding-top: 10px;">
     </a>
     <nav class="navbar navbar-static-top" role="navigation">
         <!-- Sidebar toggle button-->
@@ -127,30 +127,8 @@
             <div class="page-sidebar  sidebar-nav">
                 <div class="nav_icons">
                     <ul class="sidebar_threeicons">
-                        <li>
-                            <a href="{{ URL::to('admin/advanced_tables') }}">
-                                <i class="livicon" data-name="table" title="Advanced tables" data-loop="true"
-                                   data-color="#418BCA" data-hc="#418BCA" data-s="25"></i>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{ URL::to('admin/tasks') }}">
-                                <i class="livicon" data-name="list-ul" title="Tasks" data-loop="true"
-                                   data-color="#e9573f" data-hc="#e9573f" data-s="25"></i>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{ URL::to('admin/gallery') }}">
-                                <i class="livicon" data-name="image" title="Gallery" data-loop="true"
-                                   data-color="#F89A14" data-hc="#F89A14" data-s="25"></i>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{ URL::to('admin/users') }}">
-                                <i class="livicon" data-name="user" title="Users" data-loop="true"
-                                   data-color="#6CC66C" data-hc="#6CC66C" data-s="25"></i>
-                            </a>
-                        </li>
+                        <br><br>
+                      
                     </ul>
                 </div>
                 <div class="clearfix"></div>

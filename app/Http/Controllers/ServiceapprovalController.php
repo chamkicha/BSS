@@ -186,11 +186,11 @@ class ServiceapprovalController extends Controller
             if(is_null($payment_due)){
 
             // PAYMENT AND DUE insert into database
-            $grand_total =$request->grand_total;
+            $grand_total_due =$request->grand_total;
             $bill_creation = DB::table('paymentanddues')
             ->insert(['customer_name' => $customer_name,
-                     'total_amount' => $grand_total,
-                     'balance' => $grand_total,
+                     'total_amount' => $grand_total_due,
+                     'balance' => $grand_total_due,
                       'customer_no' => $customer_no,]);
 
 
@@ -200,14 +200,14 @@ class ServiceapprovalController extends Controller
                 $grand_total3 = DB::table('paymentanddues')->where('customer_no', $customer_no)->get();
                 $grand_total2 = $grand_total3[0]->total_amount;
                 $grand_total1 = $request->grand_total;
-                $grand_total = $grand_total1 + $grand_total2;
+                $grand_total4 = $grand_total1 + $grand_total2;
                 $balance = $grand_total3[0]->balance;
                 $balance = $balance + $grand_total1;
                 
                 
                 $bill_creation = DB::table('paymentanddues')
                 ->where('customer_no', $customer_no)
-                ->update(['total_amount' => $grand_total,
+                ->update(['total_amount' => $grand_total4,
                          'balance' => $balance]);
             } // END PAYMEND AND DUE CREATIONM
 
@@ -245,7 +245,12 @@ class ServiceapprovalController extends Controller
                       'due_balance' => $due_balance,
                       'service_name' => $service_name,
                       'payment_amount' => $payment_amount,
-                      'payment_status' => $payment_status,]);
+                      'payment_status' => $payment_status,
+                      'sub_total' => $sub_total,
+                      'tax_amount' => $tax_amount,
+                      'ed_amount' => $ed_amount,
+                      'discount' => $discount,
+                      'grand_total' => $grand_total]);
 
 
 

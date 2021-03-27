@@ -30,7 +30,7 @@
                         <div class="card ">
                             <div class="card-header bg-success text-white"> </div>
                            
-                         <div class="card-body" style="border:1px solid #ccc;padding:0;margin:0;">
+                         <div class="card-body" style="padding:0;margin:0;">
 
                             {{--  MAIN CONTENT  BEGIN  --}}
                             <div style="padding-left: 60px; padding-right: 60px;">
@@ -90,7 +90,7 @@
                                     <div class="col-md-4 col-4 col-lg-4" style="margin-top:5px;">
                                         <br><br><br><br><br><br>
                                         <strong>Total Previous Debt:</strong><br>
-                                        {!! $serviceInvoice['previous_dept'] !!}<strong> TZS</strong></p><br>
+                                        {!! number_format($serviceInvoice['previous_dept'], 2)  !!}<strong> TZS</strong></p><br>
                                     </div>
                                     <div class="col-md-4 col-4 col-lg-4" style="padding-right:0">
                                         <strong>TIN: 100-102-927</strong><br>
@@ -134,8 +134,8 @@
                                                     <td>{{ $serviceInvoices->product_name }}</td>
                                                     <td>{{ $serviceInvoices->product_name }}</td>
                                                     <td>{{ $serviceInvoices->description }}</td>
-                                                    <td>{{ $serviceInvoices->price }}</td>
-                                                    <td>{{ $serviceInvoices->price }}</td>
+                                                    <td>{{ number_format($serviceInvoices->price, 2) }}</td>
+                                                    <td>{{number_format($serviceInvoices->price, 2)  }}</td>
                                                 </tr>
                                                 @endforeach
                                                 <tr>
@@ -143,28 +143,35 @@
                                                     <td></td>
                                                     <td></td>
                                                     <td><strong>Sub-Total(TZS)</strong></td>
-                                                    <td>225</td>
+                                                    <td><strong>{!! number_format($serviceInvoice['sub_total'], 2) !!}</strong></td>
                                                 </tr>
                                                 <tr>
                                                     <td></td>
                                                     <td></td>
                                                     <td></td>
-                                                    <td>Net Total</td>
-                                                    <td>2025.00</td>
+                                                    <td><strong>VAT(TZS)</strong></td>
+                                                    <td><strong>{!! number_format($serviceInvoice['tax_amount'], 2) !!}</strong></td>
                                                 </tr>
                                                 <tr>
                                                     <td></td>
                                                     <td></td>
                                                     <td></td>
-                                                    <td>tax</td>
-                                                    <td>599.40</td>
+                                                    <td><strong>ED(TZS)</strong></td>
+                                                    <td><strong>{!! number_format($serviceInvoice['ed_amount'], 2) !!}</strong></td>
                                                 </tr>
                                                 <tr>
                                                     <td></td>
                                                     <td></td>
                                                     <td></td>
-                                                    <td><strong>TOTAL</strong></td>
-                                                    <td><strong>2624.60</strong></td>
+                                                    <td><strong>Discount(TZS)</strong></td>
+                                                    <td><strong>{!! number_format($serviceInvoice['discount'], 2) !!}</strong></td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td><strong>Total with VAT (TZS)</strong></td>
+                                                    <td><strong>{!! number_format($serviceInvoice['grand_total'], 2) !!}<strong></td>
                                                 </tr>
                                                 </tbody>
                                             </table>
@@ -172,24 +179,38 @@
                                     </div>
                                 </div>
                                 <div style="background-color: #eee;padding:15px;" id="footer-bg">
+                                
                                     <div class="row">
                                         <div class="col-md-6 col-lg-6 col-12">
-                                            <strong>Payment Details</strong><br>
-                                            <strong>Kayin Bank</strong><br>
-                                            <strong>Bank/Sort code</strong>: 32-25-85<br>
-                                            <strong>Account Number</strong>: 54257963<br>
-                                            <strong>Payment Reference</strong>: INV001<br>
+                                            <div >
+                                                <strong>Bank Account Details:</strong><br>
+                                                <strong>Account No </strong>: 9925260961<br>
+                                                <strong>Account Nname </strong>: Tanzania Telecommunications Corporation<br>
+                                                <strong>Bank </strong>: Bank of Tanzania (BOT)<br>
+                                                <strong>Currency </strong>: TZS<br>
+                                                </div>
+                                        </div>
+                                        <div class="col-md-6 col-lg-6 col-12">
+                                            
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row">
+                                        <div class="col-md-6 col-lg-6 col-12">
                                         </div>
                                         <div class="col-md-6 col-lg-6 col-12">
                                             <div class="float-right">
-                                                <strong>Other Information</strong><br>
-                                                <strong>Company Registration Number</strong>:254798621<br>
-                                                <strong>Contact/PO</strong>:PO5876452
+                                                
+                                                <br>
+                                                <strong>______________________________________________</strong><br>
+                                                <strong>G. Mpangala</strong><br>
+                                                <strong>Head NIDC</strong>
                                             </div>
                                         </div>
                                     </div>
                                     <hr>
-                                    <p class="text-center"><strong>Payment should be made by bank transfer or cheque made by payable to Josh</strong></p>
+                                    <p class="text-center"><strong>Please, present copy of this invoice during payment.</strong></p>
+                                    
                                     <div style="margin:10px 20px;text-align:center;" class="btn-section">
                                         <button type="button" class="btn btn_marTop button-alignment btn-info"
                                                 data-toggle="button">
