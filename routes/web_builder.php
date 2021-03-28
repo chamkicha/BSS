@@ -346,3 +346,18 @@ Route::get('paymentAndDues/{paymentAndDues}', ['as'=> 'paymentAndDues.show', 'us
 Route::get('paymentAndDues/{paymentAndDues}/edit', ['as'=> 'paymentAndDues.edit', 'uses' => 'Paymentanddue\PaymentAndDueController@edit']);
 
 });
+
+
+Route::group(array('prefix' => 'admin/invoicwePayment/','namespace' => 'Admin','middleware' => 'admin','as'=>'admin.invoicwePayment.'), function () {
+
+Route::get('invoicwePayments', ['as'=> 'invoicwePayments.index', 'uses' => 'Invoicwepayment\InvoicwePaymentController@index']);
+Route::post('invoicwePayments', ['as'=> 'invoicwePayments.store', 'uses' => 'Invoicwepayment\InvoicwePaymentController@store']);
+Route::get('invoicwePayments/create', ['as'=> 'invoicwePayments.create', 'uses' => 'Invoicwepayment\InvoicwePaymentController@create']);
+Route::put('invoicwePayments/{invoicwePayments}', ['as'=> 'invoicwePayments.update', 'uses' => 'Invoicwepayment\InvoicwePaymentController@update']);
+Route::patch('invoicwePayments/{invoicwePayments}', ['as'=> 'invoicwePayments.update', 'uses' => 'Invoicwepayment\InvoicwePaymentController@update']);
+Route::get('invoicwePayments/{id}/delete', ['as' => 'invoicwePayments.delete', 'uses' => 'Invoicwepayment\InvoicwePaymentController@getDelete']);
+Route::get('invoicwePayments/{id}/confirm-delete', ['as' => 'invoicwePayments.confirm-delete', 'uses' => 'Invoicwepayment\InvoicwePaymentController@getModalDelete']);
+Route::get('invoicwePayments/{invoicwePayments}', ['as'=> 'invoicwePayments.show', 'uses' => 'Invoicwepayment\InvoicwePaymentController@show']);
+Route::get('invoicwePayments/{invoicwePayments}/edit', ['as'=> 'invoicwePayments.edit', 'uses' => 'Invoicwepayment\InvoicwePaymentController@edit']);
+
+});

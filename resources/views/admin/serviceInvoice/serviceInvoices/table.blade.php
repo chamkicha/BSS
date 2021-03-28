@@ -3,7 +3,6 @@
     <thead>
      <tr>
         <th>Invoice Created Date</th>
-        <th>Invoice Due Date</th>
         <th>Service Order No</th>
         <th>Due Balance</th>
         <th>Current Charges</th>
@@ -19,7 +18,6 @@
     @foreach($serviceInvoices as $serviceInvoice)
         <tr>
             <td>{!! $serviceInvoice->invoice_created_date !!}</td>
-            <td>{!! $serviceInvoice->invoice_due_date !!}</td>
             <td>{!! $serviceInvoice->service_order_no !!}</td>
             <td>{!! $serviceInvoice->due_balance !!}</td>
             <td>{!! $serviceInvoice->current_charges !!}</td>

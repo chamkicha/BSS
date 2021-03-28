@@ -358,3 +358,5 @@ Route::get('{name?}', 'FrontEndController@showFrontEndView');
 //Route::post('/changestatues', [App\Http\Controllers\Serviceorders\ServiceOrdersController::class, 'changeStatus'])->name('changestatues');
 //Route::post('/changestatues','\Serviceorders\ServiceOrdersController@changeStatus')->name('changestatues');
 Route::post('/serviceapprove', [App\Http\Controllers\ServiceapprovalController::class, 'serviceapprove'])->name('serviceapprove');
+Route::post('/invoicenumber', [App\Http\Controllers\PaymentController::class, 'create'])->name('createPayment');
+Route::post('/invocepayment', [App\Http\Controllers\PaymentController::class, 'store'])->name('storePayment');

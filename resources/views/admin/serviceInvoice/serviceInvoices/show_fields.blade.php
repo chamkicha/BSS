@@ -212,6 +212,43 @@
                                     <p class="text-center"><strong>Please, present copy of this invoice during payment.</strong></p>
                                     
                                     <div style="margin:10px 20px;text-align:center;" class="btn-section">
+
+                                        <!-- form add start-->
+                                        <form action="{{ url('invoicenumber') }}" method = "post"><!-- form add -->
+                                            {{ csrf_field() }}
+
+
+                                        <!-- Invoice number Field -->
+                                        <div class="form-group col-sm-12">
+                                            <input type="hidden" id="invoice_number" name="invoice_number" class="form-control" value="{{$serviceInvoice['invoice_number']}}" >
+
+                                        </div>
+
+                                        
+                                        <!-- Payment amount Field -->
+                                        <div class="form-group col-sm-12">
+                                            <input type="hidden" id="grand_total" name="grand_total" class="form-control" value="{{$serviceInvoice['grand_total']}}" >
+
+                                        </div>
+
+                                        
+                                        <!-- Payment amount Field -->
+                                        <div class="form-group col-sm-12">
+                                            <input type="hidden" id="cusromer_name" name="cusromer_name" class="form-control" value="{{$serviceInvoice['cusromer_name'] }}" >
+
+                                        </div>
+
+
+
+
+                                        <button type="submit" class="btn btn_marTop button-alignment btn-info"
+                                                data-toggle="button">
+                                            <a style="color:#fff;"">
+                                                <i class="livicon" data-name="printer" data-size="16" data-loop="true"
+                                                   data-c="#fff" data-hc="white" style="position:relative;top:3px;"></i>
+                                               Make Payment
+                                            </a>
+                                        </button>
                                         <button type="button" class="btn btn_marTop button-alignment btn-info"
                                                 data-toggle="button">
                                             <a style="color:#fff;" onclick="javascript:window.print();">
@@ -228,6 +265,10 @@
                                                 Send Your Invoice
                                             </a>
                                         </button>
+
+                                        
+
+                                        </form><!-- form add end -->
                                     </div>
                                 </div>
                             </div>

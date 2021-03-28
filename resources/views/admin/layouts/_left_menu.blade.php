@@ -7,7 +7,7 @@
         </a>
     </li>
 
-    <li {!! ( Request::is('admin/laravel_charts') || Request::is('admin/database_charts') ? 'class="active"' : '' ) !!}>
+    <li {!! ( Request::is('admin/serviceOrders/serviceOrders*') || Request::is('admin/serviceOrders/serviceOrders/create') ? 'class="active"' : '' ) !!}>
         <a href="#">
             <i class="livicon" data-name="barchart" data-size="18" data-c="#418BCA" data-hc="#418BCA" data-loop="true"></i>
             <span class="title">SERVICES</span>
@@ -15,18 +15,16 @@
         </a>
         <ul class="sub-menu">
             
-            <li class="{{ Request::is('admin/serviceOrders/serviceOrders*') ? 'active' : '' }}">
+            <li {!! (Request::is('admin/serviceOrders/serviceOrders/index') ? 'class="active" id="active"' : '' ) !!}>
                 <a href="{!! route('admin.serviceOrders.serviceOrders.index') !!}">
-                <i class="livicon" data-c="#418BCA" data-hc="#418BCA" data-name="servers" data-size="18"
-                        data-loop="true"></i>
+                <i class="fa fa-angle-double-right"></i>
                         Service Orders
                 </a>
             </li>
             
-            <li class="{{ Request::is('admin/serviceOrders/serviceOrders*') ? 'active' : '' }}">
+            <li  {!! (Request::is('admin/serviceOrders/serviceOrders/create') ? 'class="active" id="active"' : '' ) !!}>
                 <a href="{!! route('admin.serviceOrders.serviceOrders.create') !!}">
-                <i class="livicon" data-c="#418BCA" data-hc="#418BCA" data-name="servers" data-size="18"
-                        data-loop="true"></i>
+                <i class="fa fa-angle-double-right"></i>
                         Create Service Orders 
                 </a>
             </li>
@@ -35,9 +33,9 @@
 
     
 
-    <li {!! ( Request::is('admin/serviceBilling/serviceBillings*') || Request::is('aadmin/serviceInvoice/serviceInvoices*') ? 'class="active"' : '' ) !!}>
+    <li {!! ( Request::is('admin/serviceBilling/serviceBillings*') || Request::is('admin/invoicwePayment/invoicwePayments*') || Request::is('admin/serviceInvoice/serviceInvoices*') || Request::is('admin/paymentAndDue/paymentAndDues*') ? 'class="active"' : '' ) !!}>
         <a href="#">
-            <i class="livicon" data-name="barchart" data-size="18" data-c="#418BCA" data-hc="#418BCA" data-loop="true"></i>
+            <i class="livicon" data-name="bank" data-size="18" data-c="#418BCA" data-hc="#418BCA" data-loop="true"></i>
             <span class="title">BILLING</span>
             <span class="fa arrow"></span>
         </a>
@@ -45,50 +43,53 @@
             
             <li {!! (Request::is('admin/serviceBilling/serviceBillings*') ? 'class="active" id="active"' : '' ) !!}">
                 <a href="{!! route('admin.serviceBilling.serviceBillings.index') !!}">
-                <i class="livicon" data-c="#31B0D5" data-hc="#31B0D5" data-name="bank" data-size="18"
-                        data-loop="true"></i>
+                <i class="fa fa-angle-double-right"></i>
                         Service Billings
                 </a>
             </li>
             
             <li {!! (Request::is('admin/serviceInvoice/serviceInvoices*') ? 'class="active" id="active"' : '' ) !!}>
                 <a href="{!! route('admin.serviceInvoice.serviceInvoices.index') !!}">
-                <i class="livicon" data-c="#31B0D5" data-hc="#31B0D5" data-name="bank" data-size="18"
-                        data-loop="true"></i>
-                        ServiceInvoices
+                <i class="fa fa-angle-double-right"></i>
+                        Service Invoices
                 </a>
             </li>
+            
+            <li class="{{ Request::is('admin/invoicwePayment/invoicwePayments*') ? 'active' : '' }}">
+                <a href="{!! route('admin.invoicwePayment.invoicwePayments.index') !!}">
+                <i class="fa fa-angle-double-right"></i>
+                        Payments
+                </a>
+            </li>
+
             
 
             <li class="{{ Request::is('admin/paymentAndDue/paymentAndDues*') ? 'active' : '' }}">
                 <a href="{!! route('admin.paymentAndDue.paymentAndDues.index') !!}">
-                <i class="livicon" data-c="#31B0D5" data-hc="#31B0D5" data-name="bank" data-size="18"
-                        data-loop="true"></i>
-                        PaymentAndDues
+                <i class="fa fa-angle-double-right"></i>
+                        Payment and Dues
                 </a>
             </li>
 
         </ul>
     </li>
 
-    <li {!! ( Request::is('admin/laravel_charts') || Request::is('admin/database_charts') ? 'class="active"' : '' ) !!}>
+    <li {!! ( Request::is('admin/customer/customers*') || Request::is('admin/customer/customers/create') ? 'class="active"' : '' ) !!}>
             <a href="#">
-                <i class="livicon" data-name="barchart" data-size="18" data-c="#418BCA" data-hc="#418BCA" data-loop="true"></i>
+                <i class="livicon" data-name="users" data-size="18" data-c="#418BCA" data-hc="#418BCA" data-loop="true"></i>
                 <span class="title">CUSTOMERS</span>
                 <span class="fa arrow"></span>
             </a>
             <ul class="sub-menu">
                 <li class="{{ Request::is('admin/customer/customers*') ? 'active' : '' }}">
                     <a href="{!! route('admin.customer.customers.index') !!}">
-                    <i class="livicon" data-c="#418BCA" data-hc="#418BCA" data-name="user" data-size="18"
-                            data-loop="true"></i>
+                    <i class="fa fa-angle-double-right"></i>
                             Customers List
                     </a>
                 </li>
-                <li class="{{ Request::is('admin/customer/customers*') ? 'active' : '' }}">
+                <li class="{{ Request::is('admin/customer/customers/create') ? 'active' : '' }}">
                     <a href="{!! route('admin.customer.customers.create') !!}">
-                    <i class="livicon" data-c="#418BCA" data-hc="#418BCA" data-name="user" data-size="18"
-                            data-loop="true"></i>
+                    <i class="fa fa-angle-double-right"></i>
                             Create Customers
                     </a>
                 </li>
@@ -96,7 +97,7 @@
             </ul>
    </li>
 
-    <li {!! ( Request::is('admin/laravel_charts') || Request::is('admin/database_charts') ? 'class="active"' : '' ) !!}>
+    <li {!! ( Request::is('admin/product/products*') || Request::is('admin/product/products/create') ? 'class="active"' : '' ) !!}>
         <a href="#">
             <i class="livicon" data-name="barchart" data-size="18" data-c="#418BCA" data-hc="#418BCA" data-loop="true"></i>
             <span class="title">PRODUCTS</span>
@@ -106,16 +107,14 @@
             
             <li class="{{ Request::is('admin/product/products*') ? 'active' : '' }}">
                 <a href="{!! route('admin.product.products.index') !!}">
-                <i class="livicon" data-c="#6CC66C" data-hc="#6CC66C" data-name="servers" data-size="18"
-                        data-loop="true"></i>
+                <i class="fa fa-angle-double-right"></i>
                         Products List
                 </a>
             </li>
             
-            <li class="{{ Request::is('admin/product/products*') ? 'active' : '' }}">
+            <li class="{{ Request::is('admin/product/products/create') ? 'active' : '' }}">
                 <a href="{!! route('admin.product.products.create') !!}">
-                <i class="livicon" data-c="#6CC66C" data-hc="#6CC66C" data-name="servers" data-size="18"
-                        data-loop="true"></i>
+                <i class="fa fa-angle-double-right"></i>
                         Create Products
                 </a>
             </li>
@@ -126,9 +125,9 @@
     </li>
 
     
-    <li {!! ( Request::is('admin/laravel_charts') || Request::is('admin/database_charts') ? 'class="active"' : '' ) !!}>
+    <li {!! ( Request::is('admin/productType/productTypes*') || Request::is('admin/unitofMeasure/unitofMeasures*') || Request::is('admin/customerType/customerTypes*') || Request::is('admin/paymentMode/paymentModes*') || Request::is('admin/servicestatus/servicestatuses*') || Request::is('admin/paymentType/paymentTypes*') ? 'class="active"' : '' ) !!}>
         <a href="#">
-            <i class="livicon" data-name="barchart" data-size="18" data-c="#418BCA" data-hc="#418BCA" data-loop="true"></i>
+            <i class="livicon" data-name="gears" data-size="18" data-c="#418BCA" data-hc="#418BCA" data-loop="true"></i>
             <span class="title">SETTINGS</span>
             <span class="fa arrow"></span>
         </a>
@@ -136,8 +135,7 @@
 
                 <li class="{{ Request::is('admin/productType/productTypes*') ? 'active' : '' }}">
                     <a href="{!! route('admin.productType.productTypes.index') !!}">
-                    <i class="livicon" data-c="#31B0D5" data-hc="#31B0D5" data-name="thumbnails-big" data-size="18"
-                            data-loop="true"></i>
+                    <i class="fa fa-angle-double-right"></i>
                             ProductTypes
                     </a>
                 </li>
@@ -145,40 +143,35 @@
 
                 <li class="{{ Request::is('admin/unitofMeasure/unitofMeasures*') ? 'active' : '' }}">
                     <a href="{!! route('admin.unitofMeasure.unitofMeasures.index') !!}">
-                    <i class="livicon" data-c="#31B0D5" data-hc="#31B0D5" data-name="dashboard" data-size="18"
-                            data-loop="true"></i>
+                    <i class="fa fa-angle-double-right"></i>
                             UnitofMeasures
                     </a>
                 </li>
 
                 <li class="{{ Request::is('admin/customerType/customerTypes*') ? 'active' : '' }}">
                     <a href="{!! route('admin.customerType.customerTypes.index') !!}">
-                    <i class="livicon" data-c="#31B0D5" data-hc="#31B0D5" data-name="users" data-size="18"
-                            data-loop="true"></i>
+                    <i class="fa fa-angle-double-right"></i>
                             CustomerTypes
                     </a>
                 </li>
 
                 <li class="{{ Request::is('admin/paymentMode/paymentModes*') ? 'active' : '' }}">
                     <a href="{!! route('admin.paymentMode.paymentModes.index') !!}">
-                    <i class="livicon" data-c="#31B0D5" data-hc="#31B0D5" data-name="bank" data-size="18"
-                            data-loop="true"></i>
+                    <i class="fa fa-angle-double-right"></i>
                             PaymentModes
                     </a>
                 </li>
 
                 <li class="{{ Request::is('admin/servicestatus/servicestatuses*') ? 'active' : '' }}">
                     <a href="{!! route('admin.servicestatus.servicestatuses.index') !!}">
-                    <i class="livicon" data-c="#31B0D5" data-hc="#31B0D5" data-name="dashboard" data-size="18"
-                            data-loop="true"></i>
+                    <i class="fa fa-angle-double-right"></i>
                             Servicestatuses
                     </a>
                 </li>
 
                 <li class="{{ Request::is('admin/paymentType/paymentTypes*') ? 'active' : '' }}">
                     <a href="{!! route('admin.paymentType.paymentTypes.index') !!}">
-                    <i class="livicon" data-c="#31B0D5" data-hc="#31B0D5" data-name="bank" data-size="18"
-                            data-loop="true"></i>
+                    <i class="fa fa-angle-double-right"></i>
                             PaymentTypes
                     </a>
                 </li>

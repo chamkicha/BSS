@@ -4,11 +4,8 @@
      <tr>
         <th>Order I D</th>
         <th>Customer Name</th>
-        <th>Payment Mode</th>
         <th>Service Status</th>
         <th>Grand Total</th>
-        <th>Service Starting Date</th>
-        <th>Service Ending Date</th>
         <th>Service Descriptions</th>
         <th>Service Lists</th>
         <th>Next Handler</th>
@@ -21,11 +18,8 @@
         <tr>
             <td>{!! $serviceOrders->order_i_d !!}</td>
             <td>{!! $serviceOrders->customer_name !!}</td>
-            <td>{!! $serviceOrders->payment_mode !!}</td>
             <td>{!! $serviceOrders->service_status !!}</td>
             <td>{!! $serviceOrders->grand_total !!}</td>
-            <td>{!! $serviceOrders->service_starting_date !!}</td>
-            <td>{!! $serviceOrders->service_ending_date !!}</td>
             <td>{!! $serviceOrders->service_descriptions !!}</td>
             <td>
 

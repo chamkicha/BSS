@@ -31,7 +31,7 @@
 
 </head>
 
-<body>
+<body style="background-image: url('images/bodybg.jpg'); background-attachment: fixed;  background-size: 100% 100%;">
     <div class="container">
         <div class="row my-3">
             <div class="col-12 mx-auto">
@@ -52,9 +52,9 @@
                         <div id="login" class="animate form">
                             <form action="{{ route('signin') }}" autocomplete="on" method="post" role="form"
                                 id="login_form" class="my-3">
-                                <h3 class="black_bg">
-                                    <img src="{{ asset('img/logo.png') }}" alt="josh logo">
-                                    <br>Log In</h3>
+                                <h3>
+                                    <img src="{{ asset('images/nidc.png') }}" alt="NIDC" style="height:90px;">
+                                </h3>
                                 <!-- CSRF Token -->
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}" />
                                 <div class="form-group {{ $errors->first('email', 'has-error') }}">
@@ -95,11 +95,6 @@
                                     <a href="#toforgot">
                                         <button type="button" class="btn btn-warning btn-sm">Forgot
                                             password
-                                        </button>
-                                    </a>
-                                    <a href="#toregister">
-                                        <button type="button" id="signup" class="btn btn-success btn-sm"
-                                            style="float:right;">Sign Up
                                         </button>
                                     </a>
                                 </p>
