@@ -5,8 +5,8 @@
         <th>Order I D</th>
         <th>Customer Name</th>
         <th>Service Status</th>
+        <th>Service Order Type</th>
         <th>Grand Total</th>
-        <th>Service Descriptions</th>
         <th>Service Lists</th>
         <th>Next Handler</th>
         <th>Created By</th>
@@ -18,9 +18,17 @@
         <tr>
             <td>{!! $serviceOrders->order_i_d !!}</td>
             <td>{!! $serviceOrders->customer_name !!}</td>
-            <td>{!! $serviceOrders->service_status !!}</td>
+            <td>
+            @if ($serviceOrders->service_status === 'Active')
+                <span class="label label-sm bg-success text-white">{!! $serviceOrders->service_status !!}</span>
+            
+            @elseif ($serviceOrders->service_status === 'Inactive')
+                <span class="label label-sm bg-danger text-white   ">{!! $serviceOrders->service_status !!}</span>
+            @endif
+            
+            </td>
+            <td>{!! $serviceOrders->serviceordertypes !!}</td>
             <td>{!! $serviceOrders->grand_total !!}</td>
-            <td>{!! $serviceOrders->service_descriptions !!}</td>
             <td>
 
                 @foreach((array) $serviceOrders->service_lists as $value)

@@ -7,15 +7,14 @@ ServiceOrders
 
 @section('content')
 <section class="content-header">
-    <h1>ServiceOrders View</h1>
     <ol class="breadcrumb">
         <li>
             <a href="{{ route('admin.dashboard') }}"> <i class="livicon" data-name="home" data-size="16" data-color="#000"></i>
                 Dashboard
             </a>
         </li>
-        <li>ServiceOrders</li>
-        <li class="active">ServiceOrders View</li>
+        <li>Service Orders</li>
+        <li class="active">Service Orders View</li>
     </ol>
 </section>
 
@@ -26,7 +25,7 @@ ServiceOrders
        <div class="card border-primary">
                 <div class="card-header bg-primary text-white">
                     <h4 class="card-title"> <i class="livicon" data-name="list-ul" data-size="16" data-loop="true" data-c="#fff" data-hc="white"></i>
-                        ServiceOrders details
+                        Service Orders details
                     </h4>
                 </div>
                     <div class="card-body">

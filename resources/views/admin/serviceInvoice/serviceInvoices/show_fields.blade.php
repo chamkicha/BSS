@@ -44,7 +44,7 @@
                                 <div class="col-md-6 col-lg-6 col-12">
                                 <div class="row" style="padding: 15px;margin-top:5px;">
                                         <div >
-                                            <img src="{{ asset('images/ttcl.png') }}" style="width:80px;height:80px;" alt="logo" class="img-fluid">
+                                            <img src="{{ asset('images/ttcllogo.png') }}" style="width:90px;height:90px;" alt="logo" class="img-fluid">
                                         </div>
                                         <div class="float-left" style="margin-left:10px;">
                                             Telephone:+255(0)22 292 6402<br>
@@ -124,6 +124,7 @@
                                                     <th>SI No.</th>
                                                     <th>Item</th>
                                                     <th>Item Descriptions</th>
+                                                    <th>VAT</th>
                                                     <th>Amount</th>
                                                     <th>Total</th>
                                                 </tr>
@@ -134,11 +135,13 @@
                                                     <td>{{ $serviceInvoices->product_name }}</td>
                                                     <td>{{ $serviceInvoices->product_name }}</td>
                                                     <td>{{ $serviceInvoices->description }}</td>
+                                                    <td>{{ number_format($serviceInvoices->vat_amount, 2) }}</td>
                                                     <td>{{ number_format($serviceInvoices->price, 2) }}</td>
-                                                    <td>{{number_format($serviceInvoices->price, 2)  }}</td>
+                                                    <td>{{number_format($serviceInvoices->grand_total, 2)  }}</td>
                                                 </tr>
                                                 @endforeach
                                                 <tr>
+                                                    <td></td>
                                                     <td></td>
                                                     <td></td>
                                                     <td></td>
@@ -149,17 +152,12 @@
                                                     <td></td>
                                                     <td></td>
                                                     <td></td>
+                                                    <td></td>
                                                     <td><strong>VAT(TZS)</strong></td>
-                                                    <td><strong>{!! number_format($serviceInvoice['tax_amount'], 2) !!}</strong></td>
+                                                    <td><strong>{!! number_format($serviceInvoice['tax_amount_total'], 2) !!}</strong></td>
                                                 </tr>
                                                 <tr>
                                                     <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td><strong>ED(TZS)</strong></td>
-                                                    <td><strong>{!! number_format($serviceInvoice['ed_amount'], 2) !!}</strong></td>
-                                                </tr>
-                                                <tr>
                                                     <td></td>
                                                     <td></td>
                                                     <td></td>
@@ -167,6 +165,7 @@
                                                     <td><strong>{!! number_format($serviceInvoice['discount'], 2) !!}</strong></td>
                                                 </tr>
                                                 <tr>
+                                                    <td></td>
                                                     <td></td>
                                                     <td></td>
                                                     <td></td>
@@ -185,7 +184,7 @@
                                             <div >
                                                 <strong>Bank Account Details:</strong><br>
                                                 <strong>Account No </strong>: 9925260961<br>
-                                                <strong>Account Nname </strong>: Tanzania Telecommunications Corporation<br>
+                                                <strong>Account Name </strong>: Tanzania Telecommunications Corporation<br>
                                                 <strong>Bank </strong>: Bank of Tanzania (BOT)<br>
                                                 <strong>Currency </strong>: TZS<br>
                                                 </div>
@@ -228,6 +227,20 @@
                                         <!-- Payment amount Field -->
                                         <div class="form-group col-sm-12">
                                             <input type="hidden" id="grand_total" name="grand_total" class="form-control" value="{{$serviceInvoice['grand_total']}}" >
+
+                                        </div>
+
+                                        
+                                        <!-- Service Order  type Field -->
+                                        <div class="form-group col-sm-12">
+                                            <input type="hidden" id="service_order_no" name="service_order_no" class="form-control" value="{{$serviceInvoice['service_order_no']}}" >
+
+                                        </div>
+
+                                        
+                                        <!-- Service Order  id Field -->
+                                        <div class="form-group col-sm-12">
+                                            <input type="hidden" id="serviceordertypes" name="serviceordertypes" class="form-control" value="{{$serviceInvoice['serviceordertypes']}}" >
 
                                         </div>
 

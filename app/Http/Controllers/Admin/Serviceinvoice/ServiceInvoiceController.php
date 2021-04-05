@@ -88,11 +88,43 @@ class ServiceInvoiceController extends InfyOmBaseController
         $v_a_t_registration_number = $customer_details->v_a_t_registration_number;
         $previous_dept = DB::table('paymentanddues')->where('customer_no', $serviceInvoice->customer_no)->first();
         $previous_dept = $previous_dept->total_amount;
+        if($previous_dept === $serviceInvoice->grand_total){
+            
+            $previous_dept ='0';
+        }
+        else{
+            $grand_total = $serviceInvoice->grand_total;
+            $previous_dept = $previous_dept- $grand_total; 
+        }
         $service_name = (array)json_decode($serviceInvoice['service_name'], true);
         //$service_name=implode(",",$service_name);
         //$service_name = $serviceInvoice->service_name;
         $service_name_description = DB::table('products')->whereIn('product_name', $service_name)->get();
         //dd($service_name_description);
+
+        
+
+        // tax amount
+        $tax_amount_total = DB::table('products')->whereIn('product_name',  $service_name)
+                                            ->sum('vat_amount');
+
+        // ED AMOUNT
+        $ed_amount_total = DB::table('products')->whereIn('product_name', $service_name)
+                                        ->sum('ed_amount');
+
+        // SUB TOTAL
+        $sub_total = DB::table('products')->whereIn('product_name', $service_name)
+                                        ->sum('price');
+
+
+        // DISCOUNT
+        $discount =$serviceInvoice->discount;
+
+        // GRAND TOTAL
+        $grand_total = DB::table('products')->whereIn('product_name', $service_name)
+                  ->sum('grand_total');
+        $grand_total = $grand_total - $discount;
+
         
         $serviceInvoice = array(
             "id" => $serviceInvoice->id,
@@ -102,11 +134,11 @@ class ServiceInvoiceController extends InfyOmBaseController
             "invoice_due_date" => $serviceInvoice->invoice_due_date,
             "cusromer_name" => $serviceInvoice->cusromer_name,
             "service_order_no" => $serviceInvoice->service_order_no,
-            "sub_total" => $serviceInvoice->sub_total,
-            "tax_amount" => $serviceInvoice->tax_amount,
-            "ed_amount" => $serviceInvoice->ed_amount,
+            "sub_total" => $sub_total,
+            "tax_amount_total" => $tax_amount_total,
+            "ed_amount_total" => $ed_amount_total,
             "discount" => $serviceInvoice->discount,
-            "grand_total" => $serviceInvoice->grand_total,
+            "grand_total" => $grand_total,
             "due_balance" => $serviceInvoice->due_balance,
             "current_charges" => $serviceInvoice->current_charges,
             "payment_amount" => $serviceInvoice->payment_amount,
@@ -119,6 +151,7 @@ class ServiceInvoiceController extends InfyOmBaseController
             "postal_address" => $postal_address,
             "previous_dept" => $previous_dept,
             "district" => $district,
+            "serviceordertypes" => $serviceInvoice->serviceordertypes,
             "region" => $region,
             "country" => $country,
             "t_i_n_number" => $t_i_n_number,

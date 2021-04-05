@@ -125,7 +125,7 @@
     </li>
 
     
-    <li {!! ( Request::is('admin/productType/productTypes*') || Request::is('admin/unitofMeasure/unitofMeasures*') || Request::is('admin/customerType/customerTypes*') || Request::is('admin/paymentMode/paymentModes*') || Request::is('admin/servicestatus/servicestatuses*') || Request::is('admin/paymentType/paymentTypes*') ? 'class="active"' : '' ) !!}>
+    <li {!! ( Request::is('admin/productType/productTypes*') || Request::is('admin/serviceOrderType/serviceOrderTypes*') || Request::is('admin/unitofMeasure/unitofMeasures*') || Request::is('admin/customerType/customerTypes*') || Request::is('admin/paymentMode/paymentModes*') || Request::is('admin/servicestatus/servicestatuses*') || Request::is('admin/paymentType/paymentTypes*') ? 'class="active"' : '' ) !!}>
         <a href="#">
             <i class="livicon" data-name="gears" data-size="18" data-c="#418BCA" data-hc="#418BCA" data-loop="true"></i>
             <span class="title">SETTINGS</span>
@@ -175,6 +175,14 @@
                             PaymentTypes
                     </a>
                 </li>
+
+                <li class="{{ Request::is('admin/serviceOrderType/serviceOrderTypes*') ? 'active' : '' }}">
+                    <a href="{!! route('admin.serviceOrderType.serviceOrderTypes.index') !!}">
+                    <i class="fa fa-angle-double-right"></i>
+                            Service Order Types
+                    </a>
+                </li>
+
         </ul>
     </li>
 

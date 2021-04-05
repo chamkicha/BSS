@@ -66,7 +66,46 @@ class ProductController extends InfyOmBaseController
     {
         $input = $request->all();
 
+        // tax amount
+        $sub_total =$request->price;
+        $tax_amount =$request->v_a_t;
+        $tax_amount2 = $tax_amount * 0.01;
+        $tax_amount1 = $tax_amount2 * $sub_total;
+        
+        // ED AMOUNT
+        $ed_amount =$request->e_d;
+        $ed_amount2 = $ed_amount * 0.01;
+        $ed_amount1 = $ed_amount2 * $sub_total;
+        
+        // DISCOUNT
+        $discount =$request->discount;
+
+       // sub total
+        $sub_total =$sub_total + $ed_amount1;
+
+        
+        // GRAND TOTAL
+        $grand_total = $sub_total + $tax_amount1 - $discount;
+
+        $input = array(
+            "product_name" => $request->product_name,
+            "product_unit" => $request->product_unit,
+            "product_type" => $request->product_type,
+            "v_a_t" => $request->v_a_t,
+            "e_d" => $request->e_d,
+            "price" => $sub_total,
+            "vat_amount" => $tax_amount1,	
+            "discount" => $discount,
+            "ed_amount" => $ed_amount1,
+            "grand_total" => $grand_total,
+            "description" => $request->description,
+
+        );
+        //dd($input);
+
         $product = $this->productRepository->create($input);
+       
+
 
         Flash::success('Product saved successfully.');
 

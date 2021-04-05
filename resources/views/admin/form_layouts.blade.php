@@ -844,7 +844,7 @@
                                                                        class="form-control"
                                                                        placeholder="Input with warning">
                                                                 <span class="fa fa-exclamation-triangle form-control-feedback"></span>
-                                                                <span class="help-block">Password mis-match</span>
+                                                                <span class="help-block">Password mismatch</span>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -857,7 +857,7 @@
                                                                        class="form-control"
                                                                        placeholder="Input with error">
                                                                 <span class="fa fa-times form-control-feedback"></span>
-                                                                <span class="help-block">Email mis-match</span>
+                                                                <span class="help-block">Email mismatch</span>
                                                             </div>
                                                         </div>
                                                     </div>

@@ -34,8 +34,11 @@ class ServiceOrders extends Model
         'next_handler_role',
         'next_handler_role_id',
         'created_by',
+        'serviceordertypes',
         'activated_by',
-        'activation_date'
+        'activation_date',
+        'service_creation_date',
+        'req_status'
     ];
 
     /**
@@ -50,6 +53,7 @@ class ServiceOrders extends Model
         'payment_mode' => 'string',
         'service_status' => 'string',
         'grand_total' => 'string',
+        'serviceordertypes' => 'string',
         'sub_total' => 'string',
         'tax_amount' => 'string',
         'tax_value' => 'string',
@@ -62,6 +66,7 @@ class ServiceOrders extends Model
         'next_handler_role_id' => 'string',
         'created_by' => 'string',
         'activated_by' => 'string',
+        'req_status' => 'string',
         'activation_date' => 'string'
     ];
 

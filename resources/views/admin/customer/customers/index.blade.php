@@ -8,7 +8,6 @@ Customers
 {{-- Page content --}}
 @section('content')
 <section class="content-header">
-    <h1>Customers</h1>
     <ol class="breadcrumb">
         <li>
             <a href="{{ route('admin.dashboard') }}"> <i class="livicon" data-name="home" data-size="16" data-color="#000"></i>

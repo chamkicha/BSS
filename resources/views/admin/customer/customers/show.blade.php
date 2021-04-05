@@ -7,7 +7,6 @@ Customer
 
 @section('content')
 <section class="content-header">
-    <h1>Customer View</h1>
     <ol class="breadcrumb">
         <li>
             <a href="{{ route('admin.dashboard') }}"> <i class="livicon" data-name="home" data-size="16" data-color="#000"></i>

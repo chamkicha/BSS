@@ -24,7 +24,14 @@
             <td>{!! $serviceInvoice->payment_amount !!}</td>
             <td>{!! $serviceInvoice->payment_status !!}</td>
             <td>{!! $serviceInvoice->invoice_number !!}</td>
-            <td>{!! $serviceInvoice->service_name !!}</td>
+            <td>
+            
+            
+                @foreach((array) $serviceInvoice->service_name as $value)
+                {{$value}},
+                @endforeach
+                
+                </td>
             <td>{!! $serviceInvoice->cusromer_name !!}</td>
             <td>
                  <a href="{{ route('admin.serviceInvoice.serviceInvoices.show', collect($serviceInvoice)->first() ) }}">

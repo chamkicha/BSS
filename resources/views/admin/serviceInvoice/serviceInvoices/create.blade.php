@@ -8,7 +8,7 @@ ServiceInvoice
 @section('content')
 @include('common.errors')
 <section class="content-header">
-    <h1>ServiceInvoice</h1>
+    <h1>Service Invoice</h1>
     <ol class="breadcrumb">
         <li>
             <a href="{{ route('admin.dashboard') }}"> <i class="livicon" data-name="home" data-size="16" data-color="#000"></i>

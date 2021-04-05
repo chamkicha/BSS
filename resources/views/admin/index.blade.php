@@ -2,7 +2,7 @@
 
 {{-- Page title --}}
 @section('title')
-Josh Admin Template
+NIDC
 @parent
 @stop
 
@@ -44,9 +44,9 @@ Josh Admin Template
                         <div class="col-12 float-left nopadmar">
                             <div class="row">
                                 <div class="square_box col-6 text-right">
-                                    <span>Views Today</span>
+                                    <span>Total Client</span>
 
-                                    <div class="number" id="myTargetElement1"></div>
+                                    <div class="number">{{servicestatus()}}</div>
                                 </div>
                                 <div class="col-6">
                                     <i class="livicon  float-right" data-name="eye-open" data-l="true" data-c="#fff"
@@ -56,11 +56,11 @@ Josh Admin Template
                             </div>
                             <div class="row">
                                 <div class="col-6">
-                                    <small class="stat-label">Last Week</small>
+                                    <small class="stat-label">Active</small>
                                     <h4 id="myTargetElement1.1"></h4>
                                 </div>
                                 <div class="col-6 text-right">
-                                    <small class="stat-label">Last Month</small>
+                                    <small class="stat-label">Inactive</small>
                                     <h4 id="myTargetElement1.2"></h4>
                                 </div>
                             </div>
@@ -77,9 +77,9 @@ Josh Admin Template
                         <div class="col-12 float-left nopadmar">
                             <div class="row">
                                 <div class="square_box col-6 float-left">
-                                    <span>Today's Sales</span>
+                                    <span>Service Orders</span>
 
-                                    <div class="number" id="myTargetElement2"></div>
+                                    <div class="number">{{serviceorder()}}</div>
                                 </div>
                                 <div class="col-6">
                                     <i class="livicon float-right" data-name="piggybank" data-l="true" data-c="#fff"
@@ -89,11 +89,11 @@ Josh Admin Template
                             </div>
                             <div class="row">
                                 <div class="col-6">
-                                    <small class="stat-label">Last Week</small>
+                                    <small class="stat-label">Active</small>
                                     <h4 id="myTargetElement2.1"></h4>
                                 </div>
                                 <div class="col-6 text-right">
-                                    <small class="stat-label">Last Month</small>
+                                    <small class="stat-label">Inactive</small>
                                     <h4 id="myTargetElement2.2"></h4>
                                 </div>
                             </div>
@@ -110,7 +110,7 @@ Josh Admin Template
                         <div class="col-12 float-left nopadmar">
                             <div class="row">
                                 <div class="square_box col-6 float-left">
-                                    <span>Subscribers</span>
+                                    <span>Total Income</span>
 
                                     <div class="number" id="myTargetElement3"></div>
                                 </div>
@@ -121,11 +121,11 @@ Josh Admin Template
                             </div>
                             <div class="row">
                                 <div class="col-6">
-                                    <small class="stat-label">Last Week</small>
+                                    <small class="stat-label">Paid</small>
                                     <h4 id="myTargetElement3.1"></h4>
                                 </div>
                                 <div class="col-6 text-right">
-                                    <small class="stat-label">Last Month</small>
+                                    <small class="stat-label">Dept</small>
                                     <h4 id="myTargetElement3.2"></h4>
                                 </div>
                             </div>
@@ -596,3 +596,25 @@ Josh Admin Template
 {{--<script src="{{ asset('js/pages/jquery-ui.min.js') }}" type="text/javascript"></script>--}}
 
 @stop
+
+
+<?php
+use App\Models\Servicestatus\Servicestatus;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
+use App\Models\User;
+
+    function servicestatus()
+    {      
+        $customers = DB::table('customers')->count();
+        return $customers;
+    } 
+
+    function serviceorder()
+    {      
+        $serviceorder = DB::table('serviceorderss')->count();
+        return $serviceorder;
+    } 
+
+
+?>

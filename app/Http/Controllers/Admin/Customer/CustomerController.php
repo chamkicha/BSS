@@ -14,6 +14,7 @@ use Flash;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
 use App\Models\Customertype\CustomerType;
+use DB;
 
 class CustomerController extends InfyOmBaseController
 {
@@ -60,6 +61,7 @@ class CustomerController extends InfyOmBaseController
      */
     public function store(CreateCustomerRequest $request)
     {
+        //dd($request);
         $input = $request->all();
 
         $customer = $this->customerRepository->create($input);
@@ -79,6 +81,38 @@ class CustomerController extends InfyOmBaseController
     public function show($id)
     {
         $customer = $this->customerRepository->findWithoutFail($id);
+        $serviceorder_details = DB::table('serviceorderss')->where('customer_no', $customer->id)->get();
+        //dd( $comments_details);
+
+
+        $customer = array(
+            "id" => $customer->id,
+            "customername" => $customer->customername,
+            "customer_no" => $customer->customer_no,
+            "t_i_n_number" => $customer->t_i_n_number,
+            "serviceorder_details" => $serviceorder_details,
+            "v_a_t_registration_number" => $customer->v_a_t_registration_number,
+            "business_license_number" => $customer->business_license_number,
+            "contact_person" => $customer->contact_person,
+            "position_held" => $customer->position_held,
+            "contact_telephone" => $customer->contact_telephone,
+            "office_telephone" => $customer->office_telephone,
+            "email" => $customer->email,
+            "postal_address" => $customer->postal_address,
+            "region" => $customer->region,
+            "district" => $customer->district,
+            "fax" => $customer->fax,
+            "customer_type" => $customer->customer_type,
+            "created_at" => $customer->created_at,
+            "updated_at" => $customer->updated_at,
+            "deleted_at" => $customer->deleted_at,
+            "country" => $customer->country,
+
+
+
+
+        );
+       // dd($customer);
 
         if (empty($customer)) {
             Flash::error('Customer not found');

@@ -8,15 +8,15 @@ Servicestatus
 @section('content')
 @include('common.errors')
 <section class="content-header">
-    <h1>Servicestatus</h1>
+    <h1>Service status</h1>
     <ol class="breadcrumb">
         <li>
             <a href="{{ route('admin.dashboard') }}"> <i class="livicon" data-name="home" data-size="16" data-color="#000"></i>
                 Dashboard
             </a>
         </li>
-        <li>Servicestatuses</li>
-        <li class="active">Create Servicestatus </li>
+        <li>Service statuses</li>
+        <li class="active">Create Service status </li>
     </ol>
 </section>
 <section class="content">

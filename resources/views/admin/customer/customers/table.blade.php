@@ -3,18 +3,11 @@
     <thead>
      <tr>
         <th>Customername</th>
+        <th>Customer Number</th>
         <th>T I N Number</th>
-        <th>V A T Registration Number</th>
-        <th>Business License Number</th>
-        <th>Contact Person</th>
-        <th>Position Held</th>
         <th>Contact Telephone</th>
-        <th>Office Telephone</th>
         <th>Email</th>
-        <th>Postal Address</th>
         <th>Region</th>
-        <th>District</th>
-        <th>Fax</th>
         <th>Customer Type</th>
         <th >Action</th>
      </tr>
@@ -23,18 +16,11 @@
     @foreach($customers as $customer)
         <tr>
             <td>{!! $customer->customername !!}</td>
+            <td>{!! $customer->customer_no !!}</td>
             <td>{!! $customer->t_i_n_number !!}</td>
-            <td>{!! $customer->v_a_t_registration_number !!}</td>
-            <td>{!! $customer->business_license_number !!}</td>
-            <td>{!! $customer->contact_person !!}</td>
-            <td>{!! $customer->position_held !!}</td>
             <td>{!! $customer->contact_telephone !!}</td>
-            <td>{!! $customer->office_telephone !!}</td>
             <td>{!! $customer->email !!}</td>
-            <td>{!! $customer->postal_address !!}</td>
             <td>{!! $customer->region !!}</td>
-            <td>{!! $customer->district !!}</td>
-            <td>{!! $customer->fax !!}</td>
             <td>{!! $customer->customer_type !!}</td>
             <td>
                  <a href="{{ route('admin.customer.customers.show', collect($customer)->first() ) }}">

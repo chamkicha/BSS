@@ -21,6 +21,9 @@ class Product extends Model
         'e_d',
         'price',
         'discount',
+        'grand_total',
+        'ed_amount',
+        'vat_amount',
         'description'
     ];
 
@@ -37,6 +40,10 @@ class Product extends Model
         'v_a_t(%)' => 'integer',
         'e_d(%)' => 'integer',
         'price(_t_z_s)' => 'integer',
+        'vat_amount' => 'integer',
+        'discount' => 'integer',
+        'ed_amount' => 'integer',
+        'grand_total' => 'integer',
         'discount(%)' => 'integer'
     ];
 

@@ -29,6 +29,19 @@
 
 </div>
 
+<!-- Invoice payment method Field -->
+<div class="form-group col-sm-12">
+    <input type="hidden" id="serviceordertypes" name="serviceordertypes" class="form-control" value="{{$serviceordertypes}}" >
+
+</div>
+
+<!-- Servide Orde number Field -->
+<div class="form-group col-sm-12">
+    <input type="hidden" id="service_order_no" name="service_order_no" class="form-control" value="{{$service_order_no}}" >
+
+</div>
+
+
 
 @endisset
 

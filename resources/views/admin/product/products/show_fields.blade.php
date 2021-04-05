@@ -35,29 +35,29 @@
 
 <!-- V A T(%) Field -->
 <div class="form-group">
-    {!! Form::label('v_a_t(%)', 'V A T(%):') !!}
-    <p>{!! $product->v_a_t(%) !!}</p>
+    {!! Form::label('v_a_t', 'V A T(%):') !!}
+    <p>{!! $product->v_a_t !!}</p>
     <hr>
 </div>
 
 <!-- E D(%) Field -->
 <div class="form-group">
-    {!! Form::label('e_d(%)', 'E D(%):') !!}
-    <p>{!! $product->e_d(%) !!}</p>
+    {!! Form::label('e_d', 'E D(%):') !!}
+    <p>{!! $product->e_d !!}</p>
     <hr>
 </div>
 
 <!-- Price( T Z S) Field -->
 <div class="form-group">
-    {!! Form::label('price(_t_z_s)', 'Price( T Z S):') !!}
-    <p>{!! $product->price(_t_z_s) !!}</p>
+    {!! Form::label('price', 'Price( T Z S):') !!}
+    <p>{!! $product->price !!}</p>
     <hr>
 </div>
 
 <!-- Discount(%) Field -->
 <div class="form-group">
-    {!! Form::label('discount(%)', 'Discount(%):') !!}
-    <p>{!! $product->discount(%) !!}</p>
+    {!! Form::label('discount', 'Discount(%):') !!}
+    <p>{!! $product->discount !!}</p>
     <hr>
 </div>
 

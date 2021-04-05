@@ -31,7 +31,7 @@
 
 </head>
 
-<body style="background-image: url('images/bodybg.jpg'); background-attachment: fixed;  background-size: 100% 100%;">
+<body style="background-image: url('{{ asset('images/bodybg.png')}}'); background-attachment: fixed;  background-size: 100%;">
     <div class="container">
         <div class="row my-3">
             <div class="col-12 mx-auto">
@@ -40,10 +40,15 @@
                 </div>
             </div>
         </div>
-        <div class="row vertical-offset-100">
+        <div class="row">
             <!-- Notifications -->
-            <div class="col-sm-6 col-sm-offset-3  col-md-5 col-md-offset-4 col-lg-4 col-lg-offset-4 mx-auto">
+            
+            <div class="col-sm-6">
+            
+            </div>
 
+            <div class="col-sm-6 col-sm-offset-3  col-md-5 col-md-offset-4 col-lg-4 col-lg-offset-4 mx-auto" style="margin-top: 80px;">
+              
                 <div id="container_demo">
                     <a class="hiddenanchor" id="toregister"></a>
                     <a class="hiddenanchor" id="tologin"></a>
@@ -90,13 +95,6 @@
                                 </div>
                                 <p class="login button">
                                     <input type="submit" value="Log In" class="btn btn-success btn-block" />
-                                </p>
-                                <p class="change_link">
-                                    <a href="#toforgot">
-                                        <button type="button" class="btn btn-warning btn-sm">Forgot
-                                            password
-                                        </button>
-                                    </a>
                                 </p>
                             </form>
                         </div>
@@ -206,7 +204,7 @@
                                 <h3 class="black_bg my-3">
                                     <img src="{{ asset('img/logo.png') }}" alt="josh logo"><br>Forgot Password</h3>
                                 <p style="font-size:14px !important;">
-                                    Enter your email address below and we'll send a special reset password link to your
+                                    Enter your email address below and well send a special reset password link to your
                                     inbox.
                                 </p>
 

@@ -103,105 +103,146 @@ function serviceorder()
 
 ?>
 
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <form class="form-horizontal">
+
+                                                     <!-- Customer Name Field -->
+                                                    <div class="form-group has-success">
+                                                        <div class="row">
+                                                            <label class="col-md-3 control-label"
+                                                                   for="form2inputSuccess">Customer Name</label>
+                                                            <div class="col-md-9">    
+                                                            
+                                                                <select name="customer_name" id="select21" class="form-control select2">
+                                                                        
+                                                                        <option value="">Select Customer Name</option>
+                                                                        @foreach($customer_list as $customer)
+                                                                        <option value="{{ $customer->customername}}">{{ $customer->customername }}</option>
+                                                                        @endforeach
+                                                                    </optgroup>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    
+                                                    <!-- Payment Mode Field -->
+                                                    <div class="form-group has-success">
+                                                        <div class="row">
+                                                            <label class="col-md-3 control-label"
+                                                                   for="form2inputsuccess">Payment Mode</label>
+                                                            <div class="col-md-9">
+                                                                
+                                                                    <select name="payment_mode" id="select21" class="form-control select2">
+                                                                            
+                                                                            <option value="">Select Payment Mode</option>
+                                                                            @foreach($paymentmode_list as $paymentmode)
+                                                                            <option value="{{ $paymentmode->payment_mode_name}}">{{ $paymentmode->payment_mode_name }}</option>
+                                                                            @endforeach
+                                                                        </optgroup>
+                                                                    </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- Service Order Type -->
+                                                    <div class="form-group has-success">
+                                                        <div class="row">
+                                                            <label class="col-md-3 control-label" for="form2inputfeedback">Service Order Type</label>
+                                                            <div class="col-md-9">
+                                                                <select name="serviceordertypes" id="select21" class="form-control select2">
+                                                                        
+                                                                        <option value="">Select Service Order Type</option>
+                                                                        @foreach($service_order_type as $serviceordertype)
+                                                                        <option value="{{ $serviceordertype->service_order_type_name}}">{{ $serviceordertype->service_order_type_name }}</option>
+                                                                        @endforeach
+                                                                    </optgroup>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+
+
+                                            <div class="col-md-6">
+
+                                                <!-- Service Creation Date Field -->
+                                                    <div class="form-group has-success has-feedback">
+                                                        <div class="row">
+                                                            <label class="col-md-3 control-label" for="inputSuccess1">Service Creation Date:</label>
+                                                            <div class="col-md-9">
+                                                                <div class="form-group col-sm-12">
+                                                                    {!! Form::date('service_creation_date', null, ['class' => 'form-control']) !!}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+                                                <!-- Service Ending Date Field -->
+                                                    <div class="form-group has-success has-feedback">
+                                                        <div class="row">
+                                                            <label class="col-md-3 control-label" for="inputSuccess1">Service Ending Date:</label>
+                                                            <div class="col-md-9">
+                                                                <div class="form-group col-sm-12">
+                                                                    {!! Form::date('service_ending_date', null, ['class' => 'form-control']) !!}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+                                                <!-- Service Descriptions Field -->
+                                                    <div class="form-group has-success has-feedback">
+                                                        <div class="row">
+                                                            <label class="col-md-3 control-label" for="inputSuccess1">Service Descriptions:</label>
+                                                            <div class="col-md-9">
+                                                                <div class="form-group col-sm-12">
+                                                                    {!! Form::text('service_descriptions', null, ['class' => 'form-control']) !!}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                            </div>
+                                        </div>
+                                    
 
 
 
-<!-- Order I D Field -->
-<div class="form-group col-sm-12">
-    
-    <input type="hidden" id="order_i_d"name="order_i_d" class="form-control" value = "{{serviceorder()}}">
-    
-</div>
-
-<!-- Customer Name Field -->
-<div class="form-group col-sm-12">
-
-    <label for="select21" class="control-label">
-        Customer:
-    </label>
-    <select name="customer_name" id="select21" class="form-control select2">
-            
-            <option value="">Select Customer Name</option>
-            @foreach($customer_list as $customer)
-            <option value="{{ $customer->customername}}">{{ $customer->customername }}</option>
-            @endforeach
-        </optgroup>
-    </select>
-</div>
 
 
-<!-- Payment Mode Field -->
-<div class="form-group col-sm-12">
-    <label for="select21" class="control-label">
-        Payment mode:
-    </label>
-    <select name="payment_mode" id="select21" class="form-control select2">
-            
-            <option value="">Select Payment Mode</option>
-            @foreach($paymentmode_list as $paymentmode)
-            <option value="{{ $paymentmode->payment_mode_name}}">{{ $paymentmode->payment_mode_name }}</option>
-            @endforeach
-        </optgroup>
-    </select>
-</div>
-
-<!-- Service Status Field -->
-<div class="form-group col-sm-12">
-    
-        <input type="hidden" id="service_status"name="service_status" class="form-control" value = "{{servicestatus()}}">
-    
-</div>
-
-<!-- Service Starting Date Field -->
-<div class="form-group col-sm-12">
-    {!! Form::label('service_starting_date', 'Service Starting Date:') !!}
-    {!! Form::date('service_starting_date', null, ['class' => 'form-control']) !!}
-</div>
-
-<!-- Service Ending Date Field -->
-<div class="form-group col-sm-12">
-    {!! Form::label('service_ending_date', 'Service Ending Date:') !!}
-    {!! Form::date('service_ending_date', null, ['class' => 'form-control']) !!}
-</div>
-
-<!-- Service Descriptions Field -->
-<div class="form-group col-sm-12">
-    {!! Form::label('service_descriptions', 'Service Descriptions:') !!}
-    {!! Form::text('service_descriptions', null, ['class' => 'form-control']) !!}
-</div>
 
 <!-- Service Lists Field -->
-<div class="form-group col-sm-12">
-    @foreach($product_list as $product_lists)
-    <label class="checkbox-inline">
-    <input type="checkbox" id="service_lists" name="service_lists[]" value="{{$product_lists->product_name}}"> {{$product_lists->product_name}}
-    </label>
-    @endforeach
-</div>
 
-<!-- TAX Field -->
-<div class="form-group col-sm-12">
-    {!! Form::label('tax_amount', 'VAT %:') !!}
-    {!! Form::text('tax_amount', null, ['class' => 'form-control']) !!}
-</div>
-
-<!-- ED AMOUNT -->
-<div class="form-group col-sm-12">
-    {!! Form::label('ed_amount', 'ED %:') !!}
-    {!! Form::text('ed_amount', null, ['class' => 'form-control']) !!}
-</div>
-
-<!-- DISCOUNT -->
-<div class="form-group col-sm-12">
-    {!! Form::label('discount', 'DISCOUNT:') !!}
-    {!! Form::text('discount', null, ['class' => 'form-control']) !!}
-</div>
-
+    <div class="form-group striped-col">
+        <div class="row">
+            <div class="col-md-9">
+            
+            <label class="control-label has-success has-feedback">Product List</label>
+                @foreach($product_list as $product_lists)
+                    <div class="checkbox mar-left5">
+                            <label for="form-checkbox1">
+                                <input type="checkbox" id="service_lists" name="service_lists[]" value="{{$product_lists->product_name}}" class="square-blue"> {{$product_lists->product_name}}</label>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    </div>
 
 <!-- Next Handler Field -->
 <div class="form-group col-sm-12">
            
     <input type="hidden" id="next_handler" name="next_handler" class="form-control" value = "{{nexthandler()}}">
+    
+</div>
+
+<!-- req_status Field -->
+<div class="form-group col-sm-12">
+           
+    <input type="hidden" id="req_status" name="req_status" class="form-control" value = "created">
     
 </div>
 
@@ -238,6 +279,21 @@ function serviceorder()
 </div>
 
 
+<!-- Order I D Field -->
+<div class="form-group col-sm-12">
+    
+    <input type="hidden" id="order_i_d"name="order_i_d" class="form-control" value = "{{serviceorder()}}">
+    
+</div>
+
+
+
+<!-- Service Status Field -->
+<div class="form-group col-sm-12">
+    
+        <input type="hidden" id="service_status"name="service_status" class="form-control" value = "{{servicestatus()}}">
+    
+</div>
 
 
 @section('footer_scripts')
@@ -263,3 +319,5 @@ function serviceorder()
 <script language="javascript" type="text/javascript" src="{{ asset('js/pages/custom_elements.js') }}"></script>
 
 @stop
+
+

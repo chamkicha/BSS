@@ -3,7 +3,7 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>404 page | Josh Admin Template</title>
+    <title>404 page | NIDC</title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <!-- global level js-->
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />

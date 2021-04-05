@@ -361,3 +361,33 @@ Route::get('invoicwePayments/{invoicwePayments}', ['as'=> 'invoicwePayments.show
 Route::get('invoicwePayments/{invoicwePayments}/edit', ['as'=> 'invoicwePayments.edit', 'uses' => 'Invoicwepayment\InvoicwePaymentController@edit']);
 
 });
+
+
+Route::group(array('prefix' => 'admin/serviceOrderType/','namespace' => 'Admin','middleware' => 'admin','as'=>'admin.serviceOrderType.'), function () {
+
+Route::get('serviceOrderTypes', ['as'=> 'serviceOrderTypes.index', 'uses' => 'Serviceordertype\ServiceOrderTypeController@index']);
+Route::post('serviceOrderTypes', ['as'=> 'serviceOrderTypes.store', 'uses' => 'Serviceordertype\ServiceOrderTypeController@store']);
+Route::get('serviceOrderTypes/create', ['as'=> 'serviceOrderTypes.create', 'uses' => 'Serviceordertype\ServiceOrderTypeController@create']);
+Route::put('serviceOrderTypes/{serviceOrderTypes}', ['as'=> 'serviceOrderTypes.update', 'uses' => 'Serviceordertype\ServiceOrderTypeController@update']);
+Route::patch('serviceOrderTypes/{serviceOrderTypes}', ['as'=> 'serviceOrderTypes.update', 'uses' => 'Serviceordertype\ServiceOrderTypeController@update']);
+Route::get('serviceOrderTypes/{id}/delete', ['as' => 'serviceOrderTypes.delete', 'uses' => 'Serviceordertype\ServiceOrderTypeController@getDelete']);
+Route::get('serviceOrderTypes/{id}/confirm-delete', ['as' => 'serviceOrderTypes.confirm-delete', 'uses' => 'Serviceordertype\ServiceOrderTypeController@getModalDelete']);
+Route::get('serviceOrderTypes/{serviceOrderTypes}', ['as'=> 'serviceOrderTypes.show', 'uses' => 'Serviceordertype\ServiceOrderTypeController@show']);
+Route::get('serviceOrderTypes/{serviceOrderTypes}/edit', ['as'=> 'serviceOrderTypes.edit', 'uses' => 'Serviceordertype\ServiceOrderTypeController@edit']);
+
+});
+
+
+Route::group(array('prefix' => 'admin/comment/','namespace' => 'Admin','middleware' => 'admin','as'=>'admin.comment.'), function () {
+
+Route::get('comments', ['as'=> 'comments.index', 'uses' => 'Comment\CommentController@index']);
+Route::post('comments', ['as'=> 'comments.store', 'uses' => 'Comment\CommentController@store']);
+Route::get('comments/create', ['as'=> 'comments.create', 'uses' => 'Comment\CommentController@create']);
+Route::put('comments/{comments}', ['as'=> 'comments.update', 'uses' => 'Comment\CommentController@update']);
+Route::patch('comments/{comments}', ['as'=> 'comments.update', 'uses' => 'Comment\CommentController@update']);
+Route::get('comments/{id}/delete', ['as' => 'comments.delete', 'uses' => 'Comment\CommentController@getDelete']);
+Route::get('comments/{id}/confirm-delete', ['as' => 'comments.confirm-delete', 'uses' => 'Comment\CommentController@getModalDelete']);
+Route::get('comments/{comments}', ['as'=> 'comments.show', 'uses' => 'Comment\CommentController@show']);
+Route::get('comments/{comments}/edit', ['as'=> 'comments.edit', 'uses' => 'Comment\CommentController@edit']);
+
+});
