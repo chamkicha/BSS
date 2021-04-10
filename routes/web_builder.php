@@ -391,3 +391,48 @@ Route::get('comments/{comments}', ['as'=> 'comments.show', 'uses' => 'Comment\Co
 Route::get('comments/{comments}/edit', ['as'=> 'comments.edit', 'uses' => 'Comment\CommentController@edit']);
 
 });
+
+
+Route::group(array('prefix' => 'admin/creditNote/','namespace' => 'Admin','middleware' => 'admin','as'=>'admin.creditNote.'), function () {
+
+Route::get('creditNotes', ['as'=> 'creditNotes.index', 'uses' => 'Creditnote\CreditNoteController@index']);
+Route::post('creditNotes', ['as'=> 'creditNotes.store', 'uses' => 'Creditnote\CreditNoteController@store']);
+Route::get('creditNotes/create', ['as'=> 'creditNotes.create', 'uses' => 'Creditnote\CreditNoteController@create']);
+Route::put('creditNotes/{creditNotes}', ['as'=> 'creditNotes.update', 'uses' => 'Creditnote\CreditNoteController@update']);
+Route::patch('creditNotes/{creditNotes}', ['as'=> 'creditNotes.update', 'uses' => 'Creditnote\CreditNoteController@update']);
+Route::get('creditNotes/{id}/delete', ['as' => 'creditNotes.delete', 'uses' => 'Creditnote\CreditNoteController@getDelete']);
+Route::get('creditNotes/{id}/confirm-delete', ['as' => 'creditNotes.confirm-delete', 'uses' => 'Creditnote\CreditNoteController@getModalDelete']);
+Route::get('creditNotes/{creditNotes}', ['as'=> 'creditNotes.show', 'uses' => 'Creditnote\CreditNoteController@show']);
+Route::get('creditNotes/{creditNotes}/edit', ['as'=> 'creditNotes.edit', 'uses' => 'Creditnote\CreditNoteController@edit']);
+
+});
+
+
+Route::group(array('prefix' => 'admin/agingAnalysisReport/','namespace' => 'Admin','middleware' => 'admin','as'=>'admin.agingAnalysisReport.'), function () {
+
+Route::get('agingAnalysisReports', ['as'=> 'agingAnalysisReports.index', 'uses' => 'Aginganalysisreport\AgingAnalysisReportController@index']);
+Route::post('agingAnalysisReports', ['as'=> 'agingAnalysisReports.store', 'uses' => 'Aginganalysisreport\AgingAnalysisReportController@store']);
+Route::get('agingAnalysisReports/create', ['as'=> 'agingAnalysisReports.create', 'uses' => 'Aginganalysisreport\AgingAnalysisReportController@create']);
+Route::put('agingAnalysisReports/{agingAnalysisReports}', ['as'=> 'agingAnalysisReports.update', 'uses' => 'Aginganalysisreport\AgingAnalysisReportController@update']);
+Route::patch('agingAnalysisReports/{agingAnalysisReports}', ['as'=> 'agingAnalysisReports.update', 'uses' => 'Aginganalysisreport\AgingAnalysisReportController@update']);
+Route::get('agingAnalysisReports/{id}/delete', ['as' => 'agingAnalysisReports.delete', 'uses' => 'Aginganalysisreport\AgingAnalysisReportController@getDelete']);
+Route::get('agingAnalysisReports/{id}/confirm-delete', ['as' => 'agingAnalysisReports.confirm-delete', 'uses' => 'Aginganalysisreport\AgingAnalysisReportController@getModalDelete']);
+Route::get('agingAnalysisReports/{agingAnalysisReports}', ['as'=> 'agingAnalysisReports.show', 'uses' => 'Aginganalysisreport\AgingAnalysisReportController@show']);
+Route::get('agingAnalysisReports/{agingAnalysisReports}/edit', ['as'=> 'agingAnalysisReports.edit', 'uses' => 'Aginganalysisreport\AgingAnalysisReportController@edit']);
+
+});
+
+
+Route::group(array('prefix' => 'admin/revenuePerCustomerReport/','namespace' => 'Admin','middleware' => 'admin','as'=>'admin.revenuePerCustomerReport.'), function () {
+
+Route::get('revenuePerCustomerReports', ['as'=> 'revenuePerCustomerReports.index', 'uses' => 'Revenuepercustomerreport\RevenuePerCustomerReportController@index']);
+Route::post('revenuePerCustomerReports', ['as'=> 'revenuePerCustomerReports.store', 'uses' => 'Revenuepercustomerreport\RevenuePerCustomerReportController@store']);
+Route::get('revenuePerCustomerReports/create', ['as'=> 'revenuePerCustomerReports.create', 'uses' => 'Revenuepercustomerreport\RevenuePerCustomerReportController@create']);
+Route::put('revenuePerCustomerReports/{revenuePerCustomerReports}', ['as'=> 'revenuePerCustomerReports.update', 'uses' => 'Revenuepercustomerreport\RevenuePerCustomerReportController@update']);
+Route::patch('revenuePerCustomerReports/{revenuePerCustomerReports}', ['as'=> 'revenuePerCustomerReports.update', 'uses' => 'Revenuepercustomerreport\RevenuePerCustomerReportController@update']);
+Route::get('revenuePerCustomerReports/{id}/delete', ['as' => 'revenuePerCustomerReports.delete', 'uses' => 'Revenuepercustomerreport\RevenuePerCustomerReportController@getDelete']);
+Route::get('revenuePerCustomerReports/{id}/confirm-delete', ['as' => 'revenuePerCustomerReports.confirm-delete', 'uses' => 'Revenuepercustomerreport\RevenuePerCustomerReportController@getModalDelete']);
+Route::get('revenuePerCustomerReports/{revenuePerCustomerReports}', ['as'=> 'revenuePerCustomerReports.show', 'uses' => 'Revenuepercustomerreport\RevenuePerCustomerReportController@show']);
+Route::get('revenuePerCustomerReports/{revenuePerCustomerReports}/edit', ['as'=> 'revenuePerCustomerReports.edit', 'uses' => 'Revenuepercustomerreport\RevenuePerCustomerReportController@edit']);
+
+});

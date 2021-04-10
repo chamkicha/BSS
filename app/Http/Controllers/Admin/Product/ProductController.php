@@ -64,6 +64,16 @@ class ProductController extends InfyOmBaseController
      */
     public function store(CreateProductRequest $request)
     {
+
+        $this->validate($request, [
+            'product_name'  => ['required', 'unique:products,product_name'],
+            'product_unit' => 'required',
+            'product_type' => 'required',
+            'v_a_t' => 'required',
+            'price' => 'required',
+        ]);
+
+
         $input = $request->all();
 
         // tax amount

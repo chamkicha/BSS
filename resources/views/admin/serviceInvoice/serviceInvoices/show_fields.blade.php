@@ -35,7 +35,7 @@
                             {{--  MAIN CONTENT  BEGIN  --}}
                             <div style="padding-left: 60px; padding-right: 60px;">
                             <div class="text-center" style="padding-top: 70px;">
-                            <p><strong>TANZANIA TELECOMMUNICSTIONS CORPORATION </strong></p>
+                            <p><strong>TANZANIA TELECOMMUNICATIONS CORPORATION </strong></p>
                             <p><strong>National Internet Data Center</strong></p>
                              </div>  
 
@@ -94,7 +94,7 @@
                                     </div>
                                     <div class="col-md-4 col-4 col-lg-4" style="padding-right:0">
                                         <strong>TIN: 100-102-927</strong><br>
-                                        <strong>VRN: 10-000002 S</strong><br><br>
+                                        <strong>VRN: 10-000002-S</strong><br><br>
                 
                                     <table class="table table-bordered table-hover">
                                         <thead>

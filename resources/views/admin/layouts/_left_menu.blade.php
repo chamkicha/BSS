@@ -33,7 +33,7 @@
 
     
 
-    <li {!! ( Request::is('admin/serviceBilling/serviceBillings*') || Request::is('admin/invoicwePayment/invoicwePayments*') || Request::is('admin/serviceInvoice/serviceInvoices*') || Request::is('admin/paymentAndDue/paymentAndDues*') ? 'class="active"' : '' ) !!}>
+    <li {!! ( Request::is('admin/serviceBilling/serviceBillings*') || Request::is('admin/creditNote/creditNotes*') || Request::is('admin/invoicwePayment/invoicwePayments*') || Request::is('admin/serviceInvoice/serviceInvoices*') || Request::is('admin/paymentAndDue/paymentAndDues*') ? 'class="active"' : '' ) !!}>
         <a href="#">
             <i class="livicon" data-name="bank" data-size="18" data-c="#418BCA" data-hc="#418BCA" data-loop="true"></i>
             <span class="title">BILLING</span>
@@ -70,6 +70,17 @@
                         Payment and Dues
                 </a>
             </li>
+
+            
+
+            <li class="{{ Request::is('admin/creditNote/creditNotes*') ? 'active' : '' }}">
+                <a href="{!! route('admin.creditNote.creditNotes.index') !!}">
+                <i class="fa fa-angle-double-right"></i>
+                        CreditNotes
+                </a>
+            </li>
+ 
+
 
         </ul>
     </li>

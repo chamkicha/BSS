@@ -1,3 +1,18 @@
+<?php
+
+function activated_by()
+{      
+      $user = Sentinel::getUser()->first_name;
+    $user2 = Sentinel::getUser()->last_name;
+    $user3 =' ';
+    $user =$user.$user3.$user2;
+    return $user;
+} 
+
+?>
+
+
+
 <form action="{{ route('serviceapprove') }}" method = "post"><!-- form add -->
     {{ csrf_field() }}
 
@@ -105,6 +120,12 @@
                                 <td>{!! $serviceOrders['activation_date'] !!}</td>
                             </tr>
 
+                            <!-- activated_by Field -->
+                            <tr>
+                                <td>{!! Form::label('activated_by', 'Service Activated by:') !!}</td>
+                                <td>{!! $serviceOrders['activated_by'] !!}</td>
+                            </tr>
+
                             <!-- Service Ending Date Field -->
                             <tr>
                                 <td>{!! Form::label('service_ending_date', 'Service Ending Date:') !!}</td>
@@ -195,32 +216,69 @@
                             @endif
 
                             <br>
+                            <!-- files Date Field -->
+
+                            @if (Sentinel::inRole('commercial-manager') && $serviceOrders['next_handler_role_id']==='3' && $serviceOrders['prev_handler_role_id']==='6' )
+                                    
                             <div >
                                 <label class="c control-label" for="form-file-input">Activation Form</label>
                                 <div class=" pad-top20 ">
                                     <input type="file" id="activation_form" name="activation_form">
                                 </div>
                             </div>
+                            @endif
+
+                            @if (Sentinel::inRole('technical_department') && $serviceOrders['req_status']==='assigned_activate')
+                                    
+                            <div >
+                                <label class="c control-label" for="form-file-input">Activation Form</label>
+                                <div class=" pad-top20 ">
+                                    <input type="file" id="activation_form" name="activation_form">
+                                </div>
+                            </div>
+                            </br>
+
+                            <div>
+                                {!! Form::label('activation_date', 'Service Activation Date:') !!}
+                                {!! Form::date('activation_date', null, ['class' => 'form-control']) !!}
+                            </div>
+                            @endif
+                            
                             <br>
                             <div >
                                 <label for="status">Change Service Status:</label>
-                                <select id="req_status" name="req_status">
+                                <select id="req_status" name="req_status" onchange="change_type()">
                                 <option disabled selected value> -- select status -- </option>
                                 
                                 @if (Sentinel::inRole('commercial-manager') && $serviceOrders['next_handler_role_id']==='3' && $serviceOrders['prev_handler_role_id']===null)
                                     <option value="approved">Approve</option>
                                         <option value="cancelled">Cancel</option>
+
                                 @elseif (Sentinel::inRole('technical-manager') && $serviceOrders['next_handler_role_id']==='6' && $serviceOrders['prev_handler_role_id']==='3' && $serviceOrders['req_status']==='approved')
                                     <option value="approved">Approve</option>
-                                    <option value="assigned">Assign To</option>
+                                    <option value="assigned" >Assign To</option>
                                     <option value="cancelled">Cancel</option>
+
+                                    
+                                @elseif (Sentinel::inRole('technical_department') && $serviceOrders['req_status']==='assigned')
+                                    <option value="assigned_approved" >Approve</option>
+                                    <option value="cancelled">Cancel</option>
+
+
                                 @elseif (Sentinel::inRole('commercial-manager') && $serviceOrders['next_handler_role_id']==='3' && $serviceOrders['prev_handler_role_id']==='6' )
-                                    <option value="activated_req">Activate Request</option>
+                                    <option value="activated_req">Activate Service Request</option>
                                     <option value="cancelled">Cancel</option>
+                                    
                                 @elseif (Sentinel::inRole('technical-manager') && $serviceOrders['next_handler_role_id']==='6' && $serviceOrders['prev_handler_role_id']==='3' && $serviceOrders['req_status']==='activated_req')
                                     <option value="activate">Activate</option>
-                                    <option value="assigned">Assign To</option>
+                                    <option value="assigned_activate">Assign To</option>
                                     <option value="cancelled">Cancel</option>
+                                    
+                                @elseif (Sentinel::inRole('technical_department') && $serviceOrders['req_status']==='assigned_activate')
+                                    <option value="assigned_activated_req">Activate Service</option>
+                                    <option value="cancelled">Cancel</option>
+
+
                                 @elseif (Sentinel::inRole('user') && $request['next_handler']==='sales')
                                     <option value="delivered">Deliver</option>
                                     <option value="cancelled">Cancel</option>
@@ -232,8 +290,44 @@
                                     <option value="cancelled">Cancel</option>
                                 @endif
                                 </select>
+
+                                
                             </div>
                             <br>
+
+                            <div>
+                            
+                                @if (Sentinel::inRole('technical-manager') && $serviceOrders['next_handler_role_id']==='6' && $serviceOrders['prev_handler_role_id']==='3' && $serviceOrders['req_status']==='approved')
+                                    
+
+                                     {{--  commercial department user assign  --}}
+                                    <select  name="assigned_to" style="display: none" id="assigned_to">
+                                    <option disabled selected value> -- select User -- </option>
+                                        @foreach($serviceOrders['tech_user'] as $item)
+                                        <option value="{{$item->id}}">{{$item->first_name}}&nbsp;<span>{{$item->last_name}}</span></option>
+                                        @endforeach
+                                    </select>
+                                    @endif
+                            
+                            </div>
+
+                            
+
+                            <div>
+                            
+                                @if (Sentinel::inRole('technical-manager') && $serviceOrders['next_handler_role_id']==='6' && $serviceOrders['prev_handler_role_id']==='3' && $serviceOrders['req_status']==='activated_req')
+                                    
+
+                                     {{--  commercial department user assign  --}}
+                                    <select  name="assigned_to" style="display: none" id="assigned_to">
+                                    <option disabled selected value> -- select User -- </option>
+                                        @foreach($serviceOrders['tech_user'] as $item)
+                                        <option value="{{$item->id}}">{{$item->first_name}}&nbsp;<span>{{$item->last_name}}</span></option>
+                                        @endforeach
+                                    </select>
+                                    @endif
+                            
+                            </div>
 
 
 
@@ -340,6 +434,12 @@
 
 </div>
 
+<!-- activated by Field -->
+<div class="form-group col-sm-12">
+    <input type="hidden" id="activated_by" name="activated_by" class="form-control" value="{{activated_by()}}" >
+
+</div>
+
 
 
 
@@ -366,5 +466,22 @@
 
 @stop
 
+<script type="text/javascript">
+    function change_type() 
+    {
+        var selectBox = document.getElementById("req_status");
+        var selectedValue = selectBox.options[selectBox.selectedIndex].value;
+        if (selectedValue=="assigned")
+            {
+            $('#assigned_to').show();
+            }
+        else if (selectedValue=="assigned_activate"){
+            $('#assigned_to').show();
+            }
+        else {
+            $('#assigned_to').hide();
+            }
+    }
+</script>
 
 

@@ -60,8 +60,19 @@ class CustomerController extends InfyOmBaseController
      * @return Response
      */
     public function store(CreateCustomerRequest $request)
+
     {
         //dd($request);
+        $this->validate($request, [
+            'customername'  => ['required', 'unique:customers,customername'],
+            'v_a_t_registration_number' => 'required',
+            't_i_n_number' => 'required',
+            'contact_person' => 'required',
+            'contact_telephone' => 'required',
+            'office_telephone' => 'required',
+            'email' => 'required',
+            'customer_type' => 'required',
+        ]);
         $input = $request->all();
 
         $customer = $this->customerRepository->create($input);

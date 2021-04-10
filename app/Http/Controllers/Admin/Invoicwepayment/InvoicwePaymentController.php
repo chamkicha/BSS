@@ -13,6 +13,7 @@ use App\Models\Invoicwepayment\InvoicwePayment;
 use Flash;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
+use App\Models\Customer\Customer;
 use DB;
 
 class InvoicwePaymentController extends InfyOmBaseController
@@ -47,8 +48,10 @@ class InvoicwePaymentController extends InfyOmBaseController
      */
     public function create()
     {
+        $customer_list = Customer::get();
         $paymentmode_list = DB::table('paymenttypes')->get();
         return view('admin.invoicwePayment.invoicwePayments.create')
+        ->with('customer_list', $customer_list)
         ->with('paymentmode_list', $paymentmode_list);
     }
 

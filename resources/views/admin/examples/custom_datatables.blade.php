@@ -67,7 +67,7 @@ Custom Data Tables
                                 <div class="float-left">
                                        <div class="caption">
                                     <i class="livicon" data-name="camera" data-size="16" data-loop="true" data-c="#fff" data-hc="white"></i>
-                                    Data Range Table
+                                    Data Range Table test
                                 </div>
                                 </div>
                             </div>
@@ -96,8 +96,8 @@ Custom Data Tables
                                         <th>Age</th>
                                     </tr>
                                     </thead>
-                                    <tbody>
-                                    </tbody>
+                                <tbody>
+                                </tbody>
                                 </table>
                                 </div>
                             </div>
@@ -145,6 +145,16 @@ Custom Data Tables
                                     </tr>
                                     </thead>
                                     <tbody>
+                                        
+                                    @foreach($PaymentAndDue as $agingAnalysisReport)
+                                        <tr>
+                                            <td>{!! $agingAnalysisReport->customer_name !!}</td>
+                                            <td>{!! $agingAnalysisReport->customer_no !!}</td>
+                                            <td>{!! $agingAnalysisReport->balance !!}</td>
+                                            <td>moja
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                     </tbody>
                                 </table>
                                 </div>
@@ -179,11 +189,20 @@ Custom Data Tables
                                         <th>First Name</th>
                                         <th>Last Name</th>
                                         <th>User E-mail</th>
-                                        <th>Job</th>
-                                        <th>Age</th>
                                     </tr>
                                     </thead>
                                     <tbody>
+                                    
+                                    @foreach($PaymentAndDue as $agingAnalysisReport)
+                                        <tr>
+                                            <td>{!! $agingAnalysisReport->customer_name !!}</td>
+                                            <td>{!! $agingAnalysisReport->customer_no !!}</td>
+                                            <td>{!! $agingAnalysisReport->balance !!}</td>
+                                            <td>moja
+                                            </td>
+                                        </tr>
+                                    @endforeach
+
                                     </tbody>
                                 </table>
                                 </div>
@@ -392,9 +411,9 @@ Custom Data Tables
                     }
                 },
                 columns: [
-                    { data: 'id', name: 'id' },
-                    { data: 'firstname', name: 'firstname' },
-                    { data: 'lastname', name: 'lastname' },
+                    { data: 'customer_name', name: 'customer_name' },
+                    { data: 'customer_no', name: 'customer_no' },
+                    { data: 'balance', name: 'balance' },
                     { data: 'email', name: 'email' },
                     { data: 'job', name: 'job' },
                     { data: 'age', name: 'age' }
@@ -419,9 +438,9 @@ Custom Data Tables
                     }
                 },
                 columns: [
-                    { data: 'id', name: 'id' },
-                    { data: 'firstname', name: 'firstname' },
-                    { data: 'lastname', name: 'lastname' },
+                    { data: 'customer_name', name: 'customer_name' },
+                    { data: 'customer_no', name: 'customer_no' },
+                    { data: 'balance', name: 'balance' },
                     { data: 'email', name: 'email' },
                     { data: 'job', name: 'job' },
                     { data: 'age', name: 'age' }

@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Datatable;
 use Illuminate\Http\Request;
+use App\Models\Paymentanddue\PaymentAndDue;
 use Yajra\DataTables\DataTables;
+use DB;
 
 class CustomDataTablesController extends Controller
 {
@@ -15,13 +17,16 @@ class CustomDataTablesController extends Controller
      */
     public function index()
     {
-        $professions=Datatable::pluck('job', 'id');
+        //$professions=Datatable::pluck('job', 'id');
+        $professions=DB::table('customers')->pluck('customername', 'customer_type');
         $professions['all']='Select All';
+        //dd($professions);
+        $PaymentAndDue =PaymentAndDue::all();   // We can pass max count for slider
 
         $max_count =Datatable::all()->count();   // We can pass max count for slider
         $max_id =Datatable::pluck('id')->max();
         $min_id =Datatable::pluck('id')->min();
-        return view('admin.examples.custom_datatables', compact('professions', 'max_count', 'max_id', 'min_id'));
+        return view('admin.examples.custom_datatables', compact('professions', 'max_count', 'max_id', 'min_id','PaymentAndDue'));
     }
 
     public function sliderData(Request $request)
@@ -37,25 +42,26 @@ class CustomDataTablesController extends Controller
     }
     public function radioData(Request $request)
     {
+        dd($request);
         if ($request->ageRadio!=null && $request->ageRadio !='all') {
             if ($request->ageRadio < 100) {
-                $tables = Datatable::where('age', '<=', $request->ageRadio)->get(['id', 'firstname', 'lastname', 'email','job','age']);
+                $tables = PaymentAndDue::where('age', '<=', $request->ageRadio)->get(['customer_name', 'customer_no', 'balance']);
             } else {
-                $tables = Datatable::where('age', '>', 50)->get(['id', 'firstname', 'lastname', 'email','job','age']);
+                $tables = PaymentAndDue::where('age', '>', 200)->get(['customer_name', 'customer_no', 'balance']);
             }
         } else {
-            $tables = Datatable::get(['id', 'firstname', 'lastname', 'email', 'job', 'age']);
+            $tables = PaymentAndDue::get(['customer_name', 'customer_no', 'balance']);
         }
 
-        return Datatables::of($tables)
+        return PaymentAndDue::of($tables)
             ->make(true);
     }
     public function selectData(Request $request)
     {
-        if ($request->professionSelect != null && $request->professionSelect != "all") {
-            $tables = Datatable::where('id', $request->professionSelect);
+        if ($request->professionSelect == null && $request->professionSelect != "all") {
+            $tables = PaymentAndDue::where('id', $request->professionSelect);
         } else {
-            $tables = Datatable::get(['id', 'firstname', 'lastname', 'email', 'job', 'age']);
+            $tables = PaymentAndDue::get(['customer_name', 'customer_no', 'balance']);
         }
         return DataTables::of($tables)
             ->make(true);

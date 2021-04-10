@@ -76,8 +76,18 @@ class ServiceOrdersController extends InfyOmBaseController
     {      
         //dd($request);    
         
+        $this->validate($request, [
+            'customer_name'  => 'required',
+            'payment_mode' => 'required',
+            'serviceordertypes' => 'required',
+            'service_creation_date' => 'required',
+            'service_ending_date' => 'required',
+            'service_lists' => 'required',
+        ]);
+        
         $input = $request->all();
         $sub_total1 = $request->service_lists;
+        
         
         $sub_total2 = DB::table('products')->whereIn('product_name', $sub_total1)
                   ->sum('grand_total');
@@ -153,8 +163,13 @@ class ServiceOrdersController extends InfyOmBaseController
         $service_name_description = DB::table('products')->whereIn('product_name', $serviceOrders->service_lists)->get();
         $customer_details = DB::table('customers')->where('id', $serviceOrders->customer_no)->get();
         $comments_details = DB::table('comments')->where('order_i_d', $serviceOrders->order_i_d)->get();
+        $tech_user = DB::table('role_users')->where('role_id', '5')
+                                            ->leftJoin('users', 'users.id', '=', 'role_users.user_id')
+                                            ->select('users.id','users.first_name','users.last_name')
+                                           ->get();
+
         
-        //dd($serviceOrders);
+       // dd($tech_user);
 
 
        $serviceOrders = array(
@@ -190,6 +205,7 @@ class ServiceOrdersController extends InfyOmBaseController
         "discount" => $serviceOrders->discount,
         "ed_value" => $serviceOrders->ed_value,
         "tax_value" => $serviceOrders->tax_value,
+        "tech_user" => $tech_user,
        );
 
       //dd($serviceOrders);
