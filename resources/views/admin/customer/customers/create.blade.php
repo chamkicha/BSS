@@ -29,7 +29,7 @@ Customer
                 </h4></div>
             <br />
             <div class="card-body">
-            {!! Form::open(['route' => 'admin.customer.customers.store']) !!}
+            {!! Form::open(['route' => 'admin.customer.customers.store','files' => true]) !!}
 
                 @include('admin.customer.customers.fields')
 

@@ -33,7 +33,11 @@ class Customer extends Model
         'fax',
         'customer_no',
         'customer_type',
-        'country'
+        'country',
+        'Business_licence_file',
+        'Certificate_of_incorporation_file',
+        'TIN_registeration_number_file',
+        'Tax_exemption_certification_file'	
     ];
 
     /**

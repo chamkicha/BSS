@@ -65,6 +65,12 @@ return [
             'endpoint' => env('AWS_ENDPOINT'),
         ],
 
+        'certificates' => [
+            'driver' => 'local',
+            'root' => '/storage/cerificate',
+            'visibility' => 'public',
+        ],
+
     ],
 
     /*

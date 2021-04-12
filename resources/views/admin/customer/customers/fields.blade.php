@@ -103,7 +103,7 @@ function customerNo()
                                 <div class="form-group col-sm-12">
 
                                     <label for="select21" class="control-label">
-                                        Customer:
+                                        Customer Type:
                                     </label>
                                     <select name="customer_type" id="select21" class="form-control select2">
                                             
@@ -201,7 +201,7 @@ function customerNo()
                                 <div >
                                     <label class="c control-label" for="form-file-input">Business licence</label>
                                     <div class=" pad-top20 ">
-                                        <input type="file" id="activation_form" name="activation_form">
+                                        <input type="file" id="Business_licence" name="Business_licence">
                                     </div>
                                 </div>
                             <br>
@@ -209,7 +209,7 @@ function customerNo()
                                 <div >
                                     <label class="c control-label" for="form-file-input">Certificate of incorporation</label>
                                     <div class=" pad-top20 ">
-                                        <input type="file" id="activation_form" name="activation_form">
+                                        <input type="file" id="Certificate_of_incorporation" name="Certificate_of_incorporation">
                                     </div>
                                 </div>
 
@@ -220,7 +220,7 @@ function customerNo()
                                 <div >
                                     <label class="c control-label" for="form-file-input">TIN registeration number</label>
                                     <div class=" pad-top20 ">
-                                        <input type="file" id="activation_form" name="activation_form">
+                                        <input type="file" id="TIN_registeration_number" name="TIN_registeration_number">
                                     </div>
                                 </div>
                             <br>
@@ -228,7 +228,7 @@ function customerNo()
                                 <div >
                                     <label class="c control-label" for="form-file-input">Tax exemption certification</label>
                                     <div class=" pad-top20 ">
-                                        <input type="file" id="activation_form" name="activation_form">
+                                        <input type="file" id="Tax_exemption_certification" name="Tax_exemption_certification">
                                     </div>
                                 </div>
                             </div>

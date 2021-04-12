@@ -14,6 +14,7 @@ use Flash;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
 use App\Models\Customertype\CustomerType;
+use Illuminate\Support\Facades\Storage;
 use DB;
 
 class CustomerController extends InfyOmBaseController
@@ -62,7 +63,7 @@ class CustomerController extends InfyOmBaseController
     public function store(CreateCustomerRequest $request)
 
     {
-        //dd($request);
+        
         $this->validate($request, [
             'customername'  => ['required', 'unique:customers,customername'],
             'v_a_t_registration_number' => 'required',
@@ -73,7 +74,92 @@ class CustomerController extends InfyOmBaseController
             'email' => 'required',
             'customer_type' => 'required',
         ]);
-        $input = $request->all();
+
+ //dd($request);
+        // Business_licence file
+        if($request->has('Business_licence')){
+            // Get filename with the extension
+            $Business_licenceWithExt = $request->file('Business_licence')->getClientOriginalName();
+            //Get just filename
+            $Business_licence = pathinfo($Business_licenceWithExt, PATHINFO_FILENAME);
+            // Get just ext
+            $extension = $request->file('Business_licence')->getClientOriginalExtension();
+            // Filename to store
+            $Business_licenceToStore = 'Business_licence'."_".$request->customer_no."_".date('d-m-Y-H-i').'.'.$extension;
+            // Upload Image
+            $Business_licence = $request->file('Business_licence')->storeAs('public/client_docs', $Business_licenceToStore);
+        }else{ $Business_licence = null; }
+
+        // Certificate_of_incorporation file
+        if($request->has('Certificate_of_incorporation')){
+            // Get filename with the extension
+            $Certificate_of_incorporationWithExt = $request->file('Certificate_of_incorporation')->getClientOriginalName();
+            //Get just filename
+            $Certificate_of_incorporation = pathinfo($Certificate_of_incorporationWithExt, PATHINFO_FILENAME);
+            // Get just ext
+            $extension = $request->file('Certificate_of_incorporation')->getClientOriginalExtension();
+            // Filename to store
+            $Certificate_of_incorporationToStore = 'Certificate_of_incorporation'."_".$request->customer_no."_".date('d-m-Y-H-i').'.'.$extension;
+            // Upload Image
+            $Certificate_of_incorporation = $request->file('Certificate_of_incorporation')->storeAs('public/client_docs', $Certificate_of_incorporationToStore);
+        }else{ $Certificate_of_incorporation = null; }
+
+
+        // TIN_registeration_number file
+        if($request->has('TIN_registeration_number')){
+            // Get filename with the extension
+            $TIN_registeration_numberWithExt = $request->file('TIN_registeration_number')->getClientOriginalName();
+            //Get just filename
+            $TIN_registeration_number = pathinfo($TIN_registeration_numberWithExt, PATHINFO_FILENAME);
+            // Get just ext
+            $extension = $request->file('TIN_registeration_number')->getClientOriginalExtension();
+            // Filename to store
+            $TIN_registeration_numberToStore = 'TIN_registeration_number'."_".$request->customer_no."_".date('d-m-Y-H-i').'.'.$extension;
+            // Upload Image
+            $TIN_registeration_number = $request->file('TIN_registeration_number')->storeAs('public/client_docs', $TIN_registeration_numberToStore);
+        }else{ $TIN_registeration_number = null; }
+            
+
+        // Tax_exemption_certification file
+        if($request->has('Tax_exemption_certification')){
+            // Get filename with the extension
+            $Tax_exemption_certificationWithExt = $request->file('Tax_exemption_certification')->getClientOriginalName();
+            //Get just filename
+            $Tax_exemption_certification = pathinfo($Tax_exemption_certificationWithExt, PATHINFO_FILENAME);
+            // Get just ext
+            $extension = $request->file('Tax_exemption_certification')->getClientOriginalExtension();
+            // Filename to store
+            $Tax_exemption_certificationToStore = 'Tax_exemption_certification'."_".$request->customer_no."_".date('d-m-Y-H-i').'.'.$extension;
+            // Upload Image
+            $Tax_exemption_certification = $request->file('Tax_exemption_certification')->storeAs('public/client_docs', $Tax_exemption_certificationToStore);
+        }else{ $Tax_exemption_certification = null; }
+
+
+
+        $input = array(
+
+            "_token" => $request->_token,
+            "customer_no" => $request->customer_no,
+            "customername" => $request->customername,
+            "t_i_n_number" => $request->t_i_n_number,
+            "v_a_t_registration_number" => $request->v_a_t_registration_number,
+            "business_license_number" => $request->business_license_number,
+            "customer_type" => $request->customer_type,
+            "contact_person" => $request->contact_person,
+            "position_held" => $request->position_held,
+            "contact_telephone" => $request->contact_telephone,
+            "office_telephone" => $request->office_telephone,
+            "email" => $request->email,
+            "postal_address" => $request->postal_address,
+            "region" => $request->region,
+            "country" => $request->country,
+            "district" => $request->district,
+            "fax" => $request->fax,
+            "Business_licence_file" => $Business_licence,
+            "Certificate_of_incorporation_file" => $Certificate_of_incorporation,
+            "TIN_registeration_number_file" => $TIN_registeration_number,
+            "Tax_exemption_certification_file" => $Tax_exemption_certification,
+        );
 
         $customer = $this->customerRepository->create($input);
 
