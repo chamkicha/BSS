@@ -168,6 +168,17 @@
       0 => 'Prettus\\Repository\\Providers\\RepositoryServiceProvider',
     ),
   ),
+  'simplesoftwareio/simple-qrcode' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'SimpleSoftwareIO\\QrCode\\QrCodeServiceProvider',
+    ),
+    'aliases' => 
+    array (
+      'QrCode' => 'SimpleSoftwareIO\\QrCode\\Facades\\QrCode',
+    ),
+  ),
   'spatie/laravel-activitylog' => 
   array (
     'providers' => 
@@ -184,6 +195,17 @@
     'aliases' => 
     array (
       'Analytics' => 'Spatie\\Analytics\\AnalyticsFacade',
+    ),
+  ),
+  'werneckbh/laravel-qr-code' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'LaravelQRCode\\Providers\\QRCodeServiceProvider',
+    ),
+    'aliases' => 
+    array (
+      'QRCode' => 'LaravelQRCode\\Facades\\QRCode',
     ),
   ),
   'yajra/laravel-datatables-oracle' => 

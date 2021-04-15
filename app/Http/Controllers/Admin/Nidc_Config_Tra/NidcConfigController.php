@@ -169,22 +169,21 @@ class NidcConfigController extends InfyOmBaseController
            $TRA = $tra_details[0]->password . $this->get_count_gc($tra_details[0]->tin_num);
            $tokenAuth = $this->get_auth_token($tra_details[0]->username, $tra_details[0]->password);
    
-           $this->send_efdrec_request_tra($tra_details, $tokenAuth['token_type'], $tokenAuth['access_token'], $request->cusromer_name, $request->mobile_number, $request->grand_total);
+           $this->send_efdrec_request_tra($tra_details, $tokenAuth['token_type'], $tokenAuth['access_token'], $request->cusromer_name, $request->mobile_number, $request->grand_total, $request);
    
-           return $TRA;
+           return view('admin.serviceInvoice.serviceInvoices.index');
        }
 
        
-    public function send_efdrec_request_tra($reg_data, $token_type, $access_token, $name, $mobile,  $amount)
+    public function send_efdrec_request_tra($reg_data, $token_type, $access_token, $name, $mobile,  $amount, $request)
     {
         $response = false;
-        $xmlReq = $this->get_receipt_posted_data($reg_data, $name, $mobile, $amount);
+        $xmlReq = $this->get_receipt_posted_data($reg_data, $name, $mobile, $amount, $request);
         $routing_key = $reg_data[0]->routekey;
-        $access_token = 'Bearer ' . trim($access_token);
+        $access_token = trim($access_token);
         $cert_serial = base64_encode($reg_data[0]->cert_serial);
         $headers = array(
            
-
             'Content-type: Application/xml',
             'Routing-Key: vfdrct',
             'Cert-Serial: ' .$cert_serial,
@@ -194,8 +193,9 @@ class NidcConfigController extends InfyOmBaseController
         );
         //1. Prepare the connectivity parameters.
         $url = "https://virtual.tra.go.tz/efdmsRctApi/api/efdmsRctInfo";
-        //$url = "https://vfd.tra.go.tz/api/efdmsRctInfo";
+        //$url = "https://vfd.tra.go.tz/api/efdmsRctInfo"; LIVE
         //3.Send the Request to the API
+        //dd($xmlReq);
         try {
             $curl = curl_init();
             curl_setopt_array($curl, array(
@@ -211,7 +211,7 @@ class NidcConfigController extends InfyOmBaseController
             ));
 
             $resp = curl_exec($curl);
-        dd($resp);
+        //dd($xmlReq);
         $httpCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 
             if (FALSE === $resp) {
@@ -227,31 +227,56 @@ class NidcConfigController extends InfyOmBaseController
         $response = '';
         if ($httpCode == 200) {
             $response = $resp;
-            $this->log_event('TRAREG', $response);
         } else {
             $response = false;
         }
-        dd($response);
+        $gc = $this->verification_receipts_barcode($request);
+
+        //dd($response);
         return $response;
     }
 
-    
-    public function get_receipt_posted_data($reg_data, $name, $mobile, $amount)
+
+    public function verification_receipts_barcode($request)
     {
+        $RCTVNUM = DB::table('serviceinvoices')->where('invoice_number', $request->invoice_number)->first()->RCTVNUM;
+
+        //1. Prepare the connectivity parameters.
+        $url = "https://virtual.tra.go.tz/efdmsRctVerify"."/".$RCTVNUM;
+        //$url = "https://vfd.tra.go.tz/api/efdmsRctInfo"; LIVE
+        //3.Send the Request to the API
+        $file = storage_path('QR-'.$RCTVNUM.'.png');
+        $qrcode_path = 'QR-'.$RCTVNUM.'.png';
+        $qrcode = \QRCode::text($url)->setOutfile($file)->png(); 
+        $qrcode_path = DB::table('serviceinvoices')
+                       ->where('invoice_number', $request->invoice_number)
+                       ->update(['qrcode_path'=>$qrcode_path]);
+        return null;
+
+    }
+
+    
+    public function get_receipt_posted_data($reg_data, $name, $mobile, $amount, $request)
+    {
+        //dd($request);
         $tin = str_replace("-", "", $reg_data[0]->tin_num);
         $gc = $this->get_count($reg_data[0], 'gc');
         $dc = $this->get_count($reg_data[0], 'dc');
         $rctvnum = $reg_data[0]->recptcode . $gc;
-        $payload = '<RCT><DATE>' . date('Y-m-d') . '</DATE><TIME>' . date('H:i:s') . '</TIME><TIN>' . $tin . '</TIN><REGID>' . $reg_data[0]->regid . '</REGID><EFDSERIAL>' . $reg_data[0]->vfd . '</EFDSERIAL><CUSTIDTYPE>1</CUSTIDTYPE><CUSTID></CUSTID><CUSTNAME>' . $name . '</CUSTNAME><MOBILENUM>' . $mobile . '</MOBILENUM><RCTNUM>' . $gc . '</RCTNUM><DC>' . $dc . '</DC><GC>' . $gc . '</GC><ZNUM>' . date('Ymd') . '</ZNUM><RCTVNUM>' . $rctvnum . '</RCTVNUM><ITEMS><ITEM><ID>1</ID><DESC>Nauli ya bus</DESC><QTY>1</QTY><TAXCODE>3</TAXCODE><AMT>' . $amount . '</AMT></ITEM></ITEMS><TOTALS><TOTALTAXEXCL>' . $amount . '</TOTALTAXEXCL><TOTALTAXINCL>' . $amount . '</TOTALTAXINCL><DISCOUNT>0.00</DISCOUNT></TOTALS><PAYMENTS><PMTTYPE>EMONEY</PMTTYPE><PMTAMOUNT>' . $amount . '</PMTAMOUNT></PAYMENTS><VATTOTALS><VATRATE>C</VATRATE><NETTAMOUNT>' . $amount . '</NETTAMOUNT><TAXAMOUNT>0</TAXAMOUNT></VATTOTALS></RCT>';
+        $payload = '<RCT><DATE>' . date('Y-m-d') . '</DATE><TIME>' . date('H:i:s') . '</TIME><TIN>' . $tin . '</TIN><REGID>' . $reg_data[0]->regid . '</REGID><EFDSERIAL>' . $reg_data[0]->vfd . '</EFDSERIAL><CUSTIDTYPE>1</CUSTIDTYPE><CUSTID>'.$request->customer_no.'</CUSTID><CUSTNAME>' . $name . '</CUSTNAME><MOBILENUM>' . $mobile . '</MOBILENUM><RCTNUM>' . $gc . '</RCTNUM><DC>' . $dc . '</DC><GC>' . $gc . '</GC><ZNUM>' . date('Ymd') . '</ZNUM><RCTVNUM>' . $rctvnum . '</RCTVNUM><ITEMS><ITEM><ID>1</ID><DESC>'.$request->description.'</DESC><QTY>1</QTY><TAXCODE>1</TAXCODE><AMT>'.$request->price.'</AMT></ITEM></ITEMS><TOTALS><TOTALTAXEXCL>'.$request->price.'</TOTALTAXEXCL><TOTALTAXINCL>' . $amount . '</TOTALTAXINCL><DISCOUNT>0.00</DISCOUNT></TOTALS><PAYMENTS><PMTTYPE>INVOICE</PMTTYPE><PMTAMOUNT>' . $amount . '</PMTAMOUNT></PAYMENTS><VATTOTALS><VATRATE>A</VATRATE><NETTAMOUNT>' . $amount . '</NETTAMOUNT><TAXAMOUNT>'.$request->vat_amount.'</TAXAMOUNT></VATTOTALS></RCT>';
         $priv_key = $this->get_key_from_file("./" . $reg_data[0]->cert_path . ".pem", true, true, $reg_data[0]->cert_password);
         $signedPayload = $this->sign_payload_plain($payload, $priv_key);
-        dd($priv_key);
+        $update_invoice_rctvum_date = DB::table('serviceinvoices')
+                                          ->where('invoice_number', $request->invoice_number)
+                                          ->update(['RCTVNUM'=> $rctvnum , 'RCTVNUM_DATE'=>date('H:i:s')]);
+        //dd($priv_key);
         $recXML = "<EFDMS>
 					$payload
 					<EFDMSSIGNATURE>
 					$signedPayload
 					</EFDMSSIGNATURE>
 				</EFDMS>";
+        //dd($recXML);
         return $recXML;
     }
 

@@ -307,6 +307,7 @@ Route::group(array('prefix' => 'admin/serviceInvoice/','namespace' => 'Admin','m
 
 Route::get('serviceInvoices', ['as'=> 'serviceInvoices.index', 'uses' => 'Serviceinvoice\ServiceInvoiceController@index']);
 Route::post('serviceInvoices', ['as'=> 'serviceInvoices.store', 'uses' => 'Serviceinvoice\ServiceInvoiceController@store']);
+Route::post('nidcConfigs/traapi', ['as'=> 'serviceInvoices.traapi', 'uses' => 'Serviceinvoice\ServiceInvoiceController@processTraReceipt']);
 Route::get('serviceInvoices/create', ['as'=> 'serviceInvoices.create', 'uses' => 'Serviceinvoice\ServiceInvoiceController@create']);
 Route::put('serviceInvoices/{serviceInvoices}', ['as'=> 'serviceInvoices.update', 'uses' => 'Serviceinvoice\ServiceInvoiceController@update']);
 Route::patch('serviceInvoices/{serviceInvoices}', ['as'=> 'serviceInvoices.update', 'uses' => 'Serviceinvoice\ServiceInvoiceController@update']);
@@ -563,7 +564,7 @@ Route::group(array('prefix' => 'admin/nidcConfigTra/','namespace' => 'Admin','mi
 Route::get('nidcConfigs', ['as'=> 'nidcConfigs.index', 'uses' => 'Nidc_Config_Tra\NidcConfigController@index']);
 Route::post('nidcConfigs', ['as'=> 'nidcConfigs.store', 'uses' => 'Nidc_Config_Tra\NidcConfigController@store']);
 Route::get('nidcConfigs/create', ['as'=> 'nidcConfigs.create', 'uses' => 'Nidc_Config_Tra\NidcConfigController@create']);
-Route::post('nidcConfigs/traapi', ['as'=> 'nidcConfigs.traapi', 'uses' => 'Nidc_Config_Tra\NidcConfigController@processTraReceipt']);
+//Route::post('nidcConfigs/traapi', ['as'=> 'nidcConfigs.traapi', 'uses' => 'Nidc_Config_Tra\NidcConfigController@processTraReceipt']);
 Route::put('nidcConfigs/{nidcConfigs}', ['as'=> 'nidcConfigs.update', 'uses' => 'Nidc_Config_Tra\NidcConfigController@update']);
 Route::patch('nidcConfigs/{nidcConfigs}', ['as'=> 'nidcConfigs.update', 'uses' => 'Nidc_Config_Tra\NidcConfigController@update']);
 Route::get('nidcConfigs/{id}/delete', ['as' => 'nidcConfigs.delete', 'uses' => 'Nidc_Config_Tra\NidcConfigController@getDelete']);

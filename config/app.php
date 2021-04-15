@@ -179,6 +179,7 @@ return [
         \InfyOm\Generator\InfyOmGeneratorServiceProvider::class,
         \InfyOm\GeneratorBuilder\GeneratorBuilderServiceProvider::class,
         Laracasts\Flash\FlashServiceProvider::class,
+        SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
         
     ],
 
@@ -231,6 +232,7 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+        'QRCode' => LaravelQRCode\Facades\QRCode::class,  
 
     ],
 

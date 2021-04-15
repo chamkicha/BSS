@@ -95,9 +95,14 @@
                                         <strong>VRN:</strong> 10-000002-S<br>
                                         <strong>Tax Invoice No.:</strong> {!! $serviceInvoice['invoice_number'] !!}<br>
                                         <strong>Bill Period:</strong> {!! $serviceInvoice['invoice_created_date'] !!} &nbsp;<strong>to</strong> &nbsp;{!! $serviceInvoice['next_invoice_date'] !!}<br>
-                                        <strong>Due Date:</strong> {!! $serviceInvoice['invoice_due_date'] !!} <br><br>
+                                        <strong>Due Date:</strong> {!! $serviceInvoice['invoice_due_date'] !!} <br>
 
+                                        @if(!empty($serviceInvoice['qrcode_path']))
 
+                                         <img src="{{ URL::asset('storage/'.$serviceInvoice['qrcode_path']) }}" /><br>
+                                        <strong>{!! $serviceInvoice['RCTVNUM'] !!}</strong>  &nbsp;
+                                        <strong>{!! $serviceInvoice['RCTVNUM_DATE'] !!}</strong>  <br><br>
+                                        @endif
                                     </div>
                                     <div class="col-md-4 col-4 col-lg-4" style="padding-right:0; border: thin solid black">
                                         
@@ -313,7 +318,7 @@
                                     <div style="margin:10px 20px;text-align:center;" class="btn-section">
 
                                         <!-- form  GET SIGNATURE add start-->
-                                     <form action="{{ route('admin.nidcConfigTra.nidcConfigs.traapi') }}" method = "post"><!-- form add -->
+                                     <form action="{{ route('admin.serviceInvoice.serviceInvoices.traapi') }}" method = "post"><!-- form add -->
                                             {{ csrf_field() }}
 
 
@@ -340,8 +345,46 @@
                                         
                                         <!-- service_name_description Field -->
                                         <div class="form-group col-sm-12">
-                                            <input type="hidden" id="service_name_description" name="service_name_description" class="form-control" value="{{$serviceInvoice['service_name_description']}}" >
+                                        
+                                                @foreach($serviceInvoice['service_name_description'] as $serviceInvoices)
+                                                
+                                                <input type="hidden" id="description" name="description" class="form-control" value="{{$serviceInvoices->description}}" >
 
+                                                @endforeach
+
+          
+                                        </div>
+
+                                        
+
+                                        
+                                        <!-- VAT Field -->
+                                        <div class="form-group col-sm-12">
+                                        
+                                                @foreach($serviceInvoice['service_name_description'] as $serviceInvoices)
+                                                
+                                                <input type="hidden" id="vat_amount" name="vat_amount" class="form-control" value="{{$serviceInvoices->vat_amount}}" >
+
+                                                @endforeach
+
+          
+                                        </div>
+
+                                        
+                                        <!-- customer no description Field -->
+                                        <div class="form-group col-sm-12">
+                                            <input type="hidden" id="customer_no" name="customer_no" class="form-control" value="{{$serviceInvoice['customer_no']}}" >
+
+                                        </div>
+
+                                        
+                                        <!-- amount/price Field -->
+                                        <div class="form-group col-sm-12">
+                                               @foreach($serviceInvoice['service_name_description'] as $serviceInvoices)
+                                                
+                                                <input type="hidden" id="price" name="price" class="form-control" value="{{$serviceInvoices->price}}" >
+                                             
+                                                @endforeach
                                         </div>
 
                                         
@@ -359,12 +402,20 @@
                                         </div>
 
                                         
-                                        <!-- Payment amount Field -->
+                                        <!--   id Field -->
+                                        <div class="form-group col-sm-12">
+                                            <input type="hidden" id="id" name="id" class="form-control" value="{{$serviceInvoice['id']}}" >
+
+                                        </div>
+
+                                        
+                                        <!-- customer name Field -->
                                         <div class="form-group col-sm-12">
                                             <input type="hidden" id="cusromer_name" name="cusromer_name" class="form-control" value="{{$serviceInvoice['cusromer_name'] }}" >
 
                                         </div>
 
+                                        @if(empty($serviceInvoice['qrcode_path']))
 
                                         <button type="submit" class="btn btn_marTop button-alignment btn-secondary default_voice"
                                                 data-toggle="button">
@@ -374,7 +425,7 @@
                                                 Get Signature
                                             </a>
                                         </button>
-
+                                       @endif
                                         
 
                                         </form><!-- form get signature add end -->

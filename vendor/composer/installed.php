@@ -6,7 +6,7 @@
     'aliases' => 
     array (
     ),
-    'reference' => '0260cbd801e980f0cce10206c6d629b6aa79cf8c',
+    'reference' => '8406e50824b694ec91e48ba705f7c606b12a022b',
     'name' => 'josh/laravel',
   ),
   'versions' => 
@@ -37,6 +37,15 @@
       array (
       ),
       'reference' => '9cb795bf30988e8c96dd3c40623c48a877bc6714',
+    ),
+    'bacon/bacon-qr-code' => 
+    array (
+      'pretty_version' => '2.0.3',
+      'version' => '2.0.3.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '3e9d791b67d0a2912922b7b7c7312f4b37af41e4',
     ),
     'balping/json-raw-encoder' => 
     array (
@@ -188,6 +197,15 @@
       array (
       ),
       'reference' => 'e467738fea64b4420d20dd83f4d0d7fffaa4140c',
+    ),
+    'dasprid/enum' => 
+    array (
+      'pretty_version' => '1.0.3',
+      'version' => '1.0.3.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '5abf82f213618696dda8e3bf6f64dd042d8542b2',
     ),
     'davedevelopment/hamcrest-php' => 
     array (
@@ -700,7 +718,7 @@
       'aliases' => 
       array (
       ),
-      'reference' => '0260cbd801e980f0cce10206c6d629b6aa79cf8c',
+      'reference' => '8406e50824b694ec91e48ba705f7c606b12a022b',
     ),
     'justinrainbow/json-schema' => 
     array (
@@ -1443,6 +1461,15 @@
       ),
       'reference' => '8674b1d84ffb47cc59a101f5d5a3b61e87d23796',
     ),
+    'simplesoftwareio/simple-qrcode' => 
+    array (
+      'pretty_version' => '4.2.0',
+      'version' => '4.2.0.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '916db7948ca6772d54bb617259c768c9cdc8d537',
+    ),
     'spatie/laravel-activitylog' => 
     array (
       'pretty_version' => '3.17.0',
@@ -1832,6 +1859,24 @@
       array (
       ),
       'reference' => '6964c76c7804814a842473e0c8fd15bab0f18e25',
+    ),
+    'werneckbh/laravel-qr-code' => 
+    array (
+      'pretty_version' => '0.1.3',
+      'version' => '0.1.3.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'df3875022158d0f8355f54219955e32f9a9ba080',
+    ),
+    'werneckbh/qr-code' => 
+    array (
+      'pretty_version' => '2.1.15',
+      'version' => '2.1.15.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'ec66df0ebd5a3e1ea895bb5fba82ab9c3b9ff8f0',
     ),
     'yajra/laravel-datatables-oracle' => 
     array (
