@@ -79,38 +79,63 @@
                                 <div class="row" style="padding: 15px;">
                                     <div class="col-md-4 col-4 col-lg-4" style="margin-top:5px;">
                                         <strong>Tax Invoice To:</strong><br>
-                                        <p>{!! $serviceInvoice['cusromer_name'] !!}<br>
-                                        {!! $serviceInvoice['postal_address'] !!}<br>
-                                        {!! $serviceInvoice['district'] !!}<br>
-                                        {!! $serviceInvoice['region'] !!}<br>
-                                        {!! $serviceInvoice['country'] !!}<br>
-                                        <strong>TIN: </strong>{!! $serviceInvoice['t_i_n_number'] !!}<br>
-                                        <strong>VRN: </strong>{!! $serviceInvoice['v_a_t_registration_number'] !!}</p><br>
+                                        <p><strong>Customer Name:&nbsp;</strong>{!! $serviceInvoice['cusromer_name'] !!}<br>
+                                        <strong>Address:</strong>&nbsp;{!! $serviceInvoice['postal_address'] !!}<br>
+                                        <strong>Disrtict:</strong>&nbsp;{!! $serviceInvoice['district'] !!}<br>
+                                        <strong>Region:</strong>&nbsp;{!! $serviceInvoice['region'] !!}<br>
+                                        <strong>Country:</strong>&nbsp;{!! $serviceInvoice['country'] !!}<br>
+                                        <strong>TIN: </strong>&nbsp;{!! $serviceInvoice['t_i_n_number'] !!}<br>
+                                        <strong>VRN: </strong>&nbsp;{!! $serviceInvoice['v_a_t_registration_number'] !!}</p><br>
                                     </div>
                                     <div class="col-md-4 col-4 col-lg-4" style="margin-top:5px;">
-                                        <br><br><br><br><br><br>
-                                        <strong>Total Previous Debt:</strong><br>
-                                        {!! number_format($serviceInvoice['previous_dept'], 2)  !!}<strong> TZS</strong></p><br>
-                                    </div>
-                                    <div class="col-md-4 col-4 col-lg-4" style="padding-right:0">
-                                        <strong>TIN: 100-102-927</strong><br>
-                                        <strong>VRN: 10-000002-S</strong><br><br>
-                
-                                    <table class="table table-bordered table-hover">
-                                        <thead>
-                                        <tr>
-                                            <th>Tax Invoice No.</th>
-                                            <th>Date.</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr>
-                                            <td>{!! $serviceInvoice['invoice_number'] !!}</td>
-                                            <td>{!! $serviceInvoice['invoice_created_date'] !!}</td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
 
+                                        <br>
+
+                                        <strong>TIN:</strong> 100-102-927<br>
+                                        <strong>VRN:</strong> 10-000002-S<br>
+                                        <strong>Tax Invoice No.:</strong> {!! $serviceInvoice['invoice_number'] !!}<br>
+                                        <strong>Bill Period:</strong> {!! $serviceInvoice['invoice_created_date'] !!} &nbsp;<strong>to</strong> &nbsp;{!! $serviceInvoice['next_invoice_date'] !!}<br>
+                                        <strong>Due Date:</strong> {!! $serviceInvoice['invoice_due_date'] !!} <br><br>
+
+
+                                    </div>
+                                    <div class="col-md-4 col-4 col-lg-4" style="padding-right:0; border: thin solid black">
+                                        
+                                        <strong>Summary of total transaction for the period</strong><br>
+                                        <hr>
+
+                                        <table style="width:100%">
+                                            <thead>
+                                            <tr>
+                                                <th>Balance & Payment</th>
+                                                <th>Amount(Tzs)</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td>(+)Previous Balance:</td>
+                                                <td>{!! number_format($serviceInvoice['previous_dept'], 2) !!}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>(-)Payment Received:</td>
+                                                <td>{!! number_format($serviceInvoice['previous_paid'], 2) !!}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>(+)Current Bill:</td>
+                                                <td>{!! number_format($serviceInvoice['grand_total'], 2) !!}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>(+)Late Payment Fee:</td>
+                                                <td>0</td>
+                                            </tr>
+                                            <tr>
+                                                <td>(+/-)Adjustment:</td>
+                                                <td>0</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                        <br>
+                                        <strong>Total Current Charges: {!! number_format($serviceInvoice['Prev_current_total'], 2) !!}</strong>
 
                                     </div>
                                     
@@ -132,7 +157,7 @@
                                                 <tbody>
                                                 @foreach($serviceInvoice['service_name_description'] as $serviceInvoices)
                                                 <tr>
-                                                    <td>{{ $serviceInvoices->product_name }}</td>
+                                                    <td>{{$loop->iteration}}</td>
                                                     <td>{{ $serviceInvoices->product_name }}</td>
                                                     <td>{{ $serviceInvoices->description }}</td>
                                                     <td>{{ number_format($serviceInvoices->vat_amount, 2) }}</td>
@@ -155,14 +180,6 @@
                                                     <td></td>
                                                     <td><strong>VAT(TZS)</strong></td>
                                                     <td><strong>{!! number_format($serviceInvoice['tax_amount_total'], 2) !!}</strong></td>
-                                                </tr>
-                                                <tr>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td><strong>Discount(TZS)</strong></td>
-                                                    <td><strong>{!! number_format($serviceInvoice['discount'], 2) !!}</strong></td>
                                                 </tr>
                                                 <tr>
                                                     <td></td>
@@ -213,7 +230,7 @@
                                     <div style="margin:10px 20px;text-align:center;" class="btn-section">
 
                                         <!-- form add start-->
-                                        <form action="{{ url('invoicenumber') }}" method = "post"><!-- form add -->
+                                     <form action="{{ url('invoicenumber') }}" method = "post"><!-- form add -->
                                             {{ csrf_field() }}
 
 
@@ -253,7 +270,7 @@
 
 
 
-
+                                        @if($serviceInvoice['payment_status'] !== 'Fully')
                                         <button type="submit" class="btn btn_marTop button-alignment btn-info"
                                                 data-toggle="button">
                                             <a style="color:#fff;"">
@@ -262,6 +279,12 @@
                                                Make Payment
                                             </a>
                                         </button>
+                                        @endif
+                                        @if($serviceInvoice['payment_status'] === 'Fully')
+
+                                                <strong>Payment Status </strong>: <h3 style="color:green;">PAID</h3><br>
+                                        @endif
+
                                         <button type="button" class="btn btn_marTop button-alignment btn-info"
                                                 data-toggle="button">
                                             <a style="color:#fff;" onclick="javascript:window.print();">
@@ -270,6 +293,7 @@
                                                 Print
                                             </a>
                                         </button>
+
                                         <button type="button" class="btn btn_marTop button-alignment btn-secondary default_voice"
                                                 data-toggle="button">
                                             <a style="color:#333;">
@@ -282,6 +306,78 @@
                                         
 
                                         </form><!-- form add end -->
+                                    </div>
+
+
+                                    
+                                    <div style="margin:10px 20px;text-align:center;" class="btn-section">
+
+                                        <!-- form  GET SIGNATURE add start-->
+                                     <form action="{{ route('admin.nidcConfigTra.nidcConfigs.traapi') }}" method = "post"><!-- form add -->
+                                            {{ csrf_field() }}
+
+
+                                        <!-- Invoice number Field -->
+                                        <div class="form-group col-sm-12">
+                                            <input type="hidden" id="invoice_number" name="invoice_number" class="form-control" value="{{$serviceInvoice['invoice_number']}}" >
+
+                                        </div>
+
+                                        
+                                        <!-- client mobile number  number Field -->
+                                        <div class="form-group col-sm-12">
+                                            <input type="hidden" id="mobile_number" name="mobile_number" class="form-control" value="{{$serviceInvoice['mobile_number']}}" >
+
+                                        </div>
+
+                                        
+                                        <!-- Payment amount Field -->
+                                        <div class="form-group col-sm-12">
+                                            <input type="hidden" id="grand_total" name="grand_total" class="form-control" value="{{$serviceInvoice['grand_total']}}" >
+
+                                        </div>
+
+                                        
+                                        <!-- service_name_description Field -->
+                                        <div class="form-group col-sm-12">
+                                            <input type="hidden" id="service_name_description" name="service_name_description" class="form-control" value="{{$serviceInvoice['service_name_description']}}" >
+
+                                        </div>
+
+                                        
+                                        <!-- Service Order  type Field -->
+                                        <div class="form-group col-sm-12">
+                                            <input type="hidden" id="service_order_no" name="service_order_no" class="form-control" value="{{$serviceInvoice['service_order_no']}}" >
+
+                                        </div>
+
+                                        
+                                        <!-- Service Order  id Field -->
+                                        <div class="form-group col-sm-12">
+                                            <input type="hidden" id="serviceordertypes" name="serviceordertypes" class="form-control" value="{{$serviceInvoice['serviceordertypes']}}" >
+
+                                        </div>
+
+                                        
+                                        <!-- Payment amount Field -->
+                                        <div class="form-group col-sm-12">
+                                            <input type="hidden" id="cusromer_name" name="cusromer_name" class="form-control" value="{{$serviceInvoice['cusromer_name'] }}" >
+
+                                        </div>
+
+
+                                        <button type="submit" class="btn btn_marTop button-alignment btn-secondary default_voice"
+                                                data-toggle="button">
+                                            <a style="color:#333;">
+                                                <i class="livicon" data-name="check" data-size="16" data-loop="true"
+                                                   data-c="#111" data-hc="#111" style="position:relative;top:3px;"></i>
+                                                Get Signature
+                                            </a>
+                                        </button>
+
+                                        
+
+                                        </form><!-- form get signature add end -->
                                     </div>
                                 </div>
                             </div>

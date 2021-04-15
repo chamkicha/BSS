@@ -373,6 +373,11 @@ function activated_by()
     <input type="hidden" id="customer_no"name="customer_no" class="form-control" value = "{{$serviceOrders['customer_no']}}">
 </div>
 
+<!-- payment_mode field -->
+<div class="form-group col-sm-12">
+    <input type="hidden" id="payment_mode"name="payment_mode" class="form-control" value = "{{$serviceOrders['payment_mode']}}">
+</div>
+
 
 <!-- next handler id -->
 <div class="form-group col-sm-12">

@@ -2,13 +2,13 @@
 <table class="table table-striped table-bordered" id="serviceInvoices-table" width="100%">
     <thead>
      <tr>
+        <th>Invoice Number</th>
         <th>Invoice Created Date</th>
         <th>Service Order No</th>
         <th>Due Balance</th>
         <th>Current Charges</th>
         <th>Payment Amount</th>
         <th>Payment Status</th>
-        <th>Invoice Number</th>
         <th>Service Name</th>
         <th>Cusromer Name</th>
         <th >Action</th>
@@ -17,13 +17,13 @@
     <tbody>
     @foreach($serviceInvoices as $serviceInvoice)
         <tr>
+            <td>{!! $serviceInvoice->invoice_number !!}</td>
             <td>{!! $serviceInvoice->invoice_created_date !!}</td>
             <td>{!! $serviceInvoice->service_order_no !!}</td>
             <td>{!! $serviceInvoice->due_balance !!}</td>
             <td>{!! $serviceInvoice->current_charges !!}</td>
             <td>{!! $serviceInvoice->payment_amount !!}</td>
             <td>{!! $serviceInvoice->payment_status !!}</td>
-            <td>{!! $serviceInvoice->invoice_number !!}</td>
             <td>
             
             

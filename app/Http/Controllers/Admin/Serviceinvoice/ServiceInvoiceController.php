@@ -78,9 +78,11 @@ class ServiceInvoiceController extends InfyOmBaseController
     public function show($id)
     {
         $serviceInvoice = $this->serviceInvoiceRepository->findWithoutFail($id);
+        //dd($serviceInvoice);
         
         $customer_details = DB::table('customers')->where('id', $serviceInvoice->customer_no)->first();
         $postal_address = $customer_details->postal_address;
+        $mobile_number = $customer_details->office_telephone;
         $district = $customer_details->district;
         $region = $customer_details->region;
         $country = $customer_details->country;
@@ -88,6 +90,7 @@ class ServiceInvoiceController extends InfyOmBaseController
         $v_a_t_registration_number = $customer_details->v_a_t_registration_number;
         $previous_dept = DB::table('paymentanddues')->where('customer_no', $serviceInvoice->customer_no)->first();
         $previous_dept = $previous_dept->total_amount;
+        $previous_paid = DB::table('paymentanddues')->where('customer_no', $serviceInvoice->customer_no)->first()->paid_amount;
         if($previous_dept === $serviceInvoice->grand_total){
             
             $previous_dept ='0';
@@ -101,8 +104,6 @@ class ServiceInvoiceController extends InfyOmBaseController
         //$service_name = $serviceInvoice->service_name;
         $service_name_description = DB::table('products')->whereIn('product_name', $service_name)->get();
         //dd($service_name_description);
-
-        
 
         // tax amount
         $tax_amount_total = DB::table('products')->whereIn('product_name',  $service_name)
@@ -125,12 +126,16 @@ class ServiceInvoiceController extends InfyOmBaseController
                   ->sum('grand_total');
         $grand_total = $grand_total - $discount;
 
-        
+        // TOTAL PREVIOUS AND CURRENT BILL
+        $Prev_current_total = $grand_total + $previous_dept;
+
+
         $serviceInvoice = array(
             "id" => $serviceInvoice->id,
             "invoice_number" => $serviceInvoice->invoice_number,
             "customer_no" => $serviceInvoice->customer_no,
             "invoice_created_date" => $serviceInvoice->invoice_created_date,
+            "next_invoice_date" => $serviceInvoice->next_invoice_date,
             "invoice_due_date" => $serviceInvoice->invoice_due_date,
             "cusromer_name" => $serviceInvoice->cusromer_name,
             "service_order_no" => $serviceInvoice->service_order_no,
@@ -150,7 +155,10 @@ class ServiceInvoiceController extends InfyOmBaseController
             "deleted_at" => $serviceInvoice->deleted_at,
             "postal_address" => $postal_address,
             "previous_dept" => $previous_dept,
+            "previous_paid" => $previous_paid,
+            "Prev_current_total" => $Prev_current_total,
             "district" => $district,
+            "mobile_number" => $mobile_number,
             "serviceordertypes" => $serviceInvoice->serviceordertypes,
             "region" => $region,
             "country" => $country,

@@ -57,11 +57,8 @@ class PaymentController extends Controller
      */
     public function store(Request $request)
     {
-
+        //dd($request);
         if($request->serviceordertypes==="Prepaid"){
-
-
-
        
         $payment_amount = $request->payment_amount;
         $payment_type = $request->payment_type;
@@ -80,6 +77,7 @@ class PaymentController extends Controller
                     'upload_supportingdocument' => $upload_supportingdocument,
                     'invoice_number' => $invoice_number,
                     'cusromer_name' => $cusromer_name,
+                    'created_at' => $request->created_at,
                     'grand_total' => $grand_total,]);
 
 
@@ -138,6 +136,7 @@ class PaymentController extends Controller
                     'payment_type' => $payment_type, 
                     'payment_descriptions' => $payment_descriptions, 
                     'upload_supportingdocument' => $upload_supportingdocument,
+                    'created_at' => $request->created_at,
                     'invoice_number' => $invoice_number,
                     'cusromer_name' => $cusromer_name,
                     'grand_total' => $grand_total,]);

@@ -436,3 +436,139 @@ Route::get('revenuePerCustomerReports/{revenuePerCustomerReports}', ['as'=> 'rev
 Route::get('revenuePerCustomerReports/{revenuePerCustomerReports}/edit', ['as'=> 'revenuePerCustomerReports.edit', 'uses' => 'Revenuepercustomerreport\RevenuePerCustomerReportController@edit']);
 
 });
+
+
+Route::group(array('prefix' => 'admin/traDetailsConf/','namespace' => 'Admin','middleware' => 'admin','as'=>'admin.traDetailsConf.'), function () {
+
+Route::get('traDetailsConfs', ['as'=> 'traDetailsConfs.index', 'uses' => 'Tra_Details_Conf\Tra_details_confController@index']);
+Route::post('traDetailsConfs', ['as'=> 'traDetailsConfs.store', 'uses' => 'Tra_Details_Conf\Tra_details_confController@store']);
+Route::get('traDetailsConfs/create', ['as'=> 'traDetailsConfs.create', 'uses' => 'Tra_Details_Conf\Tra_details_confController@create']);
+Route::put('traDetailsConfs/{traDetailsConfs}', ['as'=> 'traDetailsConfs.update', 'uses' => 'Tra_Details_Conf\Tra_details_confController@update']);
+Route::patch('traDetailsConfs/{traDetailsConfs}', ['as'=> 'traDetailsConfs.update', 'uses' => 'Tra_Details_Conf\Tra_details_confController@update']);
+Route::get('traDetailsConfs/{id}/delete', ['as' => 'traDetailsConfs.delete', 'uses' => 'Tra_Details_Conf\Tra_details_confController@getDelete']);
+Route::get('traDetailsConfs/{id}/confirm-delete', ['as' => 'traDetailsConfs.confirm-delete', 'uses' => 'Tra_Details_Conf\Tra_details_confController@getModalDelete']);
+Route::get('traDetailsConfs/{traDetailsConfs}', ['as'=> 'traDetailsConfs.show', 'uses' => 'Tra_Details_Conf\Tra_details_confController@show']);
+Route::get('traDetailsConfs/{traDetailsConfs}/edit', ['as'=> 'traDetailsConfs.edit', 'uses' => 'Tra_Details_Conf\Tra_details_confController@edit']);
+
+});
+
+
+Route::group(array('prefix' => 'admin/traDetailsConf/','namespace' => 'Admin','middleware' => 'admin','as'=>'admin.traDetailsConf.'), function () {
+
+Route::get('traDetailsConfs', ['as'=> 'traDetailsConfs.index', 'uses' => 'Tra_Details_Conf\Tra_details_confController@index']);
+Route::post('traDetailsConfs', ['as'=> 'traDetailsConfs.store', 'uses' => 'Tra_Details_Conf\Tra_details_confController@store']);
+Route::get('traDetailsConfs/create', ['as'=> 'traDetailsConfs.create', 'uses' => 'Tra_Details_Conf\Tra_details_confController@create']);
+Route::put('traDetailsConfs/{traDetailsConfs}', ['as'=> 'traDetailsConfs.update', 'uses' => 'Tra_Details_Conf\Tra_details_confController@update']);
+Route::patch('traDetailsConfs/{traDetailsConfs}', ['as'=> 'traDetailsConfs.update', 'uses' => 'Tra_Details_Conf\Tra_details_confController@update']);
+Route::get('traDetailsConfs/{id}/delete', ['as' => 'traDetailsConfs.delete', 'uses' => 'Tra_Details_Conf\Tra_details_confController@getDelete']);
+Route::get('traDetailsConfs/{id}/confirm-delete', ['as' => 'traDetailsConfs.confirm-delete', 'uses' => 'Tra_Details_Conf\Tra_details_confController@getModalDelete']);
+Route::get('traDetailsConfs/{traDetailsConfs}', ['as'=> 'traDetailsConfs.show', 'uses' => 'Tra_Details_Conf\Tra_details_confController@show']);
+Route::get('traDetailsConfs/{traDetailsConfs}/edit', ['as'=> 'traDetailsConfs.edit', 'uses' => 'Tra_Details_Conf\Tra_details_confController@edit']);
+
+});
+
+
+Route::group(array('prefix' => 'admin/traDetailsConf/','namespace' => 'Admin','middleware' => 'admin','as'=>'admin.traDetailsConf.'), function () {
+
+Route::get('tradetailsconfs', ['as'=> 'tradetailsconfs.index', 'uses' => 'Tra_Details_Conf\TradetailsconfController@index']);
+Route::post('tradetailsconfs', ['as'=> 'tradetailsconfs.store', 'uses' => 'Tra_Details_Conf\TradetailsconfController@store']);
+Route::get('tradetailsconfs/create', ['as'=> 'tradetailsconfs.create', 'uses' => 'Tra_Details_Conf\TradetailsconfController@create']);
+Route::put('tradetailsconfs/{tradetailsconfs}', ['as'=> 'tradetailsconfs.update', 'uses' => 'Tra_Details_Conf\TradetailsconfController@update']);
+Route::patch('tradetailsconfs/{tradetailsconfs}', ['as'=> 'tradetailsconfs.update', 'uses' => 'Tra_Details_Conf\TradetailsconfController@update']);
+Route::get('tradetailsconfs/{id}/delete', ['as' => 'tradetailsconfs.delete', 'uses' => 'Tra_Details_Conf\TradetailsconfController@getDelete']);
+Route::get('tradetailsconfs/{id}/confirm-delete', ['as' => 'tradetailsconfs.confirm-delete', 'uses' => 'Tra_Details_Conf\TradetailsconfController@getModalDelete']);
+Route::get('tradetailsconfs/{tradetailsconfs}', ['as'=> 'tradetailsconfs.show', 'uses' => 'Tra_Details_Conf\TradetailsconfController@show']);
+Route::get('tradetailsconfs/{tradetailsconfs}/edit', ['as'=> 'tradetailsconfs.edit', 'uses' => 'Tra_Details_Conf\TradetailsconfController@edit']);
+
+});
+
+
+Route::group(array('prefix' => 'admin/traDetailsConf/','namespace' => 'Admin','middleware' => 'admin','as'=>'admin.traDetailsConf.'), function () {
+
+Route::get('tradetailsconfs', ['as'=> 'tradetailsconfs.index', 'uses' => 'Tra_Details_Conf\TradetailsconfController@index']);
+Route::post('tradetailsconfs', ['as'=> 'tradetailsconfs.store', 'uses' => 'Tra_Details_Conf\TradetailsconfController@store']);
+Route::get('tradetailsconfs/create', ['as'=> 'tradetailsconfs.create', 'uses' => 'Tra_Details_Conf\TradetailsconfController@create']);
+Route::put('tradetailsconfs/{tradetailsconfs}', ['as'=> 'tradetailsconfs.update', 'uses' => 'Tra_Details_Conf\TradetailsconfController@update']);
+Route::patch('tradetailsconfs/{tradetailsconfs}', ['as'=> 'tradetailsconfs.update', 'uses' => 'Tra_Details_Conf\TradetailsconfController@update']);
+Route::get('tradetailsconfs/{id}/delete', ['as' => 'tradetailsconfs.delete', 'uses' => 'Tra_Details_Conf\TradetailsconfController@getDelete']);
+Route::get('tradetailsconfs/{id}/confirm-delete', ['as' => 'tradetailsconfs.confirm-delete', 'uses' => 'Tra_Details_Conf\TradetailsconfController@getModalDelete']);
+Route::get('tradetailsconfs/{tradetailsconfs}', ['as'=> 'tradetailsconfs.show', 'uses' => 'Tra_Details_Conf\TradetailsconfController@show']);
+Route::get('tradetailsconfs/{tradetailsconfs}/edit', ['as'=> 'tradetailsconfs.edit', 'uses' => 'Tra_Details_Conf\TradetailsconfController@edit']);
+
+});
+
+
+Route::group(array('prefix' => 'admin/traDetailsConf/','namespace' => 'Admin','middleware' => 'admin','as'=>'admin.traDetailsConf.'), function () {
+
+Route::get('tradetailsconfs', ['as'=> 'tradetailsconfs.index', 'uses' => 'Tradetailsconf\TradetailsconfController@index']);
+Route::post('tradetailsconfs', ['as'=> 'tradetailsconfs.store', 'uses' => 'Tradetailsconf\TradetailsconfController@store']);
+Route::get('tradetailsconfs/create', ['as'=> 'tradetailsconfs.create', 'uses' => 'Tradetailsconf\TradetailsconfController@create']);
+Route::put('tradetailsconfs/{tradetailsconfs}', ['as'=> 'tradetailsconfs.update', 'uses' => 'Tradetailsconf\TradetailsconfController@update']);
+Route::patch('tradetailsconfs/{tradetailsconfs}', ['as'=> 'tradetailsconfs.update', 'uses' => 'Tradetailsconf\TradetailsconfController@update']);
+Route::get('tradetailsconfs/{id}/delete', ['as' => 'tradetailsconfs.delete', 'uses' => 'Tradetailsconf\TradetailsconfController@getDelete']);
+Route::get('tradetailsconfs/{id}/confirm-delete', ['as' => 'tradetailsconfs.confirm-delete', 'uses' => 'Tradetailsconf\TradetailsconfController@getModalDelete']);
+Route::get('tradetailsconfs/{tradetailsconfs}', ['as'=> 'tradetailsconfs.show', 'uses' => 'Tradetailsconf\TradetailsconfController@show']);
+Route::get('tradetailsconfs/{tradetailsconfs}/edit', ['as'=> 'tradetailsconfs.edit', 'uses' => 'Tradetailsconf\TradetailsconfController@edit']);
+
+});
+
+
+Route::group(array('prefix' => 'admin/traDetailsConf/','namespace' => 'Admin','middleware' => 'admin','as'=>'admin.traDetailsConf.'), function () {
+
+Route::get('companyDetails', ['as'=> 'companyDetails.index', 'uses' => 'Tradetailsconf\CompanyDetailsController@index']);
+Route::post('companyDetails', ['as'=> 'companyDetails.store', 'uses' => 'Tradetailsconf\CompanyDetailsController@store']);
+Route::get('companyDetails/create', ['as'=> 'companyDetails.create', 'uses' => 'Tradetailsconf\CompanyDetailsController@create']);
+Route::put('companyDetails/{companyDetails}', ['as'=> 'companyDetails.update', 'uses' => 'Tradetailsconf\CompanyDetailsController@update']);
+Route::patch('companyDetails/{companyDetails}', ['as'=> 'companyDetails.update', 'uses' => 'Tradetailsconf\CompanyDetailsController@update']);
+Route::get('companyDetails/{id}/delete', ['as' => 'companyDetails.delete', 'uses' => 'Tradetailsconf\CompanyDetailsController@getDelete']);
+Route::get('companyDetails/{id}/confirm-delete', ['as' => 'companyDetails.confirm-delete', 'uses' => 'Tradetailsconf\CompanyDetailsController@getModalDelete']);
+Route::get('companyDetails/{companyDetails}', ['as'=> 'companyDetails.show', 'uses' => 'Tradetailsconf\CompanyDetailsController@show']);
+Route::get('companyDetails/{companyDetails}/edit', ['as'=> 'companyDetails.edit', 'uses' => 'Tradetailsconf\CompanyDetailsController@edit']);
+
+});
+
+
+Route::group(array('prefix' => 'admin/traDetailsConf/','namespace' => 'Admin','middleware' => 'admin','as'=>'admin.traDetailsConf.'), function () {
+
+Route::get('companyDetails', ['as'=> 'companyDetails.index', 'uses' => 'Tradetailsconf\CompanyDetailsController@index']);
+Route::post('companyDetails', ['as'=> 'companyDetails.store', 'uses' => 'Tradetailsconf\CompanyDetailsController@store']);
+Route::get('companyDetails/create', ['as'=> 'companyDetails.create', 'uses' => 'Tradetailsconf\CompanyDetailsController@create']);
+Route::put('companyDetails/{companyDetails}', ['as'=> 'companyDetails.update', 'uses' => 'Tradetailsconf\CompanyDetailsController@update']);
+Route::patch('companyDetails/{companyDetails}', ['as'=> 'companyDetails.update', 'uses' => 'Tradetailsconf\CompanyDetailsController@update']);
+Route::get('companyDetails/{id}/delete', ['as' => 'companyDetails.delete', 'uses' => 'Tradetailsconf\CompanyDetailsController@getDelete']);
+Route::get('companyDetails/{id}/confirm-delete', ['as' => 'companyDetails.confirm-delete', 'uses' => 'Tradetailsconf\CompanyDetailsController@getModalDelete']);
+Route::get('companyDetails/{companyDetails}', ['as'=> 'companyDetails.show', 'uses' => 'Tradetailsconf\CompanyDetailsController@show']);
+Route::get('companyDetails/{companyDetails}/edit', ['as'=> 'companyDetails.edit', 'uses' => 'Tradetailsconf\CompanyDetailsController@edit']);
+
+});
+
+
+Route::group(array('prefix' => 'admin/traDetailsConf/','namespace' => 'Admin','middleware' => 'admin','as'=>'admin.traDetailsConf.'), function () {
+
+Route::get('companyDetails', ['as'=> 'companyDetails.index', 'uses' => 'Tradetailsconf\CompanyDetailsController@index']);
+Route::post('companyDetails', ['as'=> 'companyDetails.store', 'uses' => 'Tradetailsconf\CompanyDetailsController@store']);
+Route::get('companyDetails/create', ['as'=> 'companyDetails.create', 'uses' => 'Tradetailsconf\CompanyDetailsController@create']);
+Route::put('companyDetails/{companyDetails}', ['as'=> 'companyDetails.update', 'uses' => 'Tradetailsconf\CompanyDetailsController@update']);
+Route::patch('companyDetails/{companyDetails}', ['as'=> 'companyDetails.update', 'uses' => 'Tradetailsconf\CompanyDetailsController@update']);
+Route::get('companyDetails/{id}/delete', ['as' => 'companyDetails.delete', 'uses' => 'Tradetailsconf\CompanyDetailsController@getDelete']);
+Route::get('companyDetails/{id}/confirm-delete', ['as' => 'companyDetails.confirm-delete', 'uses' => 'Tradetailsconf\CompanyDetailsController@getModalDelete']);
+Route::get('companyDetails/{companyDetails}', ['as'=> 'companyDetails.show', 'uses' => 'Tradetailsconf\CompanyDetailsController@show']);
+Route::get('companyDetails/{companyDetails}/edit', ['as'=> 'companyDetails.edit', 'uses' => 'Tradetailsconf\CompanyDetailsController@edit']);
+
+});
+
+
+Route::group(array('prefix' => 'admin/nidcConfigTra/','namespace' => 'Admin','middleware' => 'admin','as'=>'admin.nidcConfigTra.'), function () {
+
+Route::get('nidcConfigs', ['as'=> 'nidcConfigs.index', 'uses' => 'Nidc_Config_Tra\NidcConfigController@index']);
+Route::post('nidcConfigs', ['as'=> 'nidcConfigs.store', 'uses' => 'Nidc_Config_Tra\NidcConfigController@store']);
+Route::get('nidcConfigs/create', ['as'=> 'nidcConfigs.create', 'uses' => 'Nidc_Config_Tra\NidcConfigController@create']);
+Route::post('nidcConfigs/traapi', ['as'=> 'nidcConfigs.traapi', 'uses' => 'Nidc_Config_Tra\NidcConfigController@processTraReceipt']);
+Route::put('nidcConfigs/{nidcConfigs}', ['as'=> 'nidcConfigs.update', 'uses' => 'Nidc_Config_Tra\NidcConfigController@update']);
+Route::patch('nidcConfigs/{nidcConfigs}', ['as'=> 'nidcConfigs.update', 'uses' => 'Nidc_Config_Tra\NidcConfigController@update']);
+Route::get('nidcConfigs/{id}/delete', ['as' => 'nidcConfigs.delete', 'uses' => 'Nidc_Config_Tra\NidcConfigController@getDelete']);
+Route::get('nidcConfigs/{id}/confirm-delete', ['as' => 'nidcConfigs.confirm-delete', 'uses' => 'Nidc_Config_Tra\NidcConfigController@getModalDelete']);
+Route::get('nidcConfigs/{nidcConfigs}', ['as'=> 'nidcConfigs.show', 'uses' => 'Nidc_Config_Tra\NidcConfigController@show']);
+Route::get('nidcConfigs/{nidcConfigs}/edit', ['as'=> 'nidcConfigs.edit', 'uses' => 'Nidc_Config_Tra\NidcConfigController@edit']);
+
+});

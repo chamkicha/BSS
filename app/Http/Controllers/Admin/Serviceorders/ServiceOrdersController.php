@@ -168,6 +168,10 @@ class ServiceOrdersController extends InfyOmBaseController
                                             ->select('users.id','users.first_name','users.last_name')
                                            ->get();
 
+        $payment_mode = DB::table('paymentmodes')
+                            ->where('payment_interval', $serviceOrders->payment_mode)
+                            ->first()->payment_mode_name;
+
         
        // dd($tech_user);
 
@@ -179,7 +183,7 @@ class ServiceOrdersController extends InfyOmBaseController
         "customer_no" => $serviceOrders->customer_no,
         "comments_details" => $comments_details,
         "customer_details" => $customer_details,
-        "payment_mode" => $serviceOrders->payment_mode,
+        "payment_mode" => $payment_mode,
         "serviceordertypes" => $serviceOrders->serviceordertypes,
         "service_status" => $serviceOrders->service_status,
         "sub_total" => $serviceOrders->sub_total,

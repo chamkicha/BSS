@@ -360,3 +360,5 @@ Route::get('{name?}', 'FrontEndController@showFrontEndView');
 Route::post('/serviceapprove', [App\Http\Controllers\ServiceapprovalController::class, 'serviceapprove'])->name('serviceapprove');
 Route::post('/invoicenumber', [App\Http\Controllers\PaymentController::class, 'create'])->name('createPayment');
 Route::post('/invocepayment', [App\Http\Controllers\PaymentController::class, 'store'])->name('storePayment');
+
+

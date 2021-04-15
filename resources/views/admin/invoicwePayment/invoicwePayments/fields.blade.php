@@ -120,6 +120,12 @@
     </select>
 </div>
 
+<!-- Payment Date Field -->
+<div class="form-group col-sm-4">
+    {!! Form::label('created_at', 'Payment Date:') !!}
+    {!! Form::date('created_at', null, ['class' => 'form-control']) !!}
+</div>
+
 <!-- Payment Descriptions Field -->
 <div class="form-group col-sm-4">
     {!! Form::label('payment_descriptions', 'Payment Descriptions:') !!}

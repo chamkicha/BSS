@@ -8,6 +8,7 @@ use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
 use DB;
 use Flash;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class ServiceapprovalController extends Controller
 {
@@ -91,6 +92,7 @@ class ServiceapprovalController extends Controller
     public function serviceapprove(Request $request)
     {   
     
+        //dd($request);
         //IF IS POST PAID 
      if($request->serviceordertypes==='PostPaid') 
      {
@@ -332,6 +334,8 @@ class ServiceapprovalController extends Controller
             // technical  staff activate service
             elseif($request->next_handler_role_id==='3' && $request->req_status==='assigned_activated_req') {
 
+                $this->validate($request, ['activation_date'  => 'required',]);
+
 
                 $nexthandler = DB::table('role_users')->where('role_id','4')->get();
                 $nexthandler = DB::table('users')->where('id',$nexthandler[0]->user_id)->get();
@@ -439,12 +443,20 @@ class ServiceapprovalController extends Controller
                 }else{
                     $invoice_number = $invoice_number->invoice_number + 1;
                 }
+                $activation_date = $request->activation_date;
+                
+                // next_invoice_date creation
+                $payment_mode_intervals = DB::table('paymentmodes')
+                                          ->where('payment_mode_name', $request->payment_mode)
+                                          ->first()->payment_interval;
+                $next_invoice_date = Carbon::parse($activation_date)->addDays($payment_mode_intervals)->format('Y-m-d');
+                // next_invoice_date creation
+                $invoice_due_date = Carbon::parse($next_invoice_date)->addDays(20)->format('Y-m-d');
                 
                 $cusromer_name = $request->customer_name;
                 $customer_no = $request->customer_no;
                 $service_order_no =$request->order_i_d;
                 $due_balance = DB::table('paymentanddues')->where('customer_no', $customer_no)->first();
-                $activation_date = $request->activation_date;
                 $due_balance = $due_balance->total_amount;
                 $current_charges =$request->grand_total;
                 $payment_amount =$request->grand_total;
@@ -481,6 +493,8 @@ class ServiceapprovalController extends Controller
                         'current_charges' => $current_charges, 
                         'service_order_no' => $service_order_no,
                         'invoice_created_date' => $activation_date,
+                        'next_invoice_date' => $next_invoice_date,
+                        'invoice_due_date' => $invoice_due_date,
                         'due_balance' => $due_balance,
                         'service_name' => $service_name,
                         'payment_amount' => $payment_amount,
@@ -501,6 +515,8 @@ class ServiceapprovalController extends Controller
 
             // technical manager activate
             elseif($request->next_handler_role_id==='6' && $request->req_status==='activate') {
+                
+                $this->validate($request, ['activation_date'  => 'required',]);
 
                 // if technical manager activate
 
@@ -610,12 +626,22 @@ class ServiceapprovalController extends Controller
                 }else{
                     $invoice_number = $invoice_number->invoice_number + 1;
                 }
+
+                $activation_date = $request->activation_date;
+
+                
+                // next_invoice_date creation
+                $payment_mode_intervals = DB::table('paymentmodes')
+                                          ->where('payment_mode_name', $request->payment_mode)
+                                          ->first()->payment_interval;
+                $next_invoice_date = Carbon::parse($activation_date)->addDays($payment_mode_intervals)->format('Y-m-d');
+                // next_invoice_date creation
+                $invoice_due_date = Carbon::parse($next_invoice_date)->addDays(20)->format('Y-m-d');
                 
                 $cusromer_name = $request->customer_name;
                 $customer_no = $request->customer_no;
                 $service_order_no =$request->order_i_d;
                 $due_balance = DB::table('paymentanddues')->where('customer_no', $customer_no)->first();
-                $activation_date = $request->activation_date;
                 $due_balance = $due_balance->total_amount;
                 $current_charges =$request->grand_total;
                 $payment_amount =$request->grand_total;
@@ -632,6 +658,8 @@ class ServiceapprovalController extends Controller
                         'current_charges' => $current_charges, 
                         'service_order_no' => $service_order_no,
                         'invoice_created_date' => $activation_date,
+                        'next_invoice_date' => $next_invoice_date,
+                        'invoice_due_date' => $invoice_due_date,
                         'due_balance' => $due_balance,
                         'service_name' => $service_name,
                         'payment_amount' => $payment_amount,
@@ -799,18 +827,28 @@ else{
                 
 
                 // INVOICE creation
+
                 $invoice_number = DB::table('serviceinvoices')->orderBy('invoice_number', 'desc')->first();
                 if(is_null($invoice_number)){
             $invoice_number = 1000;
                 }else{
                     $invoice_number = $invoice_number->invoice_number + 1;
                 }
-                
+
+                $activation_date = date('Y-m-d');
+
+                // next_invoice_date creation
+                $payment_mode_intervals = DB::table('paymentmodes')
+                                          ->where('payment_mode_name', $request->payment_mode)
+                                          ->first()->payment_interval;
+                $next_invoice_date = Carbon::parse($activation_date)->addDays($payment_mode_intervals)->format('Y-m-d');
+                // next_invoice_date creation
+                $invoice_due_date = Carbon::parse($next_invoice_date)->addDays(20)->format('Y-m-d');
+
                 $cusromer_name = $request->customer_name;
                 $customer_no = $request->customer_no;
                 $service_order_no =$request->order_i_d;
                 $due_balance = DB::table('paymentanddues')->where('customer_no', $customer_no)->first();
-                $activation_date = date('Y-m-d');
                 $due_balance = $due_balance->total_amount;
                 $current_charges =$request->grand_total;
                 $payment_amount =$request->grand_total;
@@ -847,6 +885,8 @@ else{
                         'current_charges' => $current_charges, 
                         'service_order_no' => $service_order_no,
                         'invoice_created_date' => $activation_date,
+                        'next_invoice_date' => $next_invoice_date,
+                        'invoice_due_date' => $invoice_due_date,
                         'due_balance' => $due_balance,
                         'service_name' => $service_name,
                         'payment_amount' => $payment_amount,
@@ -972,12 +1012,21 @@ else{
                 }else{
                     $invoice_number = $invoice_number->invoice_number + 1;
                 }
+
+                $activation_date = date('Y-m-d');
+                
+                // next_invoice_date creation
+                $payment_mode_intervals = DB::table('paymentmodes')
+                                          ->where('payment_mode_name', $request->payment_mode)
+                                          ->first()->payment_interval;
+                $next_invoice_date = Carbon::parse($activation_date)->addDays($payment_mode_intervals)->format('Y-m-d');
+                // next_invoice_date creation
+                $invoice_due_date = Carbon::parse($next_invoice_date)->addDays(20)->format('Y-m-d');
                 
                 $cusromer_name = $request->customer_name;
                 $customer_no = $request->customer_no;
                 $service_order_no =$request->order_i_d;
                 $due_balance = DB::table('paymentanddues')->where('customer_no', $customer_no)->first();
-                $activation_date = date('Y-m-d');
                 $due_balance = $due_balance->total_amount;
                 $current_charges =$request->grand_total;
                 $payment_amount =$request->grand_total;
@@ -994,6 +1043,8 @@ else{
                         'current_charges' => $current_charges, 
                         'service_order_no' => $service_order_no,
                         'invoice_created_date' => $activation_date,
+                        'next_invoice_date' => $next_invoice_date,
+                        'invoice_due_date' => $invoice_due_date,
                         'due_balance' => $due_balance,
                         'service_name' => $service_name,
                         'payment_amount' => $payment_amount,
@@ -1289,7 +1340,8 @@ public function customer_report_revenue($clientreport)
     //dd($clientreport);
     
 
-}
+} // END CUSTOMER REVENUE REPORT CLASS
+
 
 
 }

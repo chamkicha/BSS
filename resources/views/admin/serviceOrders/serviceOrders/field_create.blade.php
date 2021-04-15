@@ -139,7 +139,7 @@ function serviceorder()
                                                                             
                                                                             <option value="">Select Payment Mode</option>
                                                                             @foreach($paymentmode_list as $paymentmode)
-                                                                            <option value="{{ $paymentmode->payment_mode_name}}">{{ $paymentmode->payment_mode_name }}</option>
+                                                                            <option value="{{ $paymentmode->payment_interval}}">{{ $paymentmode->payment_mode_name }}</option>
                                                                             @endforeach
                                                                         </optgroup>
                                                                     </select>
