@@ -7,7 +7,6 @@
         <th>Service Order No</th>
         <th>Due Balance</th>
         <th>Current Charges</th>
-        <th>Payment Amount</th>
         <th>Payment Status</th>
         <th>Service Name</th>
         <th>Cusromer Name</th>
@@ -22,7 +21,6 @@
             <td>{!! $serviceInvoice->service_order_no !!}</td>
             <td>{!! $serviceInvoice->due_balance !!}</td>
             <td>{!! $serviceInvoice->current_charges !!}</td>
-            <td>{!! $serviceInvoice->payment_amount !!}</td>
             <td>{!! $serviceInvoice->payment_status !!}</td>
             <td>
             

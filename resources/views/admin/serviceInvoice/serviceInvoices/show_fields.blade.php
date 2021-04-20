@@ -415,6 +415,13 @@
 
                                         </div>
 
+                                        
+                                        <!-- customer t_i_n_number Field -->
+                                        <div class="form-group col-sm-12">
+                                            <input type="hidden" id="t_i_n_number" name="t_i_n_number" class="form-control" value="{{$serviceInvoice['t_i_n_number'] }}" >
+
+                                        </div>
+
                                         @if(empty($serviceInvoice['qrcode_path']))
 
                                         <button type="submit" class="btn btn_marTop button-alignment btn-secondary default_voice"
