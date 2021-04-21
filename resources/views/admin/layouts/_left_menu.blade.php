@@ -46,12 +46,6 @@
         </a>
         <ul class="sub-menu">
             
-            <li {!! (Request::is('admin/serviceBilling/serviceBillings*') ? 'class="active" id="active"' : '' ) !!}">
-                <a href="{!! route('admin.serviceBilling.serviceBillings.index') !!}">
-                <i class="fa fa-angle-double-right"></i>
-                        Service Billings
-                </a>
-            </li>
             
             <li {!! (Request::is('admin/serviceInvoice/serviceInvoices*') ? 'class="active" id="active"' : '' ) !!}>
                 <a href="{!! route('admin.serviceInvoice.serviceInvoices.index') !!}">
