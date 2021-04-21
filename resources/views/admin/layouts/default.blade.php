@@ -35,7 +35,6 @@
         </div>
         <div class="navbar-right toggle">
             <ul class="nav navbar-nav  list-inline">
-                @include('admin.layouts._messages')
                 @include('admin.layouts._notifications')
                 <li class=" nav-item dropdown user user-menu">
                     <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
@@ -151,10 +150,7 @@
     </aside>
     <!-- right-side -->
 </div>
-<a id="back-to-top" href="#" class="btn btn-primary btn-lg back-to-top" role="button" title="Return to top"
-   data-toggle="tooltip" data-placement="left">
-    <i class="livicon" data-name="plane-up" data-size="18" data-loop="true" data-c="#fff" data-hc="white"></i>
-</a>
+
 <!-- global js -->
 
 <script src="{{ asset('js/admin.js') }}" type="text/javascript"></script>

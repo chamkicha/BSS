@@ -573,3 +573,18 @@ Route::get('nidcConfigs/{nidcConfigs}', ['as'=> 'nidcConfigs.show', 'uses' => 'N
 Route::get('nidcConfigs/{nidcConfigs}/edit', ['as'=> 'nidcConfigs.edit', 'uses' => 'Nidc_Config_Tra\NidcConfigController@edit']);
 
 });
+
+
+Route::group(array('prefix' => 'admin/reports/','namespace' => 'Admin','middleware' => 'admin','as'=>'admin.reports.'), function () {
+
+Route::get('reports', ['as'=> 'reports.index', 'uses' => 'Reports\ReportsController@index']);
+Route::post('reports', ['as'=> 'reports.store', 'uses' => 'Reports\ReportsController@store']);
+Route::get('reports/create', ['as'=> 'reports.create', 'uses' => 'Reports\ReportsController@create']);
+Route::put('reports/{reports}', ['as'=> 'reports.update', 'uses' => 'Reports\ReportsController@update']);
+Route::patch('reports/{reports}', ['as'=> 'reports.update', 'uses' => 'Reports\ReportsController@update']);
+Route::get('reports/{id}/delete', ['as' => 'reports.delete', 'uses' => 'Reports\ReportsController@getDelete']);
+Route::get('reports/{id}/confirm-delete', ['as' => 'reports.confirm-delete', 'uses' => 'Reports\ReportsController@getModalDelete']);
+Route::get('reports/{reports}', ['as'=> 'reports.show', 'uses' => 'Reports\ReportsController@show']);
+Route::get('reports/{reports}/edit', ['as'=> 'reports.edit', 'uses' => 'Reports\ReportsController@edit']);
+
+});

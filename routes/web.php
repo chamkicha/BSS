@@ -361,4 +361,6 @@ Route::post('/serviceapprove', [App\Http\Controllers\ServiceapprovalController::
 Route::post('/invoicenumber', [App\Http\Controllers\PaymentController::class, 'create'])->name('createPayment');
 Route::post('/invocepayment', [App\Http\Controllers\PaymentController::class, 'store'])->name('storePayment');
 
+//REPORTS
+
 

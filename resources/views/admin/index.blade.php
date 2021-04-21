@@ -24,7 +24,7 @@ NIDC
 @section('content')
 
 <section class="content-header">
-    <h1>Welcome to Dashboard</h1>
+    <h1>Welcome to NIDC-BSS</h1>
     <ol class="breadcrumb">
         <li class=" breadcrumb-item active">
             <a href="#">
@@ -57,11 +57,11 @@ NIDC
                             <div class="row">
                                 <div class="col-6">
                                     <small class="stat-label">Active</small>
-                                    <h4 id="myTargetElement1.1"></h4>
+                                    <h4 >{{activeclient()}}</h4>
                                 </div>
                                 <div class="col-6 text-right">
                                     <small class="stat-label">Inactive</small>
-                                    <h4 id="myTargetElement1.2"></h4>
+                                    <h4 >{{inactiveclient()}}</h4>
                                 </div>
                             </div>
                         </div>
@@ -90,11 +90,11 @@ NIDC
                             <div class="row">
                                 <div class="col-6">
                                     <small class="stat-label">Active</small>
-                                    <h4 id="myTargetElement2.1"></h4>
+                                    <h4 >{{serviceorderactive()}}</h4>
                                 </div>
                                 <div class="col-6 text-right">
                                     <small class="stat-label">Inactive</small>
-                                    <h4 id="myTargetElement2.2"></h4>
+                                    <h4 >{{serviceorderinactive()}}</h4>
                                 </div>
                             </div>
                         </div>
@@ -112,7 +112,7 @@ NIDC
                                 <div class="square_box col-6 float-left">
                                     <span>Total Income</span>
 
-                                    <div class="number" id="myTargetElement3"></div>
+                                    <div class="number" >{{totalincome()}}</div>
                                 </div>
                                 <div class="col-6">
                                     <i class="livicon float-right" data-name="archive-add" data-l="true" data-c="#fff"
@@ -122,11 +122,11 @@ NIDC
                             <div class="row">
                                 <div class="col-6">
                                     <small class="stat-label">Paid</small>
-                                    <h4 id="myTargetElement3.1"></h4>
+                                    <h4 >{{paid()}}</h4>
                                 </div>
                                 <div class="col-6 text-right">
                                     <small class="stat-label">Dept</small>
-                                    <h4 id="myTargetElement3.2"></h4>
+                                    <h4 >{{dept()}}</h4>
                                 </div>
                             </div>
                         </div>
@@ -142,9 +142,9 @@ NIDC
                         <div class="col-12 float-left nopadmar">
                             <div class="row">
                                 <div class="square_box col-6 float-left">
-                                    <span>Registered Users</span>
+                                    <span>Service Invoice</span>
 
-                                    <div class="number" id="myTargetElement4"></div>
+                                    <div class="number" >{{invoices()}}</div>
                                 </div>
                                 <div class="col-6">
                                     <i class="livicon float-right" data-name="users" data-l="true" data-c="#fff"
@@ -153,12 +153,12 @@ NIDC
                             </div>
                             <div class="row">
                                 <div class="col-6">
-                                    <small class="stat-label">Last Week</small>
-                                    <h4 id="myTargetElement4.1"></h4>
+                                    <small class="stat-label">Paid</small>
+                                    <h4 >{{paidinvoices()}}</h4>
                                 </div>
                                 <div class="col-6 text-right">
-                                    <small class="stat-label">Last Month</small>
-                                    <h4 id="myTargetElement4.2"></h4>
+                                    <small class="stat-label">Unpaid</small>
+                                    <h4 >{{unpaidinvoices()}}</h4>
                                 </div>
                             </div>
                         </div>
@@ -247,301 +247,6 @@ NIDC
             <!-- END BEGIN Percentage monitor-->
         </div>
     </div>
-    <div class="clearfix"></div>
-    <div class="row">
-        <div class="col-lg-6 col-md-6 col-sm-6 my-3">
-            <div class="card card-border">
-                <div class="card-header bg-success text-white">
-
-                    <i class="livicon" data-name="calendar" data-size="16" data-loop="true" data-c="#fff"
-                        data-hc="#fff"></i> Calendar
-
-                </div>
-                <div class="card-body">
-                    <div id='external-events'></div>
-                    <div id="calendar"></div>
-                    <div id="fullCalModal" class="modal fade">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h4 id="modalTitle" class="modal-title"></h4>
-                                    <button type="button" class="close" data-dismiss="modal"><span
-                                            aria-hidden="true">×</span> <span class="sr-only">close</span></button>
-
-                                </div>
-                                <div id="modalBody" class="modal-body">
-                                    <i class="mdi-action-alarm-on"></i>&nbsp;&nbsp;Start: <span
-                                        id="startTime"></span>&nbsp;&nbsp;-
-                                    End: <span id="endTime"></span>
-                                    <h4 id="eventInfo"></h4>
-                                    <br>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-raised btn-danger " data-dismiss="modal">
-                                        Close
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="box-footer pad-5">
-                        <a href="#" class="btn btn-success btn-block createevent_btn clr" data-toggle="modal"
-                            data-target="#myModal">Create event
-                        </a>
-                    </div>
-                    <!-- Modal -->
-                    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-                        aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h4 class="modal-title mr-auto" id="myModalLabel">
-                                        <i class="fa fa-plus"></i> Create Event
-                                    </h4>
-                                    <button type="button" class="close reset" data-dismiss="modal"
-                                        aria-hidden="true">&times;</button>
-                                </div>
-                                <div class="modal-body">
-                                    <div class="input-group">
-                                        <input type="text" id="new-event" class="form-control" placeholder="Event">
-                                        <div class="input-group-btn">
-                                            <button type="button" id="color-chooser-btn"
-                                                class="color-chooser btn btn-info dropdown-toggle"
-                                                data-toggle="dropdown">
-                                                Type
-                                                <span class="caret"></span>
-                                            </button>
-                                            <ul class="dropdown-menu float-right" id="color-chooser">
-                                                <li>
-                                                    <a class="palette-primary" href="#">Primary</a>
-                                                </li>
-                                                <li>
-                                                    <a class="palette-success" href="#">Success</a>
-                                                </li>
-                                                <li>
-                                                    <a class="palette-info" href="#">Info</a>
-                                                </li>
-                                                <li>
-                                                    <a class="palette-warning" href="#">warning</a>
-                                                </li>
-                                                <li>
-                                                    <a class="palette-danger" href="#">Danger</a>
-                                                </li>
-                                                <li>
-                                                    <a class="palette-default" href="#">Default</a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <!-- /btn-group -->
-                                    </div>
-                                    <!-- /input-group -->
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-success mr-auto" id="add-new-event"
-                                        data-dismiss="modal">
-                                        <i class="fa fa-plus"></i> Add
-                                    </button>
-                                    <button type="button" class="btn btn-danger justify-content-end reset"
-                                        data-dismiss="modal">
-                                        Close
-                                        <i class="fa fa-times"></i>
-                                    </button>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal fade" id="evt_modal" tabindex="-1" role="dialog" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h4 class="modal-title" id="myModalLabel">
-                                        <i class="fa fa-plus"></i>
-                                        Edit Event
-                                    </h4>
-                                    <button type="button" class="close reset" data-dismiss="modal"
-                                        aria-hidden="true">&times;</button>
-
-
-                                </div>
-                                <div class="modal-body">
-                                    <div class="input-group">
-                                        <input type="text" id="event_title" class="form-control" placeholder="Event">
-                                        <div class="input-group-btn">
-                                            <button type="button" id="color-chooser-btn_edit"
-                                                class="color-chooser btn btn-info dropdown-toggle "
-                                                data-toggle="dropdown">
-                                                Type
-                                                <span class="caret"></span>
-                                            </button>
-                                            <ul class="dropdown-menu float-right" id="color-chooser">
-                                                <li>
-                                                    <a class="palette-primary" href="#">Primary</a>
-                                                </li>
-                                                <li>
-                                                    <a class="palette-success" href="#">Success</a>
-                                                </li>
-                                                <li>
-                                                    <a class="palette-info" href="#">Info</a>
-                                                </li>
-                                                <li>
-                                                    <a class="palette-warning" href="#">warning</a>
-                                                </li>
-                                                <li>
-                                                    <a class="palette-danger" href="#">Danger</a>
-                                                </li>
-                                                <li>
-                                                    <a class="palette-default" href="#">Default</a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <!-- /btn-group -->
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-success mr-auto text_save"
-                                        data-dismiss="modal">
-                                        Update
-                                    </button>
-                                    <button type="button" class="btn btn-danger float-right" data-dismiss="modal">
-                                        Close
-                                        <i class="fa fa-times"></i>
-                                    </button>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- To do list -->
-        <div class="col-lg-6 col-md-6 col-sm-6 my-3">
-            <div class="card todolist">
-                <div class="card-header bg-primary text-white ">
-                    <span class=" background_color">
-                        <i class="livicon" data-name="medal" data-size="18" data-color="white" data-hc="white"
-                            data-l="true"></i>
-                        Tasks
-                    </span>
-                </div>
-                <div class="card-body nopadmar top_height">
-                    <div class="card-body">
-                        <div class="scroller_height">
-                            <div class="row list_of_items">
-                            </div>
-                            <div class="clearfix"></div>
-                        </div>
-                    </div>
-
-                    <div class="add_list adds bg_white">
-                        {!! Form::open(['class'=>'form', 'id'=>'main_input_box']) !!}
-                        <div class="form-group">
-                            {!! Form::label('task_description', 'Task description: ') !!}
-                            {!! Form::text('task_description', null, ['class' =>
-                            'form-control','id'=>'task_description', 'required' => 'required']) !!}
-                        </div>
-                        <div class="form-group">
-                            {!! Form::label('task_deadline', 'Deadline: ') !!}
-                            {!! Form::text('task_deadline', null, ['class' => 'form-control datepicker',
-                            'id'=>'task_deadline', 'data-date-format'=> 'YYYY/MM/DD', 'required' =>
-                            'required','autocomplete' => 'off']) !!}
-                        </div>
-                        <button type="submit" class="btn btn-primary add_button">
-                            Add Task
-                        </button>
-                        {!! Form::close() !!}
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="clearfix"></div>
-    <div class="row">
-        <div class="col-md-4 col-sm-12 col-lg-4 col-12 my-3">
-            <div class="card ">
-                <div class="card-header bg-danger bdr text-white">
-                    <span>
-                        <i class="livicon" data-name="mail" data-size="18" data-color="white" data-hc="white"
-                            data-l="true"></i>
-                        Quick Mail
-                    </span>
-                </div>
-                <div class="card-body">
-                    <div class="compose row">
-                        <label class="col-sm-1 col-md-3 d-none d-sm-block" style="padding: 0">To:</label>
-                        <input type="text" class="col-sm-11 col-md-9 col-12" placeholder="name@email.com "
-                            tabindex="1" />
-
-                        <div class="clear"></div>
-                        <label class="col-sm-1 col-md-3 hidden-xs" style="padding: 0">Subject:</label>
-                        <input type="text" class="col-sm-11 col-md-9 col-12" tabindex="1" placeholder="Subject" />
-
-                        <div class="clear"></div>
-                        <div class="box-body">
-                            <form>
-                                <textarea class="textarea textarea_home form-control"
-                                    placeholder="Write mail content here" cols="6" rows="6"></textarea>
-                            </form>
-                        </div>
-                        <div class="ml-auto my-2">
-                            <a href="#" class="btn btn-danger clr">Send</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-8 col-md-8 col-sm-12 my-3">
-            <div class="card card-border">
-
-                <div class="card-header">
-                    <h4 class="card-title float-left margin-top-10">
-                        <i class="livicon" data-name="map" data-size="16" data-loop="true" data-c="#515763"
-                            data-hc="#515763"></i>
-                        Visitors Map
-                    </h4>
-
-                    <div class="btn-group float-right">
-                        <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown">
-                            <i class="livicon" data-name="settings" data-size="16" data-loop="true" data-c="#515763"
-                                data-hc="#515763"></i>
-                        </button>
-                        <ul class="dropdown-menu" role="menu">
-                            <li>
-                                <a class="card-collapse collapses" href="#">
-                                    <i class="fa fa-angle-up"></i>
-                                    <span>Collapse</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a class="card-refresh" href="#">
-                                    <i class="fa fa-redo"></i>
-                                    <span>Refresh</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a class="card-config" href="#card-config" data-toggle="modal">
-                                    <i class="fa fa-wrench"></i>
-                                    <span>Configurations</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a class="card-expand" href="#">
-                                    <i class="fa fa-expand"></i>
-                                    <span>Fullscreen</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-
-                </div>
-                <div class="card-body nopadmar nopad_lr">
-                    <div id="world-map-markers" style="width:100%; height:300px;"></div>
-                </div>
-            </div>
-        </div>
-    </div>
 </section>
 <div class="modal fade" id="editConfirmModal" tabindex="-1" role="dialog">
     <div class="modal-dialog">
@@ -610,10 +315,70 @@ use App\Models\User;
         return $customers;
     } 
 
+    function activeclient()
+    {      
+        $customers = DB::table('customers')->where('customer_status', 'active')->count();
+        return $customers;
+    } 
+
+    function inactiveclient()
+    {      
+        $customers = DB::table('customers')->where('customer_status', 'inactive')->count();
+        return $customers;
+    } 
+
     function serviceorder()
     {      
         $serviceorder = DB::table('serviceorderss')->count();
         return $serviceorder;
+    } 
+
+    function serviceorderactive()
+    {      
+        $serviceorder = DB::table('serviceorderss')->where('service_status', 'active')->count();
+        return $serviceorder;
+    } 
+
+    function serviceorderinactive()
+    {      
+        $serviceorder = DB::table('serviceorderss')->where('service_status', 'inactive')->count();
+        return $serviceorder;
+    } 
+
+    function totalincome()
+    {      
+        $serviceorder = DB::table('serviceinvoices')->sum('grand_total');
+        return $serviceorder;
+    } 
+
+    function paid()
+    {      
+        $serviceorder = DB::table('paymentanddues')->sum('paid_amount');
+        return $serviceorder;
+    } 
+
+    function dept()
+    {      
+        $serviceorder = DB::table('paymentanddues')->sum('balance');
+        return $serviceorder;
+    } 
+
+    function invoices()
+    {      
+        $invoices = DB::table('serviceinvoices')->count();
+        return $invoices;
+    } 
+
+    function paidinvoices()
+    {      
+        $paidinvoices = DB::table('serviceinvoices')->where('payment_status','Fully')->count();
+        return $paidinvoices;
+    } 
+
+    function unpaidinvoices()
+    {      
+        $unpaidinvoices = DB::table('serviceinvoices')->where('payment_status','!=','Fully')->count();
+        return $unpaidinvoices;
     } 
 
 

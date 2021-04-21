@@ -29,9 +29,14 @@ ServiceOrders
                 <h4 class="card-title float-left"> <i class="livicon" data-name="list-ul" data-size="16" data-loop="true" data-c="#fff" data-hc="white"></i>
                     Service Orders List
                 </h4>
+
+                @if (Sentinel::inRole('admin') or Sentinel::inRole('commercial-manager') or Sentinel::inRole('commercial'))
+                   
                 <div class="float-right">
                     <a href="{{ route('admin.serviceOrders.serviceOrders.create') }}" class="btn btn-sm btn-secondary"><span class="fa fa-plus"></span> @lang('button.create')</a>
                 </div>
+
+                @endif
             </div>
             <br />
             <div class="card-body table-responsive">
