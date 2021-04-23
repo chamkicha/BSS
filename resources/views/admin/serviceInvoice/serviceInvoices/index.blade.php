@@ -8,7 +8,6 @@ ServiceInvoices
 {{-- Page content --}}
 @section('content')
 <section class="content-header">
-    <h1>ServiceInvoices</h1>
     <ol class="breadcrumb">
         <li>
             <a href="{{ route('admin.dashboard') }}"> <i class="livicon" data-name="home" data-size="16" data-color="#000"></i>
@@ -16,7 +15,7 @@ ServiceInvoices
             </a>
         </li>
         <li>ServiceInvoices</li>
-        <li class="active">ServiceInvoices List</li>
+        <li class="active">Service Invoices List</li>
     </ol>
 </section>
 
@@ -28,7 +27,7 @@ ServiceInvoices
         <div class="card border-primary ">
             <div class="card-header bg-primary text-white">
                 <h4 class="card-title float-left"> <i class="livicon" data-name="list-ul" data-size="16" data-loop="true" data-c="#fff" data-hc="white"></i>
-                    ServiceInvoices List
+                    Service Invoices List
                 </h4>
                 <div class="float-right">
                     <a href="{{ route('admin.serviceInvoice.serviceInvoices.create') }}" class="btn btn-sm btn-secondary"><span class="fa fa-plus"></span> @lang('button.create')</a>

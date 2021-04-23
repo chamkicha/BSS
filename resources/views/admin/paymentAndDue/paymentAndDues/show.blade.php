@@ -7,7 +7,6 @@ PaymentAndDue
 
 @section('content')
 <section class="content-header">
-    <h1>PaymentAndDue View</h1>
     <ol class="breadcrumb">
         <li>
             <a href="{{ route('admin.dashboard') }}"> <i class="livicon" data-name="home" data-size="16" data-color="#000"></i>
@@ -15,7 +14,7 @@ PaymentAndDue
             </a>
         </li>
         <li>PaymentAndDues</li>
-        <li class="active">PaymentAndDue View</li>
+        <li class="active">Payment And Due View</li>
     </ol>
 </section>
 
@@ -26,7 +25,7 @@ PaymentAndDue
        <div class="card border-primary">
                 <div class="card-header bg-primary text-white">
                     <h4 class="card-title"> <i class="livicon" data-name="list-ul" data-size="16" data-loop="true" data-c="#fff" data-hc="white"></i>
-                        PaymentAndDue details
+                        Payment And Due details
                     </h4>
                 </div>
                     <div class="card-body">

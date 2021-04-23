@@ -11,7 +11,7 @@ class CreditNote extends Model
 {
     use SoftDeletes;
 
-    public $table = 'CreditNotes';
+    public $table = 'creditnotes';
     
 
     protected $dates = ['deleted_at'];

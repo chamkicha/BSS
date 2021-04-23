@@ -11,7 +11,7 @@ class ServiceInvoice extends Model
 {
     use SoftDeletes;
 
-    public $table = 'ServiceInvoices';
+    public $table = 'serviceinvoices';
     
 
     protected $dates = ['deleted_at'];

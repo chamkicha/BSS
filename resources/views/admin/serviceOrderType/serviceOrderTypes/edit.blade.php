@@ -7,15 +7,14 @@ ServiceOrderTypes
 @section('content')
   @include('common.errors')
     <section class="content-header">
-     <h1>ServiceOrderTypes Edit</h1>
      <ol class="breadcrumb">
          <li>
              <a href="{{ route('admin.dashboard') }}"> <i class="livicon" data-name="home" data-size="16" data-color="#000"></i>
                  Dashboard
              </a>
          </li>
-         <li>ServiceOrderTypes</li>
-         <li class="active">Edit ServiceOrderType </li>
+         <li>Service Order Types</li>
+         <li class="active">Edit Service Order Type </li>
      </ol>
     </section>
     <section class="content">
@@ -25,7 +24,7 @@ ServiceOrderTypes
               <div class="card border-primary">
                     <div class="card-header bg-primary text-white">
                         <h4 class="card-title"> <i class="livicon" data-name="user" data-size="16" data-loop="true" data-c="#fff" data-hc="white"></i>
-                            Edit  ServiceOrderType
+                            Edit  Service Order Type
                         </h4></div>
                     <br />
                 <div class="card-body">

@@ -41,6 +41,7 @@ class ServiceOrdersController extends InfyOmBaseController
 
         $this->serviceOrdersRepository->pushCriteria(new RequestCriteria($request));
         $serviceOrders = $this->serviceOrdersRepository->all();
+        //dd($serviceOrders);
         return view('admin.serviceOrders.serviceOrders.index')
             ->with('serviceOrders', $serviceOrders);
     }
@@ -55,7 +56,7 @@ class ServiceOrdersController extends InfyOmBaseController
 
         
         $customer_list = Customer::get();
-        $paymentmode_list = Paymentmode::get();
+        $paymentmode_list = DB::table('paymentmodes')->get();
         $service_order_type = DB::table('serviceordertypes')->get();
         $product_list = Product::get();
         return view('admin.serviceOrders.serviceOrders.create')

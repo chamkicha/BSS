@@ -11,7 +11,7 @@ class NidcConfig extends Model
 {
     use SoftDeletes;
 
-    public $table = 'nidcConfigs';
+    public $table = 'nidcconfigs';
     
 
     protected $dates = ['deleted_at'];

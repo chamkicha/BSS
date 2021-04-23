@@ -11,7 +11,7 @@ class ServiceBilling extends Model
 {
     use SoftDeletes;
 
-    public $table = 'ServiceBillings';
+    public $table = 'servicebillings';
     
 
     protected $dates = ['deleted_at'];

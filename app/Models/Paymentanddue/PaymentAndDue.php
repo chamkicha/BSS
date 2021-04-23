@@ -11,7 +11,7 @@ class PaymentAndDue extends Model
 {
     use SoftDeletes;
 
-    public $table = 'PaymentAndDues';
+    public $table = 'paymentanddues';
     
 
     protected $dates = ['deleted_at'];

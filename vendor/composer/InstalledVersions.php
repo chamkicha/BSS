@@ -30,7 +30,7 @@ private static $installed = array (
     'aliases' => 
     array (
     ),
-    'reference' => '8406e50824b694ec91e48ba705f7c606b12a022b',
+    'reference' => 'f3fc116859884e91351b8c73451149ffdbea9cce',
     'name' => 'josh/laravel',
   ),
   'versions' => 
@@ -742,7 +742,7 @@ private static $installed = array (
       'aliases' => 
       array (
       ),
-      'reference' => '8406e50824b694ec91e48ba705f7c606b12a022b',
+      'reference' => 'f3fc116859884e91351b8c73451149ffdbea9cce',
     ),
     'justinrainbow/json-schema' => 
     array (
@@ -1251,8 +1251,8 @@ private static $installed = array (
     array (
       'provided' => 
       array (
-        0 => '1.0.0',
-        1 => '1.0',
+        0 => '1.0',
+        1 => '1.0.0',
       ),
     ),
     'psr/simple-cache' => 

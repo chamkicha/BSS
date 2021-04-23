@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class UnitofMeasure extends Model
 {
 
-    public $table = 'UnitofMeasures';
+    public $table = 'unitofmeasures';
     
 
 

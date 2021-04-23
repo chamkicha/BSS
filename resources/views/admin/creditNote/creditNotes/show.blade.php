@@ -7,7 +7,6 @@ CreditNote
 
 @section('content')
 <section class="content-header">
-    <h1>CreditNote View</h1>
     <ol class="breadcrumb">
         <li>
             <a href="{{ route('admin.dashboard') }}"> <i class="livicon" data-name="home" data-size="16" data-color="#000"></i>
@@ -15,7 +14,7 @@ CreditNote
             </a>
         </li>
         <li>CreditNotes</li>
-        <li class="active">CreditNote View</li>
+        <li class="active">Credit Note View</li>
     </ol>
 </section>
 
@@ -26,7 +25,7 @@ CreditNote
        <div class="card border-primary">
                 <div class="card-header bg-primary text-white">
                     <h4 class="card-title"> <i class="livicon" data-name="list-ul" data-size="16" data-loop="true" data-c="#fff" data-hc="white"></i>
-                        CreditNote details
+                        Credit Note details
                     </h4>
                 </div>
                     <div class="card-body">

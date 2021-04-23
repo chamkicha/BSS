@@ -7,15 +7,14 @@ ServiceInvoice
 
 @section('content')
 <section class="content-header">
-    <h1>ServiceInvoice View</h1>
     <ol class="breadcrumb">
         <li>
             <a href="{{ route('admin.dashboard') }}"> <i class="livicon" data-name="home" data-size="16" data-color="#000"></i>
                 Dashboard
             </a>
         </li>
-        <li>ServiceInvoices</li>
-        <li class="active">ServiceInvoice View</li>
+        <li>Service Invoices</li>
+        <li class="active">Service Invoice View</li>
     </ol>
 </section>
 
@@ -26,7 +25,7 @@ ServiceInvoice
        <div class="card border-primary">
                 <div class="card-header bg-primary text-white">
                     <h4 class="card-title"> <i class="livicon" data-name="list-ul" data-size="16" data-loop="true" data-c="#fff" data-hc="white"></i>
-                        ServiceInvoice details
+                        Service Invoice details
                     </h4>
                 </div>
                     <div class="card-body">

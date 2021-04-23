@@ -14,7 +14,7 @@ InvoicwePayment
                 Dashboard
             </a>
         </li>
-        <li>InvoicwePayments</li>
+        <li>Invoice Payments</li>
         <li class="active">Create Invoice Payment </li>
     </ol>
 </section>

@@ -7,7 +7,7 @@ CreditNotes
 @section('content')
   @include('common.errors')
     <section class="content-header">
-     <h1>CreditNotes Edit</h1>
+     <h1>Credit Notes Edit</h1>
      <ol class="breadcrumb">
          <li>
              <a href="{{ route('admin.dashboard') }}"> <i class="livicon" data-name="home" data-size="16" data-color="#000"></i>
@@ -15,7 +15,7 @@ CreditNotes
              </a>
          </li>
          <li>CreditNotes</li>
-         <li class="active">Edit CreditNote </li>
+         <li class="active">Edit Credit Note </li>
      </ol>
     </section>
     <section class="content">
@@ -25,7 +25,7 @@ CreditNotes
               <div class="card border-primary">
                     <div class="card-header bg-primary text-white">
                         <h4 class="card-title"> <i class="livicon" data-name="user" data-size="16" data-loop="true" data-c="#fff" data-hc="white"></i>
-                            Edit  CreditNote
+                            Edit  Credit Note
                         </h4></div>
                     <br />
                 <div class="card-body">

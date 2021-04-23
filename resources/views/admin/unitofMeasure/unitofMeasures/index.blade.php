@@ -8,15 +8,14 @@ UnitofMeasures
 {{-- Page content --}}
 @section('content')
 <section class="content-header">
-    <h1>UnitofMeasures</h1>
     <ol class="breadcrumb">
         <li>
             <a href="{{ route('admin.dashboard') }}"> <i class="livicon" data-name="home" data-size="16" data-color="#000"></i>
                 Dashboard
             </a>
         </li>
-        <li>UnitofMeasures</li>
-        <li class="active">UnitofMeasures List</li>
+        <li>Unit of Measures</li>
+        <li class="active">Unit of Measures List</li>
     </ol>
 </section>
 

@@ -11,7 +11,7 @@ class AgingAnalysisReport extends Model
 {
     use SoftDeletes;
 
-    public $table = 'AgingAnalysisReports';
+    public $table = 'aginganalysisreports';
     
 
     protected $dates = ['deleted_at'];

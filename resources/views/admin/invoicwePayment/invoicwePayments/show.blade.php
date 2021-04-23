@@ -1,21 +1,20 @@
 @extends('admin/layouts/default')
 
 @section('title')
-InvoicwePayment
+Invoice Payment
 @parent
 @stop
 
 @section('content')
 <section class="content-header">
-    <h1>InvoicwePayment View</h1>
     <ol class="breadcrumb">
         <li>
             <a href="{{ route('admin.dashboard') }}"> <i class="livicon" data-name="home" data-size="16" data-color="#000"></i>
                 Dashboard
             </a>
         </li>
-        <li>InvoicwePayments</li>
-        <li class="active">InvoicwePayment View</li>
+        <li>Invoice Payments</li>
+        <li class="active">Invoice Payment View</li>
     </ol>
 </section>
 
@@ -26,7 +25,7 @@ InvoicwePayment
        <div class="card border-primary">
                 <div class="card-header bg-primary text-white">
                     <h4 class="card-title"> <i class="livicon" data-name="list-ul" data-size="16" data-loop="true" data-c="#fff" data-hc="white"></i>
-                        InvoicwePayment details
+                        Invoice Payment details
                     </h4>
                 </div>
                     <div class="card-body">

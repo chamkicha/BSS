@@ -7,7 +7,6 @@ InvoicwePayments
 @section('content')
   @include('common.errors')
     <section class="content-header">
-     <h1>InvoicwePayments Edit</h1>
      <ol class="breadcrumb">
          <li>
              <a href="{{ route('admin.dashboard') }}"> <i class="livicon" data-name="home" data-size="16" data-color="#000"></i>
@@ -15,7 +14,7 @@ InvoicwePayments
              </a>
          </li>
          <li>InvoicwePayments</li>
-         <li class="active">Edit InvoicwePayment </li>
+         <li class="active">Edit Invoice Payment </li>
      </ol>
     </section>
     <section class="content">
@@ -25,7 +24,7 @@ InvoicwePayments
               <div class="card border-primary">
                     <div class="card-header bg-primary text-white">
                         <h4 class="card-title"> <i class="livicon" data-name="user" data-size="16" data-loop="true" data-c="#fff" data-hc="white"></i>
-                            Edit  InvoicwePayment
+                            Edit  Invoice Payment
                         </h4></div>
                     <br />
                 <div class="card-body">

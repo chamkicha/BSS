@@ -7,15 +7,14 @@ ProductTypes
 @section('content')
   @include('common.errors')
     <section class="content-header">
-     <h1>ProductTypes Edit</h1>
      <ol class="breadcrumb">
          <li>
              <a href="{{ route('admin.dashboard') }}"> <i class="livicon" data-name="home" data-size="16" data-color="#000"></i>
                  Dashboard
              </a>
          </li>
-         <li>ProductTypes</li>
-         <li class="active">Edit ProductType </li>
+         <li>Product Types</li>
+         <li class="active">Edit Product Type </li>
      </ol>
     </section>
     <section class="content">
@@ -25,7 +24,7 @@ ProductTypes
               <div class="card border-primary">
                     <div class="card-header bg-primary text-white">
                         <h4 class="card-title"> <i class="livicon" data-name="user" data-size="16" data-loop="true" data-c="#fff" data-hc="white"></i>
-                            Edit  ProductType
+                            Edit  Product Type
                         </h4></div>
                     <br />
                 <div class="card-body">

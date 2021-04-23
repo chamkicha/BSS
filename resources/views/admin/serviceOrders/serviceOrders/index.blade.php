@@ -14,7 +14,7 @@ ServiceOrders
                 Dashboard
             </a>
         </li>
-        <li>ServiceOrders</li>
+        <li>Service Orders</li>
         <li class="active">Service Orders List</li>
     </ol>
 </section>

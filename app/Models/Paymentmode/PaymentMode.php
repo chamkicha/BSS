@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class PaymentMode extends Model
 {
 
-    public $table = 'PaymentModes';
+    public $table = 'paymentmodes';
     
 
 

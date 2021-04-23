@@ -7,7 +7,6 @@ Customertype
 
 @section('content')
 <section class="content-header">
-    <h1>Customertype View</h1>
     <ol class="breadcrumb">
         <li>
             <a href="{{ route('admin.dashboard') }}"> <i class="livicon" data-name="home" data-size="16" data-color="#000"></i>
@@ -15,7 +14,7 @@ Customertype
             </a>
         </li>
         <li>Customertypes</li>
-        <li class="active">Customertype View</li>
+        <li class="active">Customer type View</li>
     </ol>
 </section>
 
@@ -26,7 +25,7 @@ Customertype
        <div class="card border-primary">
                 <div class="card-header bg-primary text-white">
                     <h4 class="card-title"> <i class="livicon" data-name="list-ul" data-size="16" data-loop="true" data-c="#fff" data-hc="white"></i>
-                        Customertype details
+                        Customer type details
                     </h4>
                 </div>
                     <div class="card-body">

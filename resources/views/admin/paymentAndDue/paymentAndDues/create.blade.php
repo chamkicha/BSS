@@ -8,15 +8,15 @@ PaymentAndDue
 @section('content')
 @include('common.errors')
 <section class="content-header">
-    <h1>PaymentAndDue</h1>
+    <h1>Payment And Due</h1>
     <ol class="breadcrumb">
         <li>
             <a href="{{ route('admin.dashboard') }}"> <i class="livicon" data-name="home" data-size="16" data-color="#000"></i>
                 Dashboard
             </a>
         </li>
-        <li>PaymentAndDues</li>
-        <li class="active">Create PaymentAndDue </li>
+        <li>Payment And Dues</li>
+        <li class="active">Create Payment And Due </li>
     </ol>
 </section>
 <section class="content">
@@ -26,7 +26,7 @@ PaymentAndDue
      <div class="card border-primary">
             <div class="card-header bg-primary text-white">
                 <h4 class="card-title"> <i class="livicon" data-name="user" data-size="16" data-loop="true" data-c="#fff" data-hc="white"></i>
-                    Create New  PaymentAndDue
+                    Create New  Payment And Due
                 </h4></div>
             <br />
             <div class="card-body">

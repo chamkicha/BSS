@@ -8,7 +8,6 @@ ServiceOrderType
 @section('content')
 @include('common.errors')
 <section class="content-header">
-    <h1>Service Order Type</h1>
     <ol class="breadcrumb">
         <li>
             <a href="{{ route('admin.dashboard') }}"> <i class="livicon" data-name="home" data-size="16" data-color="#000"></i>
@@ -16,7 +15,7 @@ ServiceOrderType
             </a>
         </li>
         <li>Service Order Types</li>
-        <li class="active">Create ServiceOrderType </li>
+        <li class="active">Create Service Order Type </li>
     </ol>
 </section>
 <section class="content">
@@ -26,7 +25,7 @@ ServiceOrderType
      <div class="card border-primary">
             <div class="card-header bg-primary text-white">
                 <h4 class="card-title"> <i class="livicon" data-name="user" data-size="16" data-loop="true" data-c="#fff" data-hc="white"></i>
-                    Create New  ServiceOrderType
+                    Create New  Service Order Type
                 </h4></div>
             <br />
             <div class="card-body">

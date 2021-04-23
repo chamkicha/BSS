@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class ServiceOrders extends Model
 {
 
-    public $table = 'ServiceOrderss';
+    public $table = 'serviceorderss';
     
 
 

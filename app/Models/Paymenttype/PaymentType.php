@@ -11,7 +11,7 @@ class PaymentType extends Model
 {
     use SoftDeletes;
 
-    public $table = 'PaymentTypes';
+    public $table = 'paymenttypes';
     
 
     protected $dates = ['deleted_at'];

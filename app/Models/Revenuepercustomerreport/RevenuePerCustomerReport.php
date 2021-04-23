@@ -11,7 +11,7 @@ class RevenuePerCustomerReport extends Model
 {
     use SoftDeletes;
 
-    public $table = 'RevenuePerCustomerReports';
+    public $table = 'revenuepercustomerreports';
     
 
     protected $dates = ['deleted_at'];

@@ -8,15 +8,14 @@ ProductTypes
 {{-- Page content --}}
 @section('content')
 <section class="content-header">
-    <h1>ProductTypes</h1>
     <ol class="breadcrumb">
         <li>
             <a href="{{ route('admin.dashboard') }}"> <i class="livicon" data-name="home" data-size="16" data-color="#000"></i>
                 Dashboard
             </a>
         </li>
-        <li>ProductTypes</li>
-        <li class="active">ProductTypes List</li>
+        <li>Product Types</li>
+        <li class="active">Product Types List</li>
     </ol>
 </section>
 
@@ -28,7 +27,7 @@ ProductTypes
         <div class="card border-primary ">
             <div class="card-header bg-primary text-white">
                 <h4 class="card-title float-left"> <i class="livicon" data-name="list-ul" data-size="16" data-loop="true" data-c="#fff" data-hc="white"></i>
-                    ProductTypes List
+                    Product Types List
                 </h4>
                 <div class="float-right">
                     <a href="{{ route('admin.productType.productTypes.create') }}" class="btn btn-sm btn-secondary"><span class="fa fa-plus"></span> @lang('button.create')</a>

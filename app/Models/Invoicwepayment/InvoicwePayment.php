@@ -11,7 +11,7 @@ class InvoicwePayment extends Model
 {
     use SoftDeletes;
 
-    public $table = 'InvoicwePayments';
+    public $table = 'invoicwepayments';
     
 
     protected $dates = ['deleted_at'];

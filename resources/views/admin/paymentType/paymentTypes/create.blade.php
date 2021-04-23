@@ -8,15 +8,14 @@ PaymentType
 @section('content')
 @include('common.errors')
 <section class="content-header">
-    <h1>PaymentType</h1>
     <ol class="breadcrumb">
         <li>
             <a href="{{ route('admin.dashboard') }}"> <i class="livicon" data-name="home" data-size="16" data-color="#000"></i>
                 Dashboard
             </a>
         </li>
-        <li>PaymentTypes</li>
-        <li class="active">Create PaymentType </li>
+        <li>Payment Types</li>
+        <li class="active">Create Payment Type </li>
     </ol>
 </section>
 <section class="content">
@@ -26,7 +25,7 @@ PaymentType
      <div class="card border-primary">
             <div class="card-header bg-primary text-white">
                 <h4 class="card-title"> <i class="livicon" data-name="user" data-size="16" data-loop="true" data-c="#fff" data-hc="white"></i>
-                    Create New  PaymentType
+                    Create New  Payment Type
                 </h4></div>
             <br />
             <div class="card-body">

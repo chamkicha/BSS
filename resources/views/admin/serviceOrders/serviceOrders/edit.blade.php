@@ -7,15 +7,14 @@ ServiceOrders
 @section('content')
   @include('common.errors')
     <section class="content-header">
-     <h1>ServiceOrders Edit</h1>
      <ol class="breadcrumb">
          <li>
              <a href="{{ route('admin.dashboard') }}"> <i class="livicon" data-name="home" data-size="16" data-color="#000"></i>
                  Dashboard
              </a>
          </li>
-         <li>ServiceOrders</li>
-         <li class="active">Edit ServiceOrders </li>
+         <li>Service Orders</li>
+         <li class="active">Edit Service Orders </li>
      </ol>
     </section>
     <section class="content">
@@ -25,7 +24,7 @@ ServiceOrders
               <div class="card border-primary">
                     <div class="card-header bg-primary text-white">
                         <h4 class="card-title"> <i class="livicon" data-name="user" data-size="16" data-loop="true" data-c="#fff" data-hc="white"></i>
-                            Edit  ServiceOrders
+                            Edit  Service Orders
                         </h4></div>
                     <br />
                 <div class="card-body">

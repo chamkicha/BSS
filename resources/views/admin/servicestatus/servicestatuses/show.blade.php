@@ -7,7 +7,6 @@ Servicestatus
 
 @section('content')
 <section class="content-header">
-    <h1>Servicestatus View</h1>
     <ol class="breadcrumb">
         <li>
             <a href="{{ route('admin.dashboard') }}"> <i class="livicon" data-name="home" data-size="16" data-color="#000"></i>
@@ -15,7 +14,7 @@ Servicestatus
             </a>
         </li>
         <li>Servicestatuses</li>
-        <li class="active">Servicestatus View</li>
+        <li class="active">Service status View</li>
     </ol>
 </section>
 
@@ -26,7 +25,7 @@ Servicestatus
        <div class="card border-primary">
                 <div class="card-header bg-primary text-white">
                     <h4 class="card-title"> <i class="livicon" data-name="list-ul" data-size="16" data-loop="true" data-c="#fff" data-hc="white"></i>
-                        Servicestatus details
+                        Service status details
                     </h4>
                 </div>
                     <div class="card-body">
