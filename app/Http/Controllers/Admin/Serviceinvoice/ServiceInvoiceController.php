@@ -266,9 +266,6 @@ class ServiceInvoiceController extends InfyOmBaseController
            //dd($request);
 
            
-      
-
-
            $tra_details= DB::table('nidcconfigs')->get();
            $tin = str_replace("-", "", $tra_details[0]->tin_num);
            $TRA = $tra_details[0]->password . $this->get_count_gc($tra_details[0]->tin_num);
@@ -379,13 +376,6 @@ class ServiceInvoiceController extends InfyOmBaseController
             "v_a_t_registration_number" => $v_a_t_registration_number,
         );
         //dd($serviceInvoice);
-
-           
-
-
-
-
-
 
            return view('admin.serviceInvoice.serviceInvoices.show')->with('serviceInvoice', $serviceInvoice);
        }
