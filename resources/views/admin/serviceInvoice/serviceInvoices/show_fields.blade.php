@@ -99,7 +99,7 @@
 
                                         @if(!empty($serviceInvoice['qrcode_path']))
 
-                                         <img src="{{ URL::asset('storage/'.$serviceInvoice['qrcode_path']) }}" /><br>
+                                         <img src="{{ URL::asset('public/qrimages/'.$serviceInvoice['qrcode_path']) }}" /><br>
                                         <strong>{!! $serviceInvoice['RCTVNUM'] !!}</strong>  &nbsp;
                                         <strong>{!! $serviceInvoice['RCTVNUM_DATE'] !!}</strong>  <br><br>
                                         @endif
@@ -128,14 +128,6 @@
                                             <tr>
                                                 <td>(+)Current Bill:</td>
                                                 <td>{!! number_format($serviceInvoice['grand_total'], 2) !!}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>(+)Late Payment Fee:</td>
-                                                <td>0</td>
-                                            </tr>
-                                            <tr>
-                                                <td>(+/-)Adjustment:</td>
-                                                <td>0</td>
                                             </tr>
                                             </tbody>
                                         </table>

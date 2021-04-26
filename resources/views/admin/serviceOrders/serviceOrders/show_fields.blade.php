@@ -266,7 +266,7 @@ function activated_by()
 
 
                                 @elseif (Sentinel::inRole('commercial-manager') && $serviceOrders['next_handler_role_id']==='3' && $serviceOrders['prev_handler_role_id']==='6' )
-                                    <option value="activated_req">Activate Service Request</option>
+                                    <option value="activated_req">Request for Service Activation</option>
                                     <option value="cancelled">Cancel</option>
                                     
                                 @elseif (Sentinel::inRole('technical-manager') && $serviceOrders['next_handler_role_id']==='6' && $serviceOrders['prev_handler_role_id']==='3' && $serviceOrders['req_status']==='activated_req')

@@ -13,6 +13,7 @@ use App\Models\Serviceinvoice\ServiceInvoice;
 use Flash;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
+use Carbon\Carbon;
 use DB;
 
 class ServiceInvoiceController extends InfyOmBaseController
@@ -445,14 +446,15 @@ class ServiceInvoiceController extends InfyOmBaseController
 
     public function verification_receipts_barcode($request)
     {
-        $RCTVNUM = DB::table('serviceinvoices')->where('invoice_number', $request->invoice_number)->first()->RCTVNUM;
-
+        $RCTVNUM = DB::table('serviceinvoices')->where('invoice_number', $request->invoice_number)->get();
+       $RCTVNUM_DATE = $RCTVNUM[0]->RCTVNUM_DATE;
+        $RCTVNUM_DATE = str_replace(":", "", $RCTVNUM_DATE);
         //1. Prepare the connectivity parameters.
-        $url = "https://virtual.tra.go.tz/efdmsRctVerify"."/".$RCTVNUM;
+        $url = "https://virtual.tra.go.tz/efdmsRctVerify"."/".$RCTVNUM[0]->RCTVNUM."_".$RCTVNUM_DATE;
         //$url = "https://vfd.tra.go.tz/api/efdmsRctInfo"; LIVE
         //3.Send the Request to the API
-        $file = storage_path('QR-'.$RCTVNUM.'.png');
-        $qrcode_path = 'QR-'.$RCTVNUM.'.png';
+        $file = public_path('qrimages/'.'QR-'.$RCTVNUM[0]->RCTVNUM.'.png');
+        $qrcode_path = 'QR-'.$RCTVNUM[0]->RCTVNUM.'.png';
         $qrcode = \QRCode::text($url)->setOutfile($file)->png(); 
         $qrcode_path = DB::table('serviceinvoices')
                        ->where('invoice_number', $request->invoice_number)
@@ -655,6 +657,204 @@ class ServiceInvoiceController extends InfyOmBaseController
         openssl_sign($payload_data, $signature, $key, OPENSSL_ALGO_SHA1);
         return base64_encode($signature);
     }
+
+
+
+
+
+    public function auto_invoice_generator(){
+        $today =  date('Y-m-d');
+        $invoice_details_load = DB::table('serviceinvoices')->where('next_invoice_date',$today)->get();
+        foreach($invoice_details_load as $invoice_details)
+        {
+             // check contract validation
+        $end_contract_date = DB::table('serviceorderss')
+                                 ->where('order_i_d', $invoice_details->service_order_no)
+                                 ->first()
+                                 ->service_ending_date;
+        $todayDate = Carbon::now();
+        $end_contract_date = Carbon::parse($end_contract_date)->format('Y-m-d');
+        //  $result = $todayDate->gt($end_contract_date);
+        //  dd($result);
+            if($todayDate->gt($end_contract_date) != 'true'){
+
+                // Payment and Due creation
+                
+                $customer_no = $invoice_details->customer_no;
+
+                $payment_due = DB::table('paymentanddues')->where('customer_no', $customer_no)->first();
+
+                if(is_null($payment_due)){
+
+                // PAYMENT AND DUE insert into database
+                $grand_total_due =$invoice_details->grand_total;
+                $bill_creation = DB::table('paymentanddues')
+                ->insert(['customer_name' => $customer_name,
+                        'total_amount' => $grand_total_due,
+                        'balance' => $grand_total_due,
+                        'customer_no' => $customer_no,]);
+
+
+                }else{
+                    
+                    // PAYMENT AND DUE update into database
+                    $grand_total3 = DB::table('paymentanddues')->where('customer_no', $customer_no)->get();
+                    $grand_total2 = $grand_total3[0]->total_amount;
+                    $grand_total1 = $invoice_details->grand_total;
+                    $grand_total4 = $grand_total1 + $grand_total2;
+                    $balance = $grand_total3[0]->balance;
+                    $balance = $balance + $grand_total1;
+                    //dd($grand_total4);
+                    
+                    $bill_creation = DB::table('paymentanddues')
+                    ->where('customer_no', $customer_no)
+                    ->update(['total_amount' => $grand_total4,
+                            'balance' => $balance]);
+                } // END PAYMEND AND DUE CREATIONM
+
+                
+
+                // INVOICE creation
+                $invoice_number = DB::table('serviceinvoices')->orderBy('invoice_number', 'desc')->first();
+                if(is_null($invoice_number)){
+            $invoice_number = 1000;
+                }else{
+                    $invoice_number = $invoice_number->invoice_number + 1;
+                }
+                $activation_date = date('Y-m-d');
+                
+                // next_invoice_date creation
+                $payment_mode_intervals = $invoice_details->payment_mode;
+                $next_invoice_date = Carbon::parse($activation_date)->addDays($payment_mode_intervals)->format('Y-m-d');
+                // next_invoice_date creation
+                $invoice_due_date = Carbon::parse($next_invoice_date)->addDays(20)->format('Y-m-d');
+                
+                $cusromer_name = $invoice_details->cusromer_name;
+                $customer_no = $invoice_details->customer_no;
+                $service_order_no =$invoice_details->service_order_no;
+                $due_balance = DB::table('paymentanddues')->where('customer_no', $customer_no)->first();
+                $due_balance = $due_balance->total_amount;
+                $current_charges =$invoice_details->grand_total;
+                $payment_amount =$invoice_details->grand_total;
+                $payment_status =DB::table('paymenttypes')->where('id', '2')->get();
+                $payment_status = $payment_status[0]->payment_type_name;
+                $service_name = $invoice_details->service_name;
+                $sub_total = $invoice_details->sub_total;
+                $tax_amount = $invoice_details->tax_amount;
+                $ed_amount = $invoice_details->ed_amount;
+                $discount = $invoice_details->discount;
+                $grand_total = $invoice_details->grand_total;
+
+                // CUSTOMER REVENUE REPORT GENERATION POSTPAID
+                $invoice_details = array(
+                'invoice_number' => $invoice_number,
+                'cusromer_name' => $cusromer_name, 
+                'customer_no' => $customer_no, 
+                'current_charges' => $current_charges, 
+                'service_order_no' => $service_order_no,
+                'invoice_created_date' => $activation_date,
+                'due_balance' => $due_balance,
+                'service_name' => $service_name,
+                'payment_amount' => $payment_amount,
+                'payment_status' => $payment_status,
+                'sub_total' => $sub_total,
+                'tax_amount' => $tax_amount,
+                'ed_amount' => $ed_amount,
+                'discount' => $discount,
+                'grand_total' => $grand_total
+                );
+                $customer_report_run = $this->customer_report_revenue($invoice_details);
+
+                // INVOICE insert into database
+                $invoice_creation = DB::table('serviceinvoices')
+                ->insert(['invoice_number' => $invoice_number,
+                        'cusromer_name' => $cusromer_name, 
+                        'customer_no' => $customer_no, 
+                        'current_charges' => $current_charges, 
+                        'service_order_no' => $service_order_no,
+                        'invoice_created_date' => $activation_date,
+                        'next_invoice_date' => $next_invoice_date,
+                        'invoice_due_date' => $invoice_due_date,
+                        'due_balance' => $due_balance,
+                        'service_name' => $service_name,
+                        'payment_amount' => $payment_amount,
+                        'payment_status' => $payment_status,
+                        'sub_total' => $sub_total,
+                        'tax_amount' => $tax_amount,
+                        'ed_amount' => $ed_amount,
+                        'discount' => $discount,
+                        'grand_total' => $grand_total]);
+
+                    }
+
+
+
+        }
+    }
+
+    // CUSTOMER REVENUE REPORT CLASS
+    public function customer_report_revenue($clientreport)
+    {
+
+        $service_order_type = DB::table('revenuepercustomerreports')
+                            ->where('customer_no', $clientreport['customer_no'])
+                            ->first();
+
+        $customer_type = DB::table('customers')
+                            ->where('id', $clientreport['customer_no'])
+                            ->first()
+                            ->customer_type;
+
+    $service_name = (array)json_decode($clientreport['service_name'], true);
+        
+        $excise_dutty = DB::table('products')
+                            ->whereIn('product_name', $service_name)
+                            ->sum('ed_amount');
+        
+        $created_at = date('Y-m-d H:i:s');
+        $updated_at = date('Y-m-d H:i:s');
+
+        if(is_null($service_order_type)){
+
+        $service_order_type = DB::table('revenuepercustomerreports')
+                                    ->insert([
+                                        'customer_name' => $clientreport['cusromer_name'],
+                                        'customer_no' => $clientreport['customer_no'],
+                                        'customer_type' => $customer_type,
+                                        'services' => $clientreport['service_name'],
+                                        'excise_dutty' => (int)$excise_dutty,
+                                        'v_a_t' => (int)$clientreport['tax_amount'],
+                                        'total_wit_vat' => (int)$clientreport['grand_total'],
+                                        'created_at' => $created_at
+                                    ]);
+
+
+        }else{
+        //dd($clientreport);
+
+            $service_order_type = DB::table('revenuepercustomerreports')
+                            ->where('customer_no', $clientreport['customer_no'])
+                            ->first();
+            $excise_dutty = (int)$service_order_type->excise_dutty + (int)$excise_dutty;
+            $tax_amount = (int)$service_order_type->v_a_t + (int)$clientreport['tax_amount'];
+            $grand_total = (int)$service_order_type->total_wit_vat + (int)$clientreport['grand_total'];
+            //$service_name = $service_order_type->services + $clientreport['service_name'];
+
+            $service_order_type = DB::table('revenuepercustomerreports')
+                            ->where('customer_no', $clientreport['customer_no'])
+                            ->update([
+                                //'services' => $service_name,
+                                'excise_dutty' => $excise_dutty,
+                                'v_a_t' => $tax_amount,
+                                'total_wit_vat' => $grand_total,
+                                'updated_at' => $updated_at,
+                            ]);
+
+        }
+        //dd($clientreport);
+        
+
+    } // END CUSTOMER REVENUE REPORT CLASS
 
 
 

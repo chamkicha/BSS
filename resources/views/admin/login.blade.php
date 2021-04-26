@@ -31,7 +31,7 @@
 
 </head>
 
-<body style="background-image: url('{{ asset('images/bodybg.png')}}'); background-attachment: fixed;  background-size: 100%;">
+<body style="background-image: url('{{ asset('images/bodybg1.jpg')}}'); background-attachment: fixed;  background-size: 100%;">
     <div class="container">
         <div class="row my-3">
             <div class="col-12 mx-auto">

@@ -315,6 +315,7 @@ Route::get('serviceInvoices/{id}/delete', ['as' => 'serviceInvoices.delete', 'us
 Route::get('serviceInvoices/{id}/confirm-delete', ['as' => 'serviceInvoices.confirm-delete', 'uses' => 'Serviceinvoice\ServiceInvoiceController@getModalDelete']);
 Route::get('serviceInvoices/{serviceInvoices}', ['as'=> 'serviceInvoices.show', 'uses' => 'Serviceinvoice\ServiceInvoiceController@show']);
 Route::get('serviceInvoices/{serviceInvoices}/edit', ['as'=> 'serviceInvoices.edit', 'uses' => 'Serviceinvoice\ServiceInvoiceController@edit']);
+Route::get('auto_invoice_generator', ['as'=> 'serviceInvoices.auto_invoice_generator', 'uses' => 'Serviceinvoice\ServiceInvoiceController@auto_invoice_generator']);
 
 });
 

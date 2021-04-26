@@ -13,7 +13,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        '\app\Console\Commands\MinuteUpdate',
+        '\app\Console\Commands\invoice_crone',
     ];
 
     /**
@@ -24,7 +24,9 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-         $schedule->command('billing:name')->everyMinute();
+         $schedule->command('command:invoice_crone')
+                    ->timezone('Africa/Dar_es_Salaam')
+                    ->dailyAt('00:01');
     }
 
     /**
