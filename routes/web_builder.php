@@ -589,3 +589,18 @@ Route::get('reports/{reports}', ['as'=> 'reports.show', 'uses' => 'Reports\Repor
 Route::get('reports/{reports}/edit', ['as'=> 'reports.edit', 'uses' => 'Reports\ReportsController@edit']);
 
 });
+
+
+Route::group(array('prefix' => 'admin/productrevenue/','namespace' => 'Admin','middleware' => 'admin','as'=>'admin.productrevenue.'), function () {
+
+Route::get('productRevenues', ['as'=> 'productRevenues.index', 'uses' => 'Productrevenue\ProductRevenueController@index']);
+Route::post('productRevenues', ['as'=> 'productRevenues.store', 'uses' => 'Productrevenue\ProductRevenueController@store']);
+Route::get('productRevenues/create', ['as'=> 'productRevenues.create', 'uses' => 'Productrevenue\ProductRevenueController@create']);
+Route::put('productRevenues/{productRevenues}', ['as'=> 'productRevenues.update', 'uses' => 'Productrevenue\ProductRevenueController@update']);
+Route::patch('productRevenues/{productRevenues}', ['as'=> 'productRevenues.update', 'uses' => 'Productrevenue\ProductRevenueController@update']);
+Route::get('productRevenues/{id}/delete', ['as' => 'productRevenues.delete', 'uses' => 'Productrevenue\ProductRevenueController@getDelete']);
+Route::get('productRevenues/{id}/confirm-delete', ['as' => 'productRevenues.confirm-delete', 'uses' => 'Productrevenue\ProductRevenueController@getModalDelete']);
+Route::get('productRevenues/{productRevenues}', ['as'=> 'productRevenues.show', 'uses' => 'Productrevenue\ProductRevenueController@show']);
+Route::get('productRevenues/{productRevenues}/edit', ['as'=> 'productRevenues.edit', 'uses' => 'Productrevenue\ProductRevenueController@edit']);
+
+});
