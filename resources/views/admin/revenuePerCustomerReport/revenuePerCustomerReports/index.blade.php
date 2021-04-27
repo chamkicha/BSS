@@ -29,9 +29,6 @@ RevenuePerCustomerReports
                 <h4 class="card-title float-left"> <i class="livicon" data-name="list-ul" data-size="16" data-loop="true" data-c="#fff" data-hc="white"></i>
                     Revenue Per Customer Reports List
                 </h4>
-                <div class="float-right">
-                    <a href="{{ route('admin.revenuePerCustomerReport.revenuePerCustomerReports.create') }}" class="btn btn-sm btn-secondary"><span class="fa fa-plus"></span> @lang('button.create')</a>
-                </div>
             </div>
             <br />
             <div class="card-body table-responsive">

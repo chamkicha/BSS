@@ -26,7 +26,7 @@ class Kernel extends ConsoleKernel
     {
          $schedule->command('command:invoice_crone')
                     ->timezone('Africa/Dar_es_Salaam')
-                    ->dailyAt('00:01');
+                    ->dailyAt('07:00');
     }
 
     /**

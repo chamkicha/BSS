@@ -14,6 +14,7 @@ use Flash;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
 use Carbon\Carbon;
+use Mail;
 use DB;
 
 class ServiceInvoiceController extends InfyOmBaseController
@@ -143,9 +144,9 @@ class ServiceInvoiceController extends InfyOmBaseController
             "id" => $serviceInvoice->id,
             "invoice_number" => $serviceInvoice->invoice_number,
             "customer_no" => $serviceInvoice->customer_no,
-            "invoice_created_date" => $serviceInvoice->invoice_created_date,
-            "next_invoice_date" => $serviceInvoice->next_invoice_date,
-            "invoice_due_date" => $serviceInvoice->invoice_due_date,
+            "invoice_created_date" => Carbon::parse($serviceInvoice->invoice_created_date)->format('d-m-Y'),
+            "next_invoice_date" => Carbon::parse($serviceInvoice->next_invoice_date)->format('d-m-Y'),
+            "invoice_due_date" => Carbon::parse($serviceInvoice->invoice_due_date)->format('d-m-Y'),
             "cusromer_name" => $serviceInvoice->cusromer_name,
             "service_order_no" => $serviceInvoice->service_order_no,
             "sub_total" => $sub_total,
@@ -784,6 +785,16 @@ class ServiceInvoiceController extends InfyOmBaseController
                         'ed_amount' => $ed_amount,
                         'discount' => $discount,
                         'grand_total' => $grand_total]);
+
+                        $subjects = 'Invoice '.$invoice_number. ' generated for '.$cusromer_name.' from '.Carbon::parse($activation_date)->format('d-m-Y').' to '.Carbon::parse($next_invoice_date)->format('d-m-Y');
+                        $content = 'Please login to BSS (10.60.83.218) to check the Invoice generated';
+
+                        Mail::raw($content, function ($message)use ($subjects) {
+                            $message->from('nidctanzania@gmail.com', 'NIDC-BSS');
+                            $message->to('jchamkicha@gmail.com')
+                                     ->subject($subjects)
+                                    ->cc('nidctanzania@gmail.com');
+                        });
 
                     }
 

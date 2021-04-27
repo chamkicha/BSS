@@ -18,6 +18,8 @@ use App\Models\Paymentmode\Paymentmode;
 use App\Models\Product\Product;
 use DB;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
+use Mail;
 
 
 class ServiceOrdersController extends InfyOmBaseController
@@ -145,6 +147,15 @@ class ServiceOrdersController extends InfyOmBaseController
 
        $serviceOrders = $this->serviceOrdersRepository->create($object);
 
+        $mail_subjects = 'Service Order '.$request->order_i_d. ' generated for '.$request->customer_name.' on '.Carbon::parse($request->service_creation_date)->format('d-m-Y');
+        $mail_content = 'Please login to BSS (10.60.83.218) to check the Service Order generated';
+
+        Mail::raw($mail_content, function ($message)use ($mail_subjects) {
+            $message->from('nidctanzania@gmail.com', 'NIDC-BSS');
+            $message->to('nidctanzania@gmail.com')
+                        ->subject($mail_subjects);
+        });
+
         Flash::success('ServiceOrders saved successfully.');
 
         return redirect(route('admin.serviceOrders.serviceOrders.index'));
@@ -240,7 +251,7 @@ class ServiceOrdersController extends InfyOmBaseController
         $serviceOrders = $this->serviceOrdersRepository->findWithoutFail($id);
         $customer_list = Customer::get();
         $service_order_type = DB::table('serviceordertypes')->get();
-        $paymentmode_list = Paymentmode::get();
+        $paymentmode_list = DB::table('paymentmodes')->get();;
         $product_list = Product::get();
 
         if (empty($serviceOrders)) {

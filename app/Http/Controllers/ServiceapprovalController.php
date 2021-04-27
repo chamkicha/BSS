@@ -8,6 +8,7 @@ use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
 use DB;
 use Flash;
 use Illuminate\Support\Facades\Auth;
+use Mail;
 use Carbon\Carbon;
 
 class ServiceapprovalController extends Controller
@@ -129,7 +130,7 @@ class ServiceapprovalController extends Controller
             $username= Sentinel::getUser()->first_name;
             $comment_insert = DB::table('comments')
             ->insert(['comment' => $comment, 'order_i_d' => $request->order_i_d, 'username' => $username]);
-        
+            $email_send = $this->send_email($request->order_i_d,'approved');
 
             return redirect(route('admin.serviceOrders.serviceOrders.index'))
             ->with('success', 'Order Approved and Sent to Technical Department');
@@ -165,6 +166,7 @@ class ServiceapprovalController extends Controller
             $username= Sentinel::getUser()->first_name;
             $comment_insert = DB::table('comments')
             ->insert(['comment' => $comment, 'order_i_d' => $request->order_i_d, 'username' => $username]);
+            $email_send = $this->send_email($request->order_i_d,'approved');
         
 
             return redirect(route('admin.serviceOrders.serviceOrders.index'))
@@ -203,6 +205,7 @@ class ServiceapprovalController extends Controller
             $username= Sentinel::getUser()->first_name;
             $comment_insert = DB::table('comments')
             ->insert(['comment' => $comment, 'order_i_d' => $request->order_i_d, 'username' => $username]);
+            $email_send = $this->send_email($request->order_i_d,'approved');
         
 
             return redirect(route('admin.serviceOrders.serviceOrders.index'))
@@ -243,6 +246,7 @@ class ServiceapprovalController extends Controller
             $username= Sentinel::getUser()->first_name;
             $comment_insert = DB::table('comments')
             ->insert(['comment' => $comment, 'order_i_d' => $request->order_i_d, 'username' => $username]);
+            $email_send = $this->send_email($request->order_i_d,'approved');
         
 
             return redirect(route('admin.serviceOrders.serviceOrders.index'))
@@ -281,6 +285,7 @@ class ServiceapprovalController extends Controller
             $username= Sentinel::getUser()->first_name;
             $comment_insert = DB::table('comments')
             ->insert(['comment' => $comment, 'order_i_d' => $request->order_i_d, 'username' => $username]);
+            $email_send = $this->send_email($request->order_i_d,'approved');
         
 
             return redirect(route('admin.serviceOrders.serviceOrders.index'))
@@ -322,6 +327,7 @@ class ServiceapprovalController extends Controller
                 $username= Sentinel::getUser()->first_name;
                 $comment_insert = DB::table('comments')
                 ->insert(['comment' => $comment, 'order_i_d' => $request->order_i_d, 'username' => $username]);
+                $email_send = $this->send_email($request->order_i_d,'approved');
 
                 
             return redirect(route('admin.serviceOrders.serviceOrders.index'))
@@ -723,6 +729,7 @@ else{
             $username= Sentinel::getUser()->first_name;
             $comment_insert = DB::table('comments')
             ->insert(['comment' => $comment, 'order_i_d' => $request->order_i_d, 'username' => $username]);
+            $email_send = $this->send_email($request->order_i_d,'approved');
         
 
             return redirect(route('admin.serviceOrders.serviceOrders.index'))
@@ -1100,6 +1107,7 @@ else{
             $username= Sentinel::getUser()->first_name;
             $comment_insert = DB::table('comments')
             ->insert(['comment' => $comment, 'order_i_d' => $request->order_i_d, 'username' => $username]);
+            $email_send = $this->send_email($request->order_i_d,'approved');
         
 
             return redirect(route('admin.serviceOrders.serviceOrders.index'))
@@ -1138,6 +1146,7 @@ else{
             $username= Sentinel::getUser()->first_name;
             $comment_insert = DB::table('comments')
             ->insert(['comment' => $comment, 'order_i_d' => $request->order_i_d, 'username' => $username]);
+            $email_send = $this->send_email($request->order_i_d,'approved');
         
 
             return redirect(route('admin.serviceOrders.serviceOrders.index'))
@@ -1179,6 +1188,7 @@ else{
                 $username= Sentinel::getUser()->first_name;
                 $comment_insert = DB::table('comments')
                 ->insert(['comment' => $comment, 'order_i_d' => $request->order_i_d, 'username' => $username]);
+                $email_send = $this->send_email($request->order_i_d,'approved');
 
                 
             return redirect(route('admin.serviceOrders.serviceOrders.index'))
@@ -1346,7 +1356,23 @@ public function customer_report_revenue($clientreport)
 
 } // END CUSTOMER REVENUE REPORT CLASS
 
+    // SEND EMAIL FUNCTION
+    public function send_email($service_order_no,$take_action)
+    {
 
+
+        
+
+        $mail_subjects = 'Service Order '.$service_order_no. ' need your action ';
+        $mail_content = 'Please login to BSS (10.60.83.218) to ' .$take_action.' the Service Order generated';
+
+        Mail::raw($mail_content, function ($message)use ($mail_subjects) {
+            $message->from('nidctanzania@gmail.com', 'NIDC-BSS');
+            $message->to('nidctanzania@gmail.com')
+                        ->subject($mail_subjects);
+        });
+    }
+     // END SEND EMAIL FUNCTION
 
 }
 
