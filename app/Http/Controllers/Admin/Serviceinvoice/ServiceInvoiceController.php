@@ -16,6 +16,7 @@ use Response;
 use Carbon\Carbon;
 use Mail;
 use DB;
+use Illuminate\Support\Str;
 
 class ServiceInvoiceController extends InfyOmBaseController
 {
@@ -38,8 +39,17 @@ class ServiceInvoiceController extends InfyOmBaseController
 
         $this->serviceInvoiceRepository->pushCriteria(new RequestCriteria($request));
         $serviceInvoices = $this->serviceInvoiceRepository->all();
-        return view('admin.serviceInvoice.serviceInvoices.index')
+        if(count($serviceInvoices)=='0')
+        {
+            return view('admin.serviceInvoice.serviceInvoices.index')
             ->with('serviceInvoices', $serviceInvoices);
+        }else{
+
+        $client_product = DB::table('clientproducts')->where('service_order_no',$serviceInvoices[0]->service_order_no)->get();
+        return view('admin.serviceInvoice.serviceInvoices.index')
+            ->with('client_product', $client_product)
+            ->with('serviceInvoices', $serviceInvoices);
+        }
     }
 
     /**
@@ -104,12 +114,12 @@ class ServiceInvoiceController extends InfyOmBaseController
         $service_name = (array)json_decode($serviceInvoice['service_name'], true);
         //$service_name=implode(",",$service_name);
         //$service_name = $serviceInvoice->service_name;
-        $service_name_description = DB::table('products')->whereIn('product_name', $service_name)->get();
+        $service_name_description =DB::table('productsserviceorders')->where('order_i_d', $serviceInvoice->service_order_no)->get();
         //dd($service_name_description);
 
         // tax amount
-        $tax_amount_total = DB::table('products')->whereIn('product_name',  $service_name)
-                                            ->sum('vat_amount');
+        // $tax_amount_total = DB::table('products')->whereIn('product_name',  $service_name)
+        //                                     ->sum('vat_amount');
 
         // ED AMOUNT
         $ed_amount_total = DB::table('products')->whereIn('product_name', $service_name)
@@ -129,7 +139,7 @@ class ServiceInvoiceController extends InfyOmBaseController
         $grand_total = $grand_total - $discount;
 
         // TOTAL PREVIOUS AND CURRENT BILL
-        $Prev_current_total = $grand_total + $previous_dept;
+        $Prev_current_total = $serviceInvoice->grand_total + $previous_dept;
 
         //   QR CODE LINK
         $qrcode = DB::table('serviceinvoices')->where('invoice_number', $serviceInvoice->invoice_number)
@@ -149,14 +159,14 @@ class ServiceInvoiceController extends InfyOmBaseController
             "invoice_due_date" => Carbon::parse($serviceInvoice->invoice_due_date)->format('d-m-Y'),
             "cusromer_name" => $serviceInvoice->cusromer_name,
             "service_order_no" => $serviceInvoice->service_order_no,
-            "sub_total" => $sub_total,
+            "sub_total" => $serviceInvoice->sub_total,
             "qrcode_path" => $qrcode_path,
             "RCTVNUM" => $RCTVNUM,
             "RCTVNUM_DATE" => $RCTVNUM_DATE,
-            "tax_amount_total" => $tax_amount_total,
+            "tax_amount_total" => $serviceInvoice->tax_amount,
             "ed_amount_total" => $ed_amount_total,
             "discount" => $serviceInvoice->discount,
-            "grand_total" => $grand_total,
+            "grand_total" => $serviceInvoice->grand_total,
             "due_balance" => $serviceInvoice->due_balance,
             "current_charges" => $serviceInvoice->current_charges,
             "payment_amount" => $serviceInvoice->payment_amount,
@@ -178,7 +188,7 @@ class ServiceInvoiceController extends InfyOmBaseController
             "t_i_n_number" => $t_i_n_number,
             "v_a_t_registration_number" => $v_a_t_registration_number,
         );
-        //dd($serviceInvoice);
+        //dd($service_name_description);
 
         if (empty($serviceInvoice)) {
             Flash::error('ServiceInvoice not found');
@@ -277,7 +287,7 @@ class ServiceInvoiceController extends InfyOmBaseController
            
 
 
-           
+         
         $serviceInvoice = $this->serviceInvoiceRepository->findWithoutFail($request->id);
         //dd($serviceInvoice);
         
@@ -303,12 +313,12 @@ class ServiceInvoiceController extends InfyOmBaseController
         $service_name = (array)json_decode($serviceInvoice['service_name'], true);
         //$service_name=implode(",",$service_name);
         //$service_name = $serviceInvoice->service_name;
-        $service_name_description = DB::table('products')->whereIn('product_name', $service_name)->get();
+        $service_name_description =DB::table('productsserviceorders')->where('order_i_d', $serviceInvoice->service_order_no)->get();
         //dd($service_name_description);
 
         // tax amount
-        $tax_amount_total = DB::table('products')->whereIn('product_name',  $service_name)
-                                            ->sum('vat_amount');
+        // $tax_amount_total = DB::table('products')->whereIn('product_name',  $service_name)
+        //                                     ->sum('vat_amount');
 
         // ED AMOUNT
         $ed_amount_total = DB::table('products')->whereIn('product_name', $service_name)
@@ -328,7 +338,7 @@ class ServiceInvoiceController extends InfyOmBaseController
         $grand_total = $grand_total - $discount;
 
         // TOTAL PREVIOUS AND CURRENT BILL
-        $Prev_current_total = $grand_total + $previous_dept;
+        $Prev_current_total = $serviceInvoice->grand_total + $previous_dept;
 
         //   QR CODE LINK
         $qrcode = DB::table('serviceinvoices')->where('invoice_number', $serviceInvoice->invoice_number)
@@ -343,19 +353,19 @@ class ServiceInvoiceController extends InfyOmBaseController
             "id" => $serviceInvoice->id,
             "invoice_number" => $serviceInvoice->invoice_number,
             "customer_no" => $serviceInvoice->customer_no,
-            "invoice_created_date" => $serviceInvoice->invoice_created_date,
-            "next_invoice_date" => $serviceInvoice->next_invoice_date,
-            "invoice_due_date" => $serviceInvoice->invoice_due_date,
+            "invoice_created_date" => Carbon::parse($serviceInvoice->invoice_created_date)->format('d-m-Y'),
+            "next_invoice_date" => Carbon::parse($serviceInvoice->next_invoice_date)->format('d-m-Y'),
+            "invoice_due_date" => Carbon::parse($serviceInvoice->invoice_due_date)->format('d-m-Y'),
             "cusromer_name" => $serviceInvoice->cusromer_name,
             "service_order_no" => $serviceInvoice->service_order_no,
-            "sub_total" => $sub_total,
+            "sub_total" => $serviceInvoice->sub_total,
             "qrcode_path" => $qrcode_path,
             "RCTVNUM" => $RCTVNUM,
             "RCTVNUM_DATE" => $RCTVNUM_DATE,
-            "tax_amount_total" => $tax_amount_total,
+            "tax_amount_total" => $serviceInvoice->tax_amount,
             "ed_amount_total" => $ed_amount_total,
             "discount" => $serviceInvoice->discount,
-            "grand_total" => $grand_total,
+            "grand_total" => $serviceInvoice->grand_total,
             "due_balance" => $serviceInvoice->due_balance,
             "current_charges" => $serviceInvoice->current_charges,
             "payment_amount" => $serviceInvoice->payment_amount,
@@ -377,10 +387,16 @@ class ServiceInvoiceController extends InfyOmBaseController
             "t_i_n_number" => $t_i_n_number,
             "v_a_t_registration_number" => $v_a_t_registration_number,
         );
-        //dd($serviceInvoice);
+        //dd($service_name_description);
 
-           return view('admin.serviceInvoice.serviceInvoices.show')->with('serviceInvoice', $serviceInvoice);
-       }
+        if (empty($serviceInvoice)) {
+            Flash::error('ServiceInvoice not found');
+
+            return redirect(route('serviceInvoices.index'));
+        }
+
+        return view('admin.serviceInvoice.serviceInvoices.show')->with('serviceInvoice', $serviceInvoice);
+    }
 
        
     public function send_efdrec_request_tra($reg_data, $token_type, $access_token, $name, $mobile,  $amount, $request)
@@ -459,7 +475,8 @@ class ServiceInvoiceController extends InfyOmBaseController
         $qrcode = \QRCode::text($url)->setOutfile($file)->png(); 
         $qrcode_path = DB::table('serviceinvoices')
                        ->where('invoice_number', $request->invoice_number)
-                       ->update(['qrcode_path'=>$qrcode_path]);
+                       ->update(['qrcode_path'=>$qrcode_path,
+                                 'get_signature_by'=>$request->get_signature_by]);
         return null;
 
     }
@@ -472,13 +489,15 @@ class ServiceInvoiceController extends InfyOmBaseController
         $gc = $this->get_count($reg_data[0], 'gc');
         $dc = $this->get_count($reg_data[0], 'dc');
         $rctvnum = $reg_data[0]->recptcode . $gc;
-        $payload = '<RCT><DATE>' . date('Y-m-d') . '</DATE><TIME>' . date('H:i:s') . '</TIME><TIN>' . $tin . '</TIN><REGID>' . $reg_data[0]->regid . '</REGID><EFDSERIAL>' . $reg_data[0]->vfd . '</EFDSERIAL><CUSTIDTYPE>1</CUSTIDTYPE><CUSTID>'.$request->t_i_n_number.'</CUSTID><CUSTNAME>' . $name . '</CUSTNAME><MOBILENUM>' . $mobile . '</MOBILENUM><RCTNUM>' . $gc . '</RCTNUM><DC>' . $dc . '</DC><GC>' . $gc . '</GC><ZNUM>' . date('Ymd') . '</ZNUM><RCTVNUM>' . $rctvnum . '</RCTVNUM><ITEMS><ITEM><ID>1</ID><DESC>'.$request->description.'</DESC><QTY>1</QTY><TAXCODE>1</TAXCODE><AMT>'.$request->price.'</AMT></ITEM></ITEMS><TOTALS><TOTALTAXEXCL>'.$request->price.'</TOTALTAXEXCL><TOTALTAXINCL>' . $amount . '</TOTALTAXINCL><DISCOUNT>0.00</DISCOUNT></TOTALS><PAYMENTS><PMTTYPE>INVOICE</PMTTYPE><PMTAMOUNT>' . $amount . '</PMTAMOUNT></PAYMENTS><VATTOTALS><VATRATE>A</VATRATE><NETTAMOUNT>' . $amount . '</NETTAMOUNT><TAXAMOUNT>'.$request->vat_amount.'</TAXAMOUNT></VATTOTALS></RCT>';
+        $name = str_replace("'", "", $name);
+        $name = Str::substr($name, 1, 100);
+        $payload = '<RCT><DATE>' . date('Y-m-d') . '</DATE><TIME>' . date('H:i:s') . '</TIME><TIN>' . $tin . '</TIN><REGID>' . $reg_data[0]->regid . '</REGID><EFDSERIAL>' . $reg_data[0]->vfd . '</EFDSERIAL><CUSTIDTYPE>1</CUSTIDTYPE><CUSTID>'.$request->t_i_n_number.'</CUSTID><CUSTNAME>' . $name . '</CUSTNAME><MOBILENUM>' . (int)$mobile . '</MOBILENUM><RCTNUM>' . $gc . '</RCTNUM><DC>' . $dc . '</DC><GC>' . $gc . '</GC><ZNUM>' . date('Ymd') . '</ZNUM><RCTVNUM>' . $rctvnum . '</RCTVNUM><ITEMS><ITEM><ID>1</ID><DESC>'. $request->description .'</DESC><QTY>1</QTY><TAXCODE>1</TAXCODE><AMT>'. $request->price .'</AMT></ITEM></ITEMS><TOTALS><TOTALTAXEXCL>'. $request->price .'</TOTALTAXEXCL><TOTALTAXINCL>' . $request->grand_total . '</TOTALTAXINCL><DISCOUNT>0.00</DISCOUNT></TOTALS><PAYMENTS><PMTTYPE>INVOICE</PMTTYPE><PMTAMOUNT>' . $request->grand_total . '</PMTAMOUNT></PAYMENTS><VATTOTALS><VATRATE>A</VATRATE><NETTAMOUNT>' . $request->grand_total . '</NETTAMOUNT><TAXAMOUNT>'. $request->vat_amount .'</TAXAMOUNT></VATTOTALS></RCT>';
         $priv_key = $this->get_key_from_file("./" . $reg_data[0]->cert_path . ".pem", true, true, $reg_data[0]->cert_password);
         $signedPayload = $this->sign_payload_plain($payload, $priv_key);
         $update_invoice_rctvum_date = DB::table('serviceinvoices')
                                           ->where('invoice_number', $request->invoice_number)
                                           ->update(['RCTVNUM'=> $rctvnum , 'RCTVNUM_DATE'=>date('H:i:s')]);
-        //dd($priv_key);
+        //dd($payload);
         $recXML = "<EFDMS>
 					$payload
 					<EFDMSSIGNATURE>

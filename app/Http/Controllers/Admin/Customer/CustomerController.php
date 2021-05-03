@@ -15,6 +15,8 @@ use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
 use App\Models\Customertype\CustomerType;
 use Illuminate\Support\Facades\Storage;
+use Carbon\Carbon;
+use Mail;
 use DB;
 
 class CustomerController extends InfyOmBaseController
@@ -66,7 +68,7 @@ class CustomerController extends InfyOmBaseController
         
         $this->validate($request, [
             'customername'  => ['required', 'unique:customers,customername'],
-            'v_a_t_registration_number' => 'required',
+            
             't_i_n_number' => 'required',
             'contact_person' => 'required',
             'contact_telephone' => 'required',
@@ -154,6 +156,7 @@ class CustomerController extends InfyOmBaseController
             "region" => $request->region,
             "country" => $request->country,
             "district" => $request->district,
+            'created_by'=>$request->created_by,
             "fax" => $request->fax,
             "Business_licence_file" => $Business_licence,
             "Certificate_of_incorporation_file" => $Certificate_of_incorporation,
@@ -163,9 +166,23 @@ class CustomerController extends InfyOmBaseController
 
         $customer = $this->customerRepository->create($input);
 
-        Flash::success('Customer saved successfully.');
+        
 
-        return redirect(route('admin.customer.customers.index'));
+        $mail_subjects = 'Customer '.$request->customername. ' created by '.$request->created_by.' on '.Carbon::now()->format('d-m-Y');
+        $mail_content = 'Hello.,'.'Customer '.$request->customername. ' was created by '.$request->created_by.' on '.Carbon::now()->format('d-m-Y'). 'Please login to BSS (10.60.83.218) to Verify';
+
+        Mail::raw($mail_content, function ($message)use ($mail_subjects) {
+            $message->from('nidctanzania@gmail.com', 'NIDC-BSS');
+            $message->to('gloria.muhazi@nidc.co.tz')
+                     ->cc('commercial@nidc.co.tz')
+                     ->bcc('nidctanzania@gmail.com')
+                        ->subject($mail_subjects);
+        });
+
+
+        //Flash::success('Customer saved successfully.');
+
+        return redirect(route('admin.customer.customers.index'))->with('success', 'customer successfully created');
     }
 
     /**
@@ -204,6 +221,7 @@ class CustomerController extends InfyOmBaseController
             "updated_at" => $customer->updated_at,
             "deleted_at" => $customer->deleted_at,
             "country" => $customer->country,
+            "created_by" => $customer->created_by,
 
 
 

@@ -116,7 +116,7 @@ function activated_by()
 
                             <!-- Service activation_date Field -->
                             <tr>
-                                <td>{!! Form::label('activation_date', 'Service Starting Date:') !!}</td>
+                                <td>{!! Form::label('activation_date', 'Service Activation Date:') !!}</td>
                                 <td>{!! $serviceOrders['activation_date'] !!}</td>
                             </tr>
 
@@ -176,7 +176,7 @@ function activated_by()
                                 <td>{{$loop->iteration}}</td>
                                 <td>{{$value->product_name}}</td>
                                 <td>{{$value->description}}</td>
-                                <td>{{number_format($value->price,2)}}</td>
+                                <td>{{number_format($value->sub_total,2)}}</td>
                                 <td>{{number_format($value->vat_amount,2)}}</td>
                                 <td>{{number_format($value->grand_total,2)}}</td>
                             </tr>
@@ -186,8 +186,24 @@ function activated_by()
                                 <td></td>
                                 <td></td>
                                 <td></td>
+                                <td><strong>Sub-Total</strong></td>
+                                <td><strong>{!! number_format($serviceOrders['sub_total'],2) !!} </strong></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td><strong>VAT</strong></td>
+                                <td><strong>{!! number_format($serviceOrders['tax_amount'],2) !!} </strong></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
                                 <td><strong>Total</strong></td>
-                                <td><strong>{!! number_format($serviceOrders['grand_total'],2) !!}/ TZS</strong></td>
+                                <td><strong>{!! number_format($serviceOrders['grand_total'],2) !!} </strong></td>
                             </tr>
                             </tbody>
                         </table> 

@@ -3,13 +3,13 @@
     <thead>
      <tr>
         <th>Invoice Number</th>
+        <th>Customer Name</th>
         <th>Invoice Created Date</th>
         <th>Service Order No</th>
         <th>Due Balance</th>
         <th>Current Charges</th>
         <th>Payment Status</th>
         <th>Service Name</th>
-        <th>Cusromer Name</th>
         <th >Action</th>
      </tr>
     </thead>
@@ -17,30 +17,32 @@
     @foreach($serviceInvoices as $serviceInvoice)
         <tr>
             <td>{!! $serviceInvoice->invoice_number !!}</td>
+            <td>{!! $serviceInvoice->cusromer_name !!}</td>
             <td>{!! $serviceInvoice->invoice_created_date !!}</td>
             <td>{!! $serviceInvoice->service_order_no !!}</td>
-            <td>{!! $serviceInvoice->due_balance !!}</td>
-            <td>{!! $serviceInvoice->current_charges !!}</td>
+            <td>{!! number_format($serviceInvoice->due_balance,2) !!}</td>
+            <td>{!! number_format($serviceInvoice->current_charges,2) !!}</td>
             <td>{!! $serviceInvoice->payment_status !!}</td>
             <td>
             
             
-                @foreach((array) $serviceInvoice->service_name as $value)
-                {{$value}},
+                @foreach($client_product as $client_products)
+                {{$client_products->product_name}},
                 @endforeach
                 
                 </td>
-            <td>{!! $serviceInvoice->cusromer_name !!}</td>
             <td>
                  <a href="{{ route('admin.serviceInvoice.serviceInvoices.show', collect($serviceInvoice)->first() ) }}">
                      <i class="livicon" data-name="info" data-size="18" data-loop="true" data-c="#428BCA" data-hc="#428BCA" title="view serviceInvoice"></i>
                  </a>
+                 @if (Sentinel::inRole('admin'))
+
                  <a href="{{ route('admin.serviceInvoice.serviceInvoices.edit', collect($serviceInvoice)->first() ) }}">
                      <i class="livicon" data-name="edit" data-size="18" data-loop="true" data-c="#428BCA" data-hc="#428BCA" title="edit serviceInvoice"></i>
                  </a>
                  <a href="{{ route('admin.serviceInvoice.serviceInvoices.confirm-delete', collect($serviceInvoice)->first() ) }}" data-toggle="modal" data-target="#delete_confirm" data-id="{{ route('admin.serviceInvoice.serviceInvoices.delete', collect($serviceInvoice)->first() ) }}">
                      <i class="livicon" data-name="remove-alt" data-size="18" data-loop="true" data-c="#f56954" data-hc="#f56954" title="delete serviceInvoice"></i>
-
+                 @endif
                  </a>
             </td>
         </tr>

@@ -37,7 +37,8 @@ class Customer extends Model
         'Business_licence_file',
         'Certificate_of_incorporation_file',
         'TIN_registeration_number_file',
-        'Tax_exemption_certification_file'	
+        'Tax_exemption_certification_file',
+        'created_by'	
     ];
 
     /**
@@ -60,7 +61,8 @@ class Customer extends Model
         'district' => 'string',
         'fax' => 'string',
         'country' => 'string',
-        'customer_no' => 'string',
+        'created_by' => 'string',
+        'customer_no' => 'string',	
         'customer_type' => 'string'
     ];
 

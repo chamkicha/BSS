@@ -13,6 +13,7 @@ use App\Models\Productrevenue\ProductRevenue;
 use Flash;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
+use DB;
 
 class ProductRevenueController extends InfyOmBaseController
 {
@@ -32,9 +33,9 @@ class ProductRevenueController extends InfyOmBaseController
      */
     public function index(Request $request)
     {
-
+        $productRevenues = DB::table('products')->get();
         $this->productRevenueRepository->pushCriteria(new RequestCriteria($request));
-        $productRevenues = $this->productRevenueRepository->all();
+        $productRevenues1 = $this->productRevenueRepository->all();
         return view('admin.productrevenue.productRevenues.index')
             ->with('productRevenues', $productRevenues);
     }

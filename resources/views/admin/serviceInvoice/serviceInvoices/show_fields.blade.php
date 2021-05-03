@@ -1,4 +1,22 @@
 
+<?php
+use App\Models\Servicestatus\Servicestatus;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
+use App\Models\User;
+
+
+function get_signature_by()
+{      
+    
+    $user = Sentinel::getUser()->first_name;
+    $user2 = Sentinel::getUser()->last_name;
+    $user3 =' ';
+    $user =$user.$user3.$user2;
+    return $user;
+} 
+
+?>
 
 
 
@@ -158,7 +176,7 @@
                                                     <td>{{ $serviceInvoices->product_name }}</td>
                                                     <td>{{ $serviceInvoices->description }}</td>
                                                     <td>{{ number_format($serviceInvoices->vat_amount, 2) }}</td>
-                                                    <td>{{ number_format($serviceInvoices->price, 2) }}</td>
+                                                    <td>{{ number_format($serviceInvoices->sub_total, 2) }}</td>
                                                     <td>{{number_format($serviceInvoices->grand_total, 2)  }}</td>
                                                 </tr>
                                                 @endforeach
@@ -216,7 +234,7 @@
                                                 
                                                 <br>
                                                 <strong>______________________________________________</strong><br>
-                                                <strong>G. Mpangala</strong><br>
+                                                <strong>S. Malimi</strong><br>
                                                 <strong>Head NIDC</strong>
                                             </div>
                                         </div>
@@ -277,10 +295,6 @@
                                             </a>
                                         </button>
                                         @endif
-                                        @if($serviceInvoice['payment_status'] === 'Fully')
-
-                                                <strong>Payment Status </strong>: <h3 style="color:green;">PAID</h3><br>
-                                        @endif
 
                                         <button type="button" class="btn btn_marTop button-alignment btn-info"
                                                 data-toggle="button">
@@ -330,7 +344,7 @@
                                         
                                         <!-- Payment amount Field -->
                                         <div class="form-group col-sm-12">
-                                            <input type="hidden" id="grand_total" name="grand_total" class="form-control" value="{{$serviceInvoice['grand_total']}}" >
+                                            <input type="hidden" id="grand_total" name="grand_total" class="form-control" value="{{ str_replace(',', '', number_format($serviceInvoice['grand_total'],2))}}" >
 
                                         </div>
 
@@ -355,7 +369,7 @@
                                         
                                                 @foreach($serviceInvoice['service_name_description'] as $serviceInvoices)
                                                 
-                                                <input type="hidden" id="vat_amount" name="vat_amount" class="form-control" value="{{$serviceInvoices->vat_amount}}" >
+                                                <input type="hidden" id="vat_amount" name="vat_amount" class="form-control" value="{{ str_replace(',', '',number_format($serviceInvoices->vat_amount, 2))}}" >
 
                                                 @endforeach
 
@@ -374,7 +388,7 @@
                                         <div class="form-group col-sm-12">
                                                @foreach($serviceInvoice['service_name_description'] as $serviceInvoices)
                                                 
-                                                <input type="hidden" id="price" name="price" class="form-control" value="{{$serviceInvoices->price}}" >
+                                                <input type="hidden" id="price" name="price" class="form-control" value="{{ str_replace(',', '',number_format($serviceInvoices->sub_total,2))}}" >
                                              
                                                 @endforeach
                                         </div>
@@ -413,6 +427,14 @@
                                             <input type="hidden" id="t_i_n_number" name="t_i_n_number" class="form-control" value="{{$serviceInvoice['t_i_n_number'] }}" >
 
                                         </div>
+                                        
+
+                                        
+                                        <!-- get signature by Field -->
+                                        <div class="form-group col-sm-12">
+                                            <input type="hidden" id="get_signature_by" name="get_signature_by" class="form-control" value="{{ get_signature_by() }}" >
+
+                                        </div>
 
                                         @if(empty($serviceInvoice['qrcode_path']))
 
@@ -426,6 +448,20 @@
                                         </button>
                                        @endif
                                         
+                                        @if($serviceInvoice['payment_status'] === 'Fully')
+
+                                            <h2 style="color:green; ">PAID</h2>
+                                        @endif
+
+                                        @if($serviceInvoice['payment_status'] === 'Not Paid')
+
+                                            <h2 style="color:red;  ">NOT PAID</h2>
+                                        @endif
+
+                                        @if($serviceInvoice['payment_status'] === 'Fully')
+
+                                            <h2 style="color:orange;  ">PARTIALLY PAID</h2>
+                                        @endif
 
                                         </form><!-- form get signature add end -->
                                     </div>
@@ -445,4 +481,6 @@
     <script  src="{{ asset('js/pages/invoice.js') }}"  type="text/javascript"></script>
 
 @stop
+
+
 

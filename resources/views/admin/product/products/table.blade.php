@@ -2,32 +2,36 @@
 <table class="table table-striped table-bordered" id="products-table" width="100%">
     <thead>
      <tr>
+        <th>Product No</th>
         <th>Product Name</th>
         <th>Product Description</th>
         <th>Product Unit</th>
         <th>Product Type</th>
-        <th>V A T(%)</th>
-        <th>E D(%)</th>
-        <th>Price( T Z S)</th>
-        <th>Discount(%)</th>
+        <th>V A T(TZS)</th>
+        <th>Price( TZS)</th>
+        <th>Grand Total</th>
+        <th>Created By</th>
         <th >Action</th>
      </tr>
     </thead>
     <tbody>
     @foreach($products as $product)
         <tr>
+            <td>{!! $product->product_no !!}</td>
             <td>{!! $product->product_name !!}</td>
             <td>{!! $product->description !!}</td>
             <td>{!! $product->product_unit !!}</td>
             <td>{!! $product->product_type !!}</td>
-            <td>{!! $product->v_a_t !!}</td>
-            <td>{!! $product->e_d !!}</td>
-            <td>{!! $product->price !!}</td>
-            <td>{!! $product->discount !!}</td>
+            <td>{!! number_format($product->vat_amount) !!}</td>
+            <td>{!! number_format($product->price) !!}</td>
+            <td>{!! number_format($product->grand_total) !!}</td>
+            <td>{!! $product->created_by !!}</td>
             <td>
                  <a href="{{ route('admin.product.products.show', collect($product)->first() ) }}">
                      <i class="livicon" data-name="info" data-size="18" data-loop="true" data-c="#428BCA" data-hc="#428BCA" title="view product"></i>
                  </a>
+                 @if (Sentinel::inRole('admin') or Sentinel::inRole('commercial-manager'))
+
                  <a href="{{ route('admin.product.products.edit', collect($product)->first() ) }}">
                      <i class="livicon" data-name="edit" data-size="18" data-loop="true" data-c="#428BCA" data-hc="#428BCA" title="edit product"></i>
                  </a>
@@ -35,6 +39,7 @@
                      <i class="livicon" data-name="remove-alt" data-size="18" data-loop="true" data-c="#f56954" data-hc="#f56954" title="delete product"></i>
 
                  </a>
+                 @endif
             </td>
         </tr>
     @endforeach

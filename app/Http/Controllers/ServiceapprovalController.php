@@ -105,6 +105,7 @@ class ServiceapprovalController extends Controller
                 
                 $nexthandler = DB::table('role_users')->where('role_id','6')->get();
                 $nexthandler = DB::table('users')->where('id',$nexthandler[0]->user_id)->get();
+                $nexthandler_email = $nexthandler[0]->email;
                 $nexthandler_role = $nexthandler[0]->id;
                 $nexthandler_role_id = '6';
                 $prevhandler_role = DB::table('role_users')->where('role_id','3')->get();
@@ -115,6 +116,7 @@ class ServiceapprovalController extends Controller
                 $nexthandler2 = $nexthandler[0]->last_name;
                 $nexthandler3 = ' ';
                 $nexthandler = $nexthandler1.$nexthandler3.$nexthandler2;
+                $next_handler_email_sent = $this->next_handler_email_sent($nexthandler1,$nexthandler_email,$request->order_i_d,$request->req_status);
                 
                 $servicestatus = DB::table('serviceorderss')->where('order_i_d', $request->order_i_d)
                 ->update(['next_handler' => $nexthandler, 
@@ -130,7 +132,6 @@ class ServiceapprovalController extends Controller
             $username= Sentinel::getUser()->first_name;
             $comment_insert = DB::table('comments')
             ->insert(['comment' => $comment, 'order_i_d' => $request->order_i_d, 'username' => $username]);
-            $email_send = $this->send_email($request->order_i_d,'approved');
 
             return redirect(route('admin.serviceOrders.serviceOrders.index'))
             ->with('success', 'Order Approved and Sent to Technical Department');
@@ -141,6 +142,7 @@ class ServiceapprovalController extends Controller
 
                 $nexthandler = DB::table('role_users')->where('role_id','3')->get();
                 $nexthandler = DB::table('users')->where('id',$nexthandler[0]->user_id)->get();
+                $nexthandler_email = $nexthandler[0]->email;
                 $nexthandler_role = $nexthandler[0]->id;
                 $nexthandler_role_id = '3';
                 $prevhandler_role = DB::table('role_users')->where('role_id','6')->get();
@@ -151,6 +153,8 @@ class ServiceapprovalController extends Controller
                 $nexthandler2 = $nexthandler[0]->last_name;
                 $nexthandler3 = ' ';
                 $nexthandler = $nexthandler1.$nexthandler3.$nexthandler2;
+
+                $next_handler_email_sent = $this->next_handler_email_sent($nexthandler1,$nexthandler_email,$request->order_i_d,$request->req_status);
                 
                 $servicestatus = DB::table('serviceorderss')->where('order_i_d', $request->order_i_d)
                 ->update(['next_handler' => $nexthandler, 
@@ -166,7 +170,7 @@ class ServiceapprovalController extends Controller
             $username= Sentinel::getUser()->first_name;
             $comment_insert = DB::table('comments')
             ->insert(['comment' => $comment, 'order_i_d' => $request->order_i_d, 'username' => $username]);
-            $email_send = $this->send_email($request->order_i_d,'approved');
+            
         
 
             return redirect(route('admin.serviceOrders.serviceOrders.index'))
@@ -180,6 +184,7 @@ class ServiceapprovalController extends Controller
                 // if technical manager aprove
 
                 $nexthandler = DB::table('users')->where('id',$request->assigned_to)->first();
+                $nexthandler_email = $nexthandler->email;
                 $nexthandler_role = '5';
                 $nexthandler_role_id = '3';
                 $prevhandler_role = DB::table('role_users')->where('role_id','6')->get();
@@ -190,6 +195,8 @@ class ServiceapprovalController extends Controller
                 $nexthandler2 = $nexthandler->last_name;
                 $nexthandler3 = ' ';
                 $nexthandler = $nexthandler1.$nexthandler3.$nexthandler2;
+
+                $next_handler_email_sent = $this->next_handler_email_sent($nexthandler1,$nexthandler_email,$request->order_i_d,$request->req_status);
                 
                 $servicestatus = DB::table('serviceorderss')->where('order_i_d', $request->order_i_d)
                 ->update(['next_handler' => $nexthandler, 
@@ -205,7 +212,6 @@ class ServiceapprovalController extends Controller
             $username= Sentinel::getUser()->first_name;
             $comment_insert = DB::table('comments')
             ->insert(['comment' => $comment, 'order_i_d' => $request->order_i_d, 'username' => $username]);
-            $email_send = $this->send_email($request->order_i_d,'approved');
         
 
             return redirect(route('admin.serviceOrders.serviceOrders.index'))
@@ -221,6 +227,7 @@ class ServiceapprovalController extends Controller
                 // if technical manager aprove
 
                 $nexthandler = DB::table('users')->where('id',$request->assigned_to)->first();
+                $nexthandler_email = $nexthandler->email;
                 $nexthandler_role = '5';
                 $nexthandler_role_id = '3';
                 $prevhandler_role = DB::table('role_users')->where('role_id','6')->get();
@@ -231,6 +238,8 @@ class ServiceapprovalController extends Controller
                 $nexthandler2 = $nexthandler->last_name;
                 $nexthandler3 = ' ';
                 $nexthandler = $nexthandler1.$nexthandler3.$nexthandler2;
+
+                $next_handler_email_sent = $this->next_handler_email_sent($nexthandler1,$nexthandler_email,$request->order_i_d,$request->req_status);
                 
                 $servicestatus = DB::table('serviceorderss')->where('order_i_d', $request->order_i_d)
                 ->update(['next_handler' => $nexthandler, 
@@ -246,7 +255,6 @@ class ServiceapprovalController extends Controller
             $username= Sentinel::getUser()->first_name;
             $comment_insert = DB::table('comments')
             ->insert(['comment' => $comment, 'order_i_d' => $request->order_i_d, 'username' => $username]);
-            $email_send = $this->send_email($request->order_i_d,'approved');
         
 
             return redirect(route('admin.serviceOrders.serviceOrders.index'))
@@ -270,6 +278,9 @@ class ServiceapprovalController extends Controller
                 $nexthandler2 = $nexthandler[0]->last_name;
                 $nexthandler3 = ' ';
                 $nexthandler = $nexthandler1.$nexthandler3.$nexthandler2;
+
+                $nexthandler_email = $nexthandler[0]->email;
+                $next_handler_email_sent = $this->next_handler_email_sent($nexthandler1,$nexthandler_email,$request->order_i_d,$request->req_status);
                 
                 $servicestatus = DB::table('serviceorderss')->where('order_i_d', $request->order_i_d)
                 ->update(['next_handler' => $nexthandler, 
@@ -285,7 +296,6 @@ class ServiceapprovalController extends Controller
             $username= Sentinel::getUser()->first_name;
             $comment_insert = DB::table('comments')
             ->insert(['comment' => $comment, 'order_i_d' => $request->order_i_d, 'username' => $username]);
-            $email_send = $this->send_email($request->order_i_d,'approved');
         
 
             return redirect(route('admin.serviceOrders.serviceOrders.index'))
@@ -302,6 +312,7 @@ class ServiceapprovalController extends Controller
               
                 $nexthandler = DB::table('role_users')->where('role_id','6')->get();
                 $nexthandler = DB::table('users')->where('id',$nexthandler[0]->user_id)->get();
+                $nexthandler_email = $nexthandler[0]->email;
                 $nexthandler_role = $nexthandler[0]->id;
                 $nexthandler_role_id = '6';
                 $prevhandler_role = DB::table('role_users')->where('role_id','3')->get();
@@ -312,6 +323,8 @@ class ServiceapprovalController extends Controller
                 $nexthandler2 = $nexthandler[0]->last_name;
                 $nexthandler3 = ' ';
                 $nexthandler = $nexthandler1.$nexthandler3.$nexthandler2;
+
+                $next_handler_email_sent = $this->next_handler_email_sent($nexthandler1,$nexthandler_email,$request->order_i_d,$request->req_status);
                 
                 $servicestatus = DB::table('serviceorderss')->where('order_i_d', $request->order_i_d)
                 ->update(['next_handler' => $nexthandler, 
@@ -327,7 +340,6 @@ class ServiceapprovalController extends Controller
                 $username= Sentinel::getUser()->first_name;
                 $comment_insert = DB::table('comments')
                 ->insert(['comment' => $comment, 'order_i_d' => $request->order_i_d, 'username' => $username]);
-                $email_send = $this->send_email($request->order_i_d,'approved');
 
                 
             return redirect(route('admin.serviceOrders.serviceOrders.index'))
@@ -355,7 +367,10 @@ class ServiceapprovalController extends Controller
                 $nexthandler2 = $nexthandler[0]->last_name;
                 $nexthandler3 = ' ';
                 $nexthandler = $nexthandler1.$nexthandler3.$nexthandler2;
-                
+
+                $nexthandler_email = $nexthandler[0]->email;
+                $next_handler_email_sent = $this->next_handler_email_sent($nexthandler1,$nexthandler_email,$request->order_i_d,'process invoice of');
+                $send_service_activation_email = $this->send_service_activation_email($request->activated_by,$request->activation_date,$request->order_i_d);
                 $servicestatus = DB::table('serviceorderss')->where('order_i_d', $request->order_i_d)
                 ->update(['service_status' =>'Active', 
                           'next_handler' => $nexthandler, 
@@ -490,6 +505,7 @@ class ServiceapprovalController extends Controller
                 'grand_total' => $grand_total
                 );
                 $customer_report_run = $this->customer_report_revenue($invoice_details);
+                $invoice_creatred_email_sent = $this->invoice_creatred_email_sent($invoice_number,$activation_date,$cusromer_name);
 
                 // INVOICE insert into database
                 $invoice_creation = DB::table('serviceinvoices')
@@ -529,6 +545,7 @@ class ServiceapprovalController extends Controller
 
                 $nexthandler = DB::table('role_users')->where('role_id','4')->get();
                 $nexthandler = DB::table('users')->where('id',$nexthandler[0]->user_id)->get();
+                $nexthandler_email = $nexthandler[0]->email;
                 $nexthandler_role = $nexthandler[0]->id;
                 $nexthandler_role_id = '4';
                 $prevhandler_role = DB::table('role_users')->where('role_id','6')->get();
@@ -539,7 +556,10 @@ class ServiceapprovalController extends Controller
                 $nexthandler2 = $nexthandler[0]->last_name;
                 $nexthandler3 = ' ';
                 $nexthandler = $nexthandler1.$nexthandler3.$nexthandler2;
+
+                $next_handler_email_sent = $this->next_handler_email_sent($nexthandler1,$nexthandler_email,$request->order_i_d,'process invoice of');
                 
+                $send_service_activation_email = $this->send_service_activation_email($request->activated_by,$request->activation_date,$request->order_i_d);
                 $servicestatus = DB::table('serviceorderss')->where('order_i_d', $request->order_i_d)
                 ->update(['service_status' =>'Active', 
                           'next_handler' => $nexthandler, 
@@ -704,6 +724,7 @@ else{
                 
                 $nexthandler = DB::table('role_users')->where('role_id','6')->get();
                 $nexthandler = DB::table('users')->where('id',$nexthandler[0]->user_id)->get();
+                $nexthandler_email = $nexthandler[0]->email;
                 $nexthandler_role = $nexthandler[0]->id;
                 $nexthandler_role_id = '6';
                 $prevhandler_role = DB::table('role_users')->where('role_id','3')->get();
@@ -714,6 +735,8 @@ else{
                 $nexthandler2 = $nexthandler[0]->last_name;
                 $nexthandler3 = ' ';
                 $nexthandler = $nexthandler1.$nexthandler3.$nexthandler2;
+
+                $next_handler_email_sent = $this->next_handler_email_sent($nexthandler1,$nexthandler_email,$request->order_i_d,$request->req_status);
                 
                 $servicestatus = DB::table('serviceorderss')->where('order_i_d', $request->order_i_d)
                 ->update(['next_handler' => $nexthandler, 
@@ -729,7 +752,6 @@ else{
             $username= Sentinel::getUser()->first_name;
             $comment_insert = DB::table('comments')
             ->insert(['comment' => $comment, 'order_i_d' => $request->order_i_d, 'username' => $username]);
-            $email_send = $this->send_email($request->order_i_d,'approved');
         
 
             return redirect(route('admin.serviceOrders.serviceOrders.index'))
@@ -741,6 +763,7 @@ else{
 
                 $nexthandler = DB::table('role_users')->where('role_id','3')->get();
                 $nexthandler = DB::table('users')->where('id',$nexthandler[0]->user_id)->get();
+                $nexthandler_email = $nexthandler[0]->email;
                 $nexthandler_role = $nexthandler[0]->id;
                 $nexthandler_role_id = '3';
                 $prevhandler_role = DB::table('role_users')->where('role_id','6')->get();
@@ -751,6 +774,8 @@ else{
                 $nexthandler2 = $nexthandler[0]->last_name;
                 $nexthandler3 = ' ';
                 $nexthandler = $nexthandler1.$nexthandler3.$nexthandler2;
+
+                $next_handler_email_sent = $this->next_handler_email_sent($nexthandler1,$nexthandler_email,$request->order_i_d,$request->req_status);
                 
                 $servicestatus = DB::table('serviceorderss')->where('order_i_d', $request->order_i_d)
                 ->update(['next_handler' => $nexthandler, 
@@ -921,6 +946,7 @@ else{
                 // if technical manager aprove
 
                 $nexthandler = DB::table('users')->where('id',$request->assigned_to)->first();
+                $nexthandler_email = $nexthandler->email;
                 $nexthandler_role = '5';
                 $nexthandler_role_id = '3';
                 $prevhandler_role = DB::table('role_users')->where('role_id','6')->get();
@@ -931,6 +957,8 @@ else{
                 $nexthandler2 = $nexthandler->last_name;
                 $nexthandler3 = ' ';
                 $nexthandler = $nexthandler1.$nexthandler3.$nexthandler2;
+
+                $next_handler_email_sent = $this->next_handler_email_sent($nexthandler1,$nexthandler_email,$request->order_i_d,$request->req_status);
                 
                 $servicestatus = DB::table('serviceorderss')->where('order_i_d', $request->order_i_d)
                 ->update(['next_handler' => $nexthandler, 
@@ -1082,6 +1110,7 @@ else{
                 // if technical manager aprove
 
                 $nexthandler = DB::table('users')->where('id',$request->assigned_to)->first();
+                $nexthandler_email = $nexthandler->email;
                 $nexthandler_role = '5';
                 $nexthandler_role_id = '3';
                 $prevhandler_role = DB::table('role_users')->where('role_id','6')->get();
@@ -1092,6 +1121,8 @@ else{
                 $nexthandler2 = $nexthandler->last_name;
                 $nexthandler3 = ' ';
                 $nexthandler = $nexthandler1.$nexthandler3.$nexthandler2;
+
+                $next_handler_email_sent = $this->next_handler_email_sent($nexthandler1,$nexthandler_email,$request->order_i_d,$request->req_status);
                 
                 $servicestatus = DB::table('serviceorderss')->where('order_i_d', $request->order_i_d)
                 ->update(['next_handler' => $nexthandler, 
@@ -1107,7 +1138,6 @@ else{
             $username= Sentinel::getUser()->first_name;
             $comment_insert = DB::table('comments')
             ->insert(['comment' => $comment, 'order_i_d' => $request->order_i_d, 'username' => $username]);
-            $email_send = $this->send_email($request->order_i_d,'approved');
         
 
             return redirect(route('admin.serviceOrders.serviceOrders.index'))
@@ -1121,6 +1151,7 @@ else{
 
                 $nexthandler = DB::table('role_users')->where('role_id','3')->get();
                 $nexthandler = DB::table('users')->where('id',$nexthandler[0]->user_id)->get();
+                $nexthandler_email = $nexthandler[0]->email;
                 $nexthandler_role = $nexthandler[0]->id;
                 $nexthandler_role_id = '3';
                 $prevhandler_role = DB::table('role_users')->where('role_id','6')->get();
@@ -1131,6 +1162,8 @@ else{
                 $nexthandler2 = $nexthandler[0]->last_name;
                 $nexthandler3 = ' ';
                 $nexthandler = $nexthandler1.$nexthandler3.$nexthandler2;
+
+                $next_handler_email_sent = $this->next_handler_email_sent($nexthandler1,$nexthandler_email,$request->order_i_d,$request->req_status);
                 
                 $servicestatus = DB::table('serviceorderss')->where('order_i_d', $request->order_i_d)
                 ->update(['next_handler' => $nexthandler, 
@@ -1146,7 +1179,6 @@ else{
             $username= Sentinel::getUser()->first_name;
             $comment_insert = DB::table('comments')
             ->insert(['comment' => $comment, 'order_i_d' => $request->order_i_d, 'username' => $username]);
-            $email_send = $this->send_email($request->order_i_d,'approved');
         
 
             return redirect(route('admin.serviceOrders.serviceOrders.index'))
@@ -1163,6 +1195,7 @@ else{
               
                 $nexthandler = DB::table('role_users')->where('role_id','6')->get();
                 $nexthandler = DB::table('users')->where('id',$nexthandler[0]->user_id)->get();
+                $nexthandler_email = $nexthandler[0]->email;
                 $nexthandler_role = $nexthandler[0]->id;
                 $nexthandler_role_id = '6';
                 $prevhandler_role = DB::table('role_users')->where('role_id','3')->get();
@@ -1173,6 +1206,8 @@ else{
                 $nexthandler2 = $nexthandler[0]->last_name;
                 $nexthandler3 = ' ';
                 $nexthandler = $nexthandler1.$nexthandler3.$nexthandler2;
+
+                $next_handler_email_sent = $this->next_handler_email_sent($nexthandler1,$nexthandler_email,$request->order_i_d,$request->req_status);
                 
                 $servicestatus = DB::table('serviceorderss')->where('order_i_d', $request->order_i_d)
                 ->update(['next_handler' => $nexthandler, 
@@ -1188,7 +1223,6 @@ else{
                 $username= Sentinel::getUser()->first_name;
                 $comment_insert = DB::table('comments')
                 ->insert(['comment' => $comment, 'order_i_d' => $request->order_i_d, 'username' => $username]);
-                $email_send = $this->send_email($request->order_i_d,'approved');
 
                 
             return redirect(route('admin.serviceOrders.serviceOrders.index'))
@@ -1204,6 +1238,7 @@ else{
 
                 $nexthandler = DB::table('role_users')->where('role_id','4')->get();
                 $nexthandler = DB::table('users')->where('id',$nexthandler[0]->user_id)->get();
+                $nexthandler_email = $nexthandler[0]->email;
                 $nexthandler_role = $nexthandler[0]->id;
                 $nexthandler_role_id = '4';
                 $prevhandler_role = DB::table('role_users')->where('role_id','6')->get();
@@ -1214,7 +1249,10 @@ else{
                 $nexthandler2 = $nexthandler[0]->last_name;
                 $nexthandler3 = ' ';
                 $nexthandler = $nexthandler1.$nexthandler3.$nexthandler2;
+
+                $next_handler_email_sent = $this->next_handler_email_sent($nexthandler1,$nexthandler_email,$request->order_i_d,'process invoice of');
                 
+                $send_service_activation_email = $this->send_service_activation_email($request->activated_by,$request->activation_date,$request->order_i_d);
                 $servicestatus = DB::table('serviceorderss')->where('order_i_d', $request->order_i_d)
                 ->update(['service_status' =>'Active', 
                           'next_handler' => $nexthandler, 
@@ -1248,6 +1286,7 @@ else{
 
                 $nexthandler = DB::table('role_users')->where('role_id','4')->get();
                 $nexthandler = DB::table('users')->where('id',$nexthandler[0]->user_id)->get();
+                $nexthandler_email = $nexthandler[0]->email;
                 $nexthandler_role = $nexthandler[0]->id;
                 $nexthandler_role_id = '4';
                 $prevhandler_role = DB::table('role_users')->where('role_id','6')->get();
@@ -1258,7 +1297,10 @@ else{
                 $nexthandler2 = $nexthandler[0]->last_name;
                 $nexthandler3 = ' ';
                 $nexthandler = $nexthandler1.$nexthandler3.$nexthandler2;
+
+                $next_handler_email_sent = $this->next_handler_email_sent($nexthandler1,$nexthandler_email,$request->order_i_d,'process invoice of');
                 
+                $send_service_activation_email = $this->send_service_activation_email($request->activated_by,$request->activation_date,$request->order_i_d);
                 $servicestatus = DB::table('serviceorderss')->where('order_i_d', $request->order_i_d)
                 ->update(['service_status' =>'Active', 
                           'next_handler' => $nexthandler, 
@@ -1356,23 +1398,57 @@ public function customer_report_revenue($clientreport)
 
 } // END CUSTOMER REVENUE REPORT CLASS
 
-    // SEND EMAIL FUNCTION
-    public function send_email($service_order_no,$take_action)
+
+
+    // SEND NEXT_HANDLER EMAIL FUNCTION
+    public function next_handler_email_sent($username,$nexthandler_email,$service_order_no,$take_action)
     {
 
-
-        
-
         $mail_subjects = 'Service Order '.$service_order_no. ' need your action ';
-        $mail_content = 'Please login to BSS (10.60.83.218) to ' .$take_action.' the Service Order generated';
+        $mail_content = 'Hello ' .$username. ' , Please login to BSS (10.60.83.218) to ' .$take_action.' the Service Order '.$service_order_no;
+
+        Mail::raw($mail_content, function ($message)use ($mail_subjects,$nexthandler_email) {
+            $message->from('nidctanzania@gmail.com', 'NIDC-BSS');
+            $message->to($nexthandler_email)
+                    ->bcc('nidctanzania@gmail.com')
+                        ->subject($mail_subjects);
+        });
+     }
+     // END SEND NEXT_HANDLER EMAIL FUNCTION
+
+
+    // SEND SERVICE ACTIVATION EMAIL 
+    public function send_service_activation_email($activated_by,$activation_date,$service_order_no)
+    {
+
+        $mail_subjects = 'Service Order '.$service_order_no. ' activated on '.$activation_date;
+        $mail_content = 'Hello , '.'Service Order '.$service_order_no. ' activated on '.$activation_date .' Please login to BSS (10.60.83.218) to verify the Service Order. ';
 
         Mail::raw($mail_content, function ($message)use ($mail_subjects) {
             $message->from('nidctanzania@gmail.com', 'NIDC-BSS');
-            $message->to('nidctanzania@gmail.com')
+            $message->to('gloria.muhazi@nidc.co.tz')
+                    ->cc('commercial@nidc.co.tz')
+                    ->bcc('nidctanzania@gmail.com')
                         ->subject($mail_subjects);
         });
-    }
-     // END SEND EMAIL FUNCTION
+     }
+     // END SEND NEXT_HANDLER EMAIL FUNCTION
 
+    // SEND INVOICE EMAIL FUNCTION
+    public function invoice_creatred_email_sent($invoice_number,$activation_date,$cusromer_name)
+    {
+
+        $mail_subjects = 'Invoice '.$invoice_number . ' for customer ' . $cusromer_name . ' was created on '.$activation_date ;
+        $mail_content = 'Please login to BSS (10.60.83.218) to take action for the invoice generated of Customer'.$cusromer_name;
+
+        Mail::raw($mail_content, function ($message)use ($mail_subjects,$nexthandler_email) {
+            $message->from('nidctanzania@gmail.com', 'NIDC-BSS');
+            $message->to('bahati.otaigo@nidc.co.tz')
+                    ->cc('augustino.irafay@nidc.co.tz')
+                    ->bcc('nidctanzania@gmail.com')
+                        ->subject($mail_subjects);
+        });
+     }
+     // END SEND NEXT_HANDLER EMAIL FUNCTION
 }
 

@@ -259,7 +259,7 @@
         </ul>
     </li>
 @endif
-    <li {!! (Request::is('admin/roles') || Request::is('admin/revenuePerCustomerReport/revenuePerCustomerReports*') || Request::is('admin/agingAnalysisReport/agingAnalysisReports*') ? 'class="active"' : '' ) !!}>
+    <li {!! (Request::is('admin/roles') || Request::is('admin/productrevenue/productRevenues*') || Request::is('admin/revenuePerCustomerReport/revenuePerCustomerReports*') || Request::is('admin/agingAnalysisReport/agingAnalysisReports*') ? 'class="active"' : '' ) !!}>
         <a href="#">
             <i class="livicon" data-name="users" data-size="18" data-c="#418BCA" data-hc="#418BCA" data-loop="true"></i>
             <span class="title">Reports</span>
@@ -270,6 +270,14 @@
                 <a href="{{ route('admin.revenuePerCustomerReport.revenuePerCustomerReports.index') }}">
                     <i class="fa fa-angle-double-right"></i>
                     Revenue Per Customer
+                </a>
+            </li>
+        </ul>
+        <ul class="sub-menu">
+            <li {!! (Request::is('admin/productrevenue/productRevenues*') ? 'class="active" id="active"' : '' ) !!}>
+                <a href="{{ route('admin.productrevenue.productRevenues.index') }}">
+                    <i class="fa fa-angle-double-right"></i>
+                    Revenue Per Product
                 </a>
             </li>
         </ul>

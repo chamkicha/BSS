@@ -38,7 +38,9 @@ class ServiceOrders extends Model
         'activated_by',
         'activation_date',
         'service_creation_date',
-        'req_status'
+        'req_status',
+        'item_quantity',
+        'discount_value'
     ];
 
     /**
@@ -60,6 +62,7 @@ class ServiceOrders extends Model
         'ed_amount' => 'string',
         'ed_value' => 'string',
         'discount' => 'string',
+        'discount_value' => 'string',
         'service_lists' => 'array',
         'next_handler' => 'string',
         'next_handler_role' => 'string',
@@ -67,7 +70,8 @@ class ServiceOrders extends Model
         'created_by' => 'string',
         'activated_by' => 'string',
         'req_status' => 'string',
-        'activation_date' => 'string'
+        'activation_date' => 'string',
+        'item_quantity' => 'integer'
     ];
 
     /**

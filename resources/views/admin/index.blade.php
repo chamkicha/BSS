@@ -82,7 +82,7 @@ NIDC
                                     <div class="number">{{serviceorder()}}</div>
                                 </div>
                                 <div class="col-6">
-                                    <i class="livicon float-right" data-name="piggybank" data-l="true" data-c="#fff"
+                                    <i class="livicon float-right" data-name="archive-add" data-l="true" data-c="#fff"
                                         data-hc="#fff" data-s="70"></i>
                                 </div>
 
@@ -112,21 +112,21 @@ NIDC
                                 <div class="square_box col-6 float-left">
                                     <span>Total Income</span>
 
-                                    <div class="number" >{{totalincome()}}</div>
+                                    <div class="number" >{{ number_format(totalincome(),2)}}</div>
                                 </div>
-                                <div class="col-6">
+                                {{--  <div class="col-6">
                                     <i class="livicon float-right" data-name="archive-add" data-l="true" data-c="#fff"
                                         data-hc="#fff" data-s="70"></i>
-                                </div>
+                                </div>  --}}
                             </div>
                             <div class="row">
                                 <div class="col-6">
                                     <small class="stat-label">Paid</small>
-                                    <h4 >{{paid()}}</h4>
+                                    <h4 >{{ number_format(paid(),2)}}</h4>
                                 </div>
                                 <div class="col-6 text-right">
                                     <small class="stat-label">Dept</small>
-                                    <h4 >{{dept()}}</h4>
+                                    <h4 >{{ number_format(dept(),2)}}</h4>
                                 </div>
                             </div>
                         </div>

@@ -36,16 +36,9 @@ class RevenuePerCustomerReportController extends InfyOmBaseController
         
         $this->revenuePerCustomerReportRepository->pushCriteria(new RequestCriteria($request));
         $revenuePerCustomerReports = $this->revenuePerCustomerReportRepository->all();
-        //dd($revenuePerCustomerReports);
-        $customer = DB:: table('customers')
-            ->join('serviceorderss', 'customers.id', '=', 'serviceorderss.customer_no')
-            ->join('paymentanddues', 'customers.id', '=', 'paymentanddues.customer_no')
-            ->select('customers.*', 'serviceorderss.ed_amount', 'paymentanddues.balance')
-            ->get();
-//dd($customer);
+        
         return view('admin.revenuePerCustomerReport.revenuePerCustomerReports.index')
-            ->with('revenuePerCustomerReports', $revenuePerCustomerReports)
-            ->with('customer_details', $customer);
+            ->with('revenuePerCustomerReports', $revenuePerCustomerReports);
     }
 
     /**

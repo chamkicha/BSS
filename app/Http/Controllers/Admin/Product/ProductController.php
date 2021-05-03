@@ -15,6 +15,8 @@ use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
 use App\Models\Unitofmeasure\UnitofMeasure;
 use App\Models\Producttype\ProductType;
+use Carbon\Carbon;
+use Mail;
 
 class ProductController extends InfyOmBaseController
 {
@@ -78,8 +80,8 @@ class ProductController extends InfyOmBaseController
 
         // tax amount
         $sub_total =$request->price;
-        $tax_amount =$request->v_a_t;
-        $tax_amount2 = $tax_amount * 0.01;
+        $tax_amount_percent =$request->v_a_t;
+        $tax_amount2 = $tax_amount_percent * 0.01;
         $tax_amount1 = $tax_amount2 * $sub_total;
         
         // ED AMOUNT
@@ -92,15 +94,17 @@ class ProductController extends InfyOmBaseController
 
        // sub total
         $sub_total =$sub_total + $ed_amount1;
-
         
         // GRAND TOTAL
-        $grand_total = $sub_total + $tax_amount1 - $discount;
+        $grand_total = $sub_total + $tax_amount1;
+        //dd($grand_total);
 
         $input = array(
             "product_name" => $request->product_name,
             "product_unit" => $request->product_unit,
             "product_type" => $request->product_type,
+            "created_by" => $request->created_by,
+            "product_no" => $request->product_no,
             "v_a_t" => $request->v_a_t,
             "e_d" => $request->e_d,
             "price" => $sub_total,
@@ -118,6 +122,17 @@ class ProductController extends InfyOmBaseController
 
 
         Flash::success('Product saved successfully.');
+        
+        $mail_subjects = 'Product '.$request->product_name. ' created by '.$request->created_by.' on '.Carbon::now()->format('d-m-Y');
+        $mail_content = 'Hello.,'.' Product '.$request->product_name. ' was created by '.$request->created_by.' on '.Carbon::now()->format('d-m-Y'). 'Please login to BSS (10.60.83.218) to Verify';
+
+        Mail::raw($mail_content, function ($message)use ($mail_subjects) {
+            $message->from('nidctanzania@gmail.com', 'NIDC-BSS');
+            $message->to('gloria.muhazi@nidc.co.tz')
+                     ->cc('commercial@nidc.co.tz')
+                     ->bcc('nidctanzania@gmail.com')
+                        ->subject($mail_subjects);
+        });
 
         return redirect(route('admin.product.products.index'));
     }

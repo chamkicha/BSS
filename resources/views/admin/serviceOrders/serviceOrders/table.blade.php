@@ -5,8 +5,9 @@
         <th>Order I D</th>
         <th>Customer Name</th>
         <th>Service Status</th>
+        <th>Service State</th>
         <th>Service Order Type</th>
-        <th>Grand Total</th>
+        <th>Service Createion Date</th>
         <th>Service Lists</th>
         <th>Next Handler</th>
         <th>Created By</th>
@@ -27,12 +28,19 @@
             @endif
             
             </td>
+            <td>
+             @if ($serviceOrders->req_status === 'created')
+            <strong>{!! $serviceOrders->req_status !!}</strong>
+            @else
+             <strong>{!! $serviceOrders->req_status !!}</strong>
+             @endif
+            </td>
             <td>{!! $serviceOrders->serviceordertypes !!}</td>
-            <td>{!! $serviceOrders->grand_total !!}</td>
+            <td>{!! \Carbon\Carbon::parse($serviceOrders->service_creation_date)->format('d/m/Y') !!}</td>
             <td>
 
-                @foreach((array) $serviceOrders->service_lists as $value)
-                {{$value}},
+                @foreach($client_product as $client_products)
+                {{$client_products->product_name}},
                 @endforeach
             </td>
             <td>{!! $serviceOrders->next_handler !!}</td>
@@ -41,6 +49,8 @@
                  <a href="{{ route('admin.serviceOrders.serviceOrders.show', collect($serviceOrders)->first() ) }}">
                      <i class="livicon" data-name="info" data-size="18" data-loop="true" data-c="#428BCA" data-hc="#428BCA" title="view serviceOrders"></i>
                  </a>
+                 @if (Sentinel::inRole('admin') or Sentinel::inRole('commercial-manager'))
+                 
                  <a href="{{ route('admin.serviceOrders.serviceOrders.edit', collect($serviceOrders)->first() ) }}">
                      <i class="livicon" data-name="edit" data-size="18" data-loop="true" data-c="#428BCA" data-hc="#428BCA" title="edit serviceOrders"></i>
                  </a>
@@ -48,6 +58,7 @@
                      <i class="livicon" data-name="remove-alt" data-size="18" data-loop="true" data-c="#f56954" data-hc="#f56954" title="delete serviceOrders"></i>
 
                  </a>
+                 @endif
             </td>
         </tr>
     @endforeach

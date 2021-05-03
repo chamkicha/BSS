@@ -604,3 +604,123 @@ Route::get('productRevenues/{productRevenues}', ['as'=> 'productRevenues.show', 
 Route::get('productRevenues/{productRevenues}/edit', ['as'=> 'productRevenues.edit', 'uses' => 'Productrevenue\ProductRevenueController@edit']);
 
 });
+
+
+Route::group(array('prefix' => 'admin/clientProduct/','namespace' => 'Admin','middleware' => 'admin','as'=>'admin.clientProduct.'), function () {
+
+Route::get('clientProducts', ['as'=> 'clientProducts.index', 'uses' => 'Client_Product\Client_productController@index']);
+Route::post('clientProducts', ['as'=> 'clientProducts.store', 'uses' => 'Client_Product\Client_productController@store']);
+Route::get('clientProducts/create', ['as'=> 'clientProducts.create', 'uses' => 'Client_Product\Client_productController@create']);
+Route::put('clientProducts/{clientProducts}', ['as'=> 'clientProducts.update', 'uses' => 'Client_Product\Client_productController@update']);
+Route::patch('clientProducts/{clientProducts}', ['as'=> 'clientProducts.update', 'uses' => 'Client_Product\Client_productController@update']);
+Route::get('clientProducts/{id}/delete', ['as' => 'clientProducts.delete', 'uses' => 'Client_Product\Client_productController@getDelete']);
+Route::get('clientProducts/{id}/confirm-delete', ['as' => 'clientProducts.confirm-delete', 'uses' => 'Client_Product\Client_productController@getModalDelete']);
+Route::get('clientProducts/{clientProducts}', ['as'=> 'clientProducts.show', 'uses' => 'Client_Product\Client_productController@show']);
+Route::get('clientProducts/{clientProducts}/edit', ['as'=> 'clientProducts.edit', 'uses' => 'Client_Product\Client_productController@edit']);
+
+});
+
+
+Route::group(array('prefix' => 'admin/clientProduct/','namespace' => 'Admin','middleware' => 'admin','as'=>'admin.clientProduct.'), function () {
+
+Route::get('clientproducts', ['as'=> 'clientproducts.index', 'uses' => 'Client_Product\ClientproductController@index']);
+Route::post('clientproducts', ['as'=> 'clientproducts.store', 'uses' => 'Client_Product\ClientproductController@store']);
+Route::get('clientproducts/create', ['as'=> 'clientproducts.create', 'uses' => 'Client_Product\ClientproductController@create']);
+Route::put('clientproducts/{clientproducts}', ['as'=> 'clientproducts.update', 'uses' => 'Client_Product\ClientproductController@update']);
+Route::patch('clientproducts/{clientproducts}', ['as'=> 'clientproducts.update', 'uses' => 'Client_Product\ClientproductController@update']);
+Route::get('clientproducts/{id}/delete', ['as' => 'clientproducts.delete', 'uses' => 'Client_Product\ClientproductController@getDelete']);
+Route::get('clientproducts/{id}/confirm-delete', ['as' => 'clientproducts.confirm-delete', 'uses' => 'Client_Product\ClientproductController@getModalDelete']);
+Route::get('clientproducts/{clientproducts}', ['as'=> 'clientproducts.show', 'uses' => 'Client_Product\ClientproductController@show']);
+Route::get('clientproducts/{clientproducts}/edit', ['as'=> 'clientproducts.edit', 'uses' => 'Client_Product\ClientproductController@edit']);
+
+});
+
+
+Route::group(array('prefix' => 'admin/clientProduct/','namespace' => 'Admin','middleware' => 'admin','as'=>'admin.clientProduct.'), function () {
+
+Route::get('clientproductreports', ['as'=> 'clientproductreports.index', 'uses' => 'Client_Product\ClientproductreportController@index']);
+Route::post('clientproductreports', ['as'=> 'clientproductreports.store', 'uses' => 'Client_Product\ClientproductreportController@store']);
+Route::get('clientproductreports/create', ['as'=> 'clientproductreports.create', 'uses' => 'Client_Product\ClientproductreportController@create']);
+Route::put('clientproductreports/{clientproductreports}', ['as'=> 'clientproductreports.update', 'uses' => 'Client_Product\ClientproductreportController@update']);
+Route::patch('clientproductreports/{clientproductreports}', ['as'=> 'clientproductreports.update', 'uses' => 'Client_Product\ClientproductreportController@update']);
+Route::get('clientproductreports/{id}/delete', ['as' => 'clientproductreports.delete', 'uses' => 'Client_Product\ClientproductreportController@getDelete']);
+Route::get('clientproductreports/{id}/confirm-delete', ['as' => 'clientproductreports.confirm-delete', 'uses' => 'Client_Product\ClientproductreportController@getModalDelete']);
+Route::get('clientproductreports/{clientproductreports}', ['as'=> 'clientproductreports.show', 'uses' => 'Client_Product\ClientproductreportController@show']);
+Route::get('clientproductreports/{clientproductreports}/edit', ['as'=> 'clientproductreports.edit', 'uses' => 'Client_Product\ClientproductreportController@edit']);
+
+});
+
+
+Route::group(array('prefix' => 'admin/clientProduct/','namespace' => 'Admin','middleware' => 'admin','as'=>'admin.clientProduct.'), function () {
+
+Route::get('productclients', ['as'=> 'productclients.index', 'uses' => 'Client_Product\ProductclientController@index']);
+Route::post('productclients', ['as'=> 'productclients.store', 'uses' => 'Client_Product\ProductclientController@store']);
+Route::get('productclients/create', ['as'=> 'productclients.create', 'uses' => 'Client_Product\ProductclientController@create']);
+Route::put('productclients/{productclients}', ['as'=> 'productclients.update', 'uses' => 'Client_Product\ProductclientController@update']);
+Route::patch('productclients/{productclients}', ['as'=> 'productclients.update', 'uses' => 'Client_Product\ProductclientController@update']);
+Route::get('productclients/{id}/delete', ['as' => 'productclients.delete', 'uses' => 'Client_Product\ProductclientController@getDelete']);
+Route::get('productclients/{id}/confirm-delete', ['as' => 'productclients.confirm-delete', 'uses' => 'Client_Product\ProductclientController@getModalDelete']);
+Route::get('productclients/{productclients}', ['as'=> 'productclients.show', 'uses' => 'Client_Product\ProductclientController@show']);
+Route::get('productclients/{productclients}/edit', ['as'=> 'productclients.edit', 'uses' => 'Client_Product\ProductclientController@edit']);
+
+});
+
+
+Route::group(array('prefix' => 'admin/clientProducts/','namespace' => 'Admin','middleware' => 'admin','as'=>'admin.clientProducts.'), function () {
+
+Route::get('productclients', ['as'=> 'productclients.index', 'uses' => 'Client_Products\ProductclientController@index']);
+Route::post('productclients', ['as'=> 'productclients.store', 'uses' => 'Client_Products\ProductclientController@store']);
+Route::get('productclients/create', ['as'=> 'productclients.create', 'uses' => 'Client_Products\ProductclientController@create']);
+Route::put('productclients/{productclients}', ['as'=> 'productclients.update', 'uses' => 'Client_Products\ProductclientController@update']);
+Route::patch('productclients/{productclients}', ['as'=> 'productclients.update', 'uses' => 'Client_Products\ProductclientController@update']);
+Route::get('productclients/{id}/delete', ['as' => 'productclients.delete', 'uses' => 'Client_Products\ProductclientController@getDelete']);
+Route::get('productclients/{id}/confirm-delete', ['as' => 'productclients.confirm-delete', 'uses' => 'Client_Products\ProductclientController@getModalDelete']);
+Route::get('productclients/{productclients}', ['as'=> 'productclients.show', 'uses' => 'Client_Products\ProductclientController@show']);
+Route::get('productclients/{productclients}/edit', ['as'=> 'productclients.edit', 'uses' => 'Client_Products\ProductclientController@edit']);
+
+});
+
+
+Route::group(array('prefix' => 'admin/productsServiceOrder/','namespace' => 'Admin','middleware' => 'admin','as'=>'admin.productsServiceOrder.'), function () {
+
+Route::get('productsServiceOrders', ['as'=> 'productsServiceOrders.index', 'uses' => 'Products_Service_Order\Products_service_orderController@index']);
+Route::post('productsServiceOrders', ['as'=> 'productsServiceOrders.store', 'uses' => 'Products_Service_Order\Products_service_orderController@store']);
+Route::get('productsServiceOrders/create', ['as'=> 'productsServiceOrders.create', 'uses' => 'Products_Service_Order\Products_service_orderController@create']);
+Route::put('productsServiceOrders/{productsServiceOrders}', ['as'=> 'productsServiceOrders.update', 'uses' => 'Products_Service_Order\Products_service_orderController@update']);
+Route::patch('productsServiceOrders/{productsServiceOrders}', ['as'=> 'productsServiceOrders.update', 'uses' => 'Products_Service_Order\Products_service_orderController@update']);
+Route::get('productsServiceOrders/{id}/delete', ['as' => 'productsServiceOrders.delete', 'uses' => 'Products_Service_Order\Products_service_orderController@getDelete']);
+Route::get('productsServiceOrders/{id}/confirm-delete', ['as' => 'productsServiceOrders.confirm-delete', 'uses' => 'Products_Service_Order\Products_service_orderController@getModalDelete']);
+Route::get('productsServiceOrders/{productsServiceOrders}', ['as'=> 'productsServiceOrders.show', 'uses' => 'Products_Service_Order\Products_service_orderController@show']);
+Route::get('productsServiceOrders/{productsServiceOrders}/edit', ['as'=> 'productsServiceOrders.edit', 'uses' => 'Products_Service_Order\Products_service_orderController@edit']);
+
+});
+
+
+Route::group(array('prefix' => 'admin/productsServicePrder/','namespace' => 'Admin','middleware' => 'admin','as'=>'admin.productsServicePrder.'), function () {
+
+Route::get('productsserviceorders', ['as'=> 'productsserviceorders.index', 'uses' => 'Productsserviceprder\ProductsserviceorderController@index']);
+Route::post('productsserviceorders', ['as'=> 'productsserviceorders.store', 'uses' => 'Productsserviceprder\ProductsserviceorderController@store']);
+Route::get('productsserviceorders/create', ['as'=> 'productsserviceorders.create', 'uses' => 'Productsserviceprder\ProductsserviceorderController@create']);
+Route::put('productsserviceorders/{productsserviceorders}', ['as'=> 'productsserviceorders.update', 'uses' => 'Productsserviceprder\ProductsserviceorderController@update']);
+Route::patch('productsserviceorders/{productsserviceorders}', ['as'=> 'productsserviceorders.update', 'uses' => 'Productsserviceprder\ProductsserviceorderController@update']);
+Route::get('productsserviceorders/{id}/delete', ['as' => 'productsserviceorders.delete', 'uses' => 'Productsserviceprder\ProductsserviceorderController@getDelete']);
+Route::get('productsserviceorders/{id}/confirm-delete', ['as' => 'productsserviceorders.confirm-delete', 'uses' => 'Productsserviceprder\ProductsserviceorderController@getModalDelete']);
+Route::get('productsserviceorders/{productsserviceorders}', ['as'=> 'productsserviceorders.show', 'uses' => 'Productsserviceprder\ProductsserviceorderController@show']);
+Route::get('productsserviceorders/{productsserviceorders}/edit', ['as'=> 'productsserviceorders.edit', 'uses' => 'Productsserviceprder\ProductsserviceorderController@edit']);
+
+});
+
+
+Route::group(array('prefix' => 'admin/productServiceOrderList/','namespace' => 'Admin','middleware' => 'admin','as'=>'admin.productServiceOrderList.'), function () {
+
+Route::get('productServiceOrderLists', ['as'=> 'productServiceOrderLists.index', 'uses' => 'Productserviceorderlist\ProductServiceOrderListController@index']);
+Route::post('productServiceOrderLists', ['as'=> 'productServiceOrderLists.store', 'uses' => 'Productserviceorderlist\ProductServiceOrderListController@store']);
+Route::get('productServiceOrderLists/create', ['as'=> 'productServiceOrderLists.create', 'uses' => 'Productserviceorderlist\ProductServiceOrderListController@create']);
+Route::put('productServiceOrderLists/{productServiceOrderLists}', ['as'=> 'productServiceOrderLists.update', 'uses' => 'Productserviceorderlist\ProductServiceOrderListController@update']);
+Route::patch('productServiceOrderLists/{productServiceOrderLists}', ['as'=> 'productServiceOrderLists.update', 'uses' => 'Productserviceorderlist\ProductServiceOrderListController@update']);
+Route::get('productServiceOrderLists/{id}/delete', ['as' => 'productServiceOrderLists.delete', 'uses' => 'Productserviceorderlist\ProductServiceOrderListController@getDelete']);
+Route::get('productServiceOrderLists/{id}/confirm-delete', ['as' => 'productServiceOrderLists.confirm-delete', 'uses' => 'Productserviceorderlist\ProductServiceOrderListController@getModalDelete']);
+Route::get('productServiceOrderLists/{productServiceOrderLists}', ['as'=> 'productServiceOrderLists.show', 'uses' => 'Productserviceorderlist\ProductServiceOrderListController@show']);
+Route::get('productServiceOrderLists/{productServiceOrderLists}/edit', ['as'=> 'productServiceOrderLists.edit', 'uses' => 'Productserviceorderlist\ProductServiceOrderListController@edit']);
+
+});

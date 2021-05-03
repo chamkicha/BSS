@@ -38,6 +38,15 @@ function customerNo()
         return $customer_no;
 } 
 
+function created_by(){
+
+    $user = Sentinel::getUser()->first_name;
+    $user2 = Sentinel::getUser()->last_name;
+    $user3 =' ';
+    $user =$user.$user3.$user2;
+    return $user;
+}
+
 
 ?>
 
@@ -238,6 +247,12 @@ function customerNo()
             </div>
     </div>
 
+
+<!-- created by Field -->
+<div class="form-group col-sm-12">
+    <input type="hidden" id="created_by" name="created_by" class="form-control" value="{{created_by()}}" >
+
+</div>
 
 <!-- Submit Field -->
 <div class="form-group col-sm-12 text-center">

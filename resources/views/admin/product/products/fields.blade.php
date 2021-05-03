@@ -1,3 +1,55 @@
+<?php
+use App\Models\Servicestatus\Servicestatus;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
+use App\Models\User;
+
+
+function product_no()
+{   
+
+              
+    $product_no = DB::table('products')->orderBy('product_no', 'desc')->first();
+    
+    if(is_null($product_no)){
+
+        $product_no1 = 'PO_';
+
+        $product_no = date('Y-m');
+        $product_no = str_replace("-", "", $product_no);
+        $product_no = str_replace(":", "", $product_no);
+        $product_no2 = str_replace(" ", "", $product_no);
+ 
+        $product_no3 = 1000;
+        $product_no = $product_no1.$product_no2.$product_no3;
+
+    }else{
+        $product_no = DB::table('products')->orderBy('product_no', 'desc')->first()->product_no;
+        $product_no = substr($product_no, -4);
+        $product_no3 = e($product_no) + 1;
+        $product_no1 = 'PO_';
+
+        $product_no = date('Y-m');
+        $product_no = str_replace("-", "", $product_no);
+        $product_no = str_replace(":", "", $product_no);
+        $product_no2 = str_replace(" ", "", $product_no);
+        $product_no = $product_no1.$product_no2.$product_no3;
+    }
+        return $product_no;
+} 
+
+function created_by(){
+
+    $user = Sentinel::getUser()->first_name;
+    $user2 = Sentinel::getUser()->last_name;
+    $user3 =' ';
+    $user =$user.$user3.$user2;
+    return $user;
+}
+
+
+?>
+
 
 <div class="row">
              <div class"form-group col-lg-6">
@@ -78,6 +130,19 @@
                     </div>
 
             </div>
+            
+<!-- product no Field -->
+<div class="form-group col-sm-12">
+    <input type="hidden" id="product_no" name="product_no" class="form-control" value="{{product_no()}}" >
+
+</div>
+
+<!-- created by Field -->
+<div class="form-group col-sm-12">
+    <input type="hidden" id="created_by" name="created_by" class="form-control" value="{{created_by()}}" >
+
+</div>
+
 
 </div>
 

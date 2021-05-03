@@ -213,6 +213,12 @@ function serviceorder()
 
 
 
+<!-- Discount Field -->
+    <div class="form-group has-success has-feedback">
+    <label for="fname">Discount(%):</label>&nbsp;&nbsp;&nbsp;
+        <input type="text" name="discount" id="discount" name="fname" style="width: 15%;">
+    </div>
+
 
 
 <!-- Service Lists Field -->
@@ -225,7 +231,9 @@ function serviceorder()
                 @foreach($product_list as $product_lists)
                     <div class="checkbox mar-left5">
                             <label for="form-checkbox1">
-                                <input type="checkbox" id="service_lists" name="service_lists[]" value="{{$product_lists->product_name}}" class="square-blue"> {{$product_lists->product_name}}</label>
+                                <input type="checkbox" id="service_lists" name="service_lists[]" value="{{$product_lists->product_name}}" class="square-blue"> {{$product_lists->product_name}}
+                                &nbsp;&nbsp;&nbsp;<span><label>Quantity:</label>&nbsp;<input style="width: 15%;" type="number" name="item_quantity"> </span> 
+                                </label>
                     </div>
                 @endforeach
             </div>

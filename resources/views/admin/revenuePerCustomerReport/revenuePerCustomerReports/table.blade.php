@@ -97,7 +97,11 @@
             <td>{!! $revenuePerCustomerReport->customer_name !!}</td>
             <td>{!! $revenuePerCustomerReport->customer_no !!}</td>
             <td>{!! $revenuePerCustomerReport->customer_type !!}</td>
-            <td>{!! $revenuePerCustomerReport->services !!}</td>
+            <td>
+            
+                
+            
+            </td>
             <td>{!! $revenuePerCustomerReport->excise_dutty !!}</td>
             <td>{!! $revenuePerCustomerReport->v_a_t !!}</td>
             <td>{!! $revenuePerCustomerReport->total_wit_vat !!}</td>

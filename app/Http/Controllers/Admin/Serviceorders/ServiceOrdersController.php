@@ -44,8 +44,19 @@ class ServiceOrdersController extends InfyOmBaseController
         $this->serviceOrdersRepository->pushCriteria(new RequestCriteria($request));
         $serviceOrders = $this->serviceOrdersRepository->all();
         //dd($serviceOrders);
-        return view('admin.serviceOrders.serviceOrders.index')
+        if(count($serviceOrders)=='0')
+        {
+            return view('admin.serviceOrders.serviceOrders.index')
             ->with('serviceOrders', $serviceOrders);
+        }else{
+        $client_product = DB::table('clientproducts')->where('service_order_no',$serviceOrders[0]->order_i_d)->get();
+        //$prev_handler_role = DB::table('users')->where('id',$serviceOrders[0]->prev_handler_role)->first()->last_name;
+        //dd($client_product);
+        return view('admin.serviceOrders.serviceOrders.index')
+            ->with('client_product', $client_product)
+            //->with('prev_handler_role', $prev_handler_role)
+            ->with('serviceOrders', $serviceOrders);
+        }
     }
 
     /**
@@ -89,35 +100,49 @@ class ServiceOrdersController extends InfyOmBaseController
         ]);
         
         $input = $request->all();
-        $sub_total1 = $request->service_lists;
+        $service_lists = $request->service_lists;
+
+        // Get Month count
+        $monthly_count = DB::table('paymentmodes')->where('payment_interval', $request->payment_mode)
+                  ->first()->monthly_count;
         
-        
-        $sub_total2 = DB::table('products')->whereIn('product_name', $sub_total1)
-                  ->sum('grand_total');
-        
+        // customer no
         $customer_name = $request->customer_name;
         $customer_no = DB::table('customers')->where('customername', $customer_name)->get();
         $customer_no = $customer_no[0]->id;
 
-        // tax amount
-        $tax_amount = DB::table('products')->whereIn('product_name', $sub_total1)
-                                            ->sum('vat_amount');
 
         // ED AMOUNT
-        $ed_amount = DB::table('products')->whereIn('product_name', $sub_total1)
+        $ed_amount = DB::table('products')->whereIn('product_name', $service_lists)
                                         ->sum('ed_amount');
+        //$ed_amount = $ed_amount * $monthly_count;
 
-        // SUB TOTAL
-        $sub_total = DB::table('products')->whereIn('product_name', $sub_total1)
-                                        ->sum('price');
+        
+        
 
 
         // DISCOUNT
+        $sub_total = DB::table('products')->whereIn('product_name', $service_lists)
+                                        ->sum('grand_total');
         $discount =$request->discount;
+        $discount = $discount * 0.01;
+        $discount_value = $sub_total * $discount ;
 
         // GRAND TOTAL
-        $grand_total = $sub_total2 - $discount;
-        
+        $grand_total = $sub_total - $discount_value;
+        $grand_total = $grand_total * $monthly_count;
+
+
+        // tax amount
+        //$tax_amount = DB::table('products')->whereIn('product_name', $service_lists)->sum('vat_amount');
+        $tax_amount = $grand_total / 1.18;
+        $tax_amount = $grand_total - $tax_amount;
+
+        // SUB TOTAL
+        $sub_total = $grand_total / 1.18;
+        //dd($sub_total);
+
+
        
         $object = array(
             'order_i_d' => $request->order_i_d,
@@ -126,6 +151,7 @@ class ServiceOrdersController extends InfyOmBaseController
             'payment_mode' => $request->payment_mode,
             'serviceordertypes' => $request->serviceordertypes,
             'service_status' => $request->service_status,
+            'item_quantity' => $request->item_quantity,
             'sub_total' => $sub_total,
             'grand_total' => $grand_total,
             'tax_amount' => $tax_amount,
@@ -133,6 +159,7 @@ class ServiceOrdersController extends InfyOmBaseController
             'req_status' => $request->req_status,
             //'tax_value' => $request->tax_amount,
             'discount' => $request->discount,
+            'discount_value' => $discount_value,
             'service_creation_date' => $request->service_creation_date,
             'service_ending_date' => $request->service_ending_date,
             'service_descriptions' => $request->service_descriptions,
@@ -147,14 +174,55 @@ class ServiceOrdersController extends InfyOmBaseController
 
        $serviceOrders = $this->serviceOrdersRepository->create($object);
 
-        $mail_subjects = 'Service Order '.$request->order_i_d. ' generated for '.$request->customer_name.' on '.Carbon::parse($request->service_creation_date)->format('d-m-Y');
-        $mail_content = 'Please login to BSS (10.60.83.218) to check the Service Order generated';
+       foreach($request->service_lists as $service_name)
+       {
+        
+        // DISCOUNT PER PRODUCT
+        $sub_total = DB::table('products')->where('product_name', $service_name)
+                                        ->sum('grand_total');
+        
+        // DESCRIPTION PER PRODUCT
+        $description = DB::table('products')->where('product_name', $service_name)
+                                        ->first()->description;
 
-        Mail::raw($mail_content, function ($message)use ($mail_subjects) {
-            $message->from('nidctanzania@gmail.com', 'NIDC-BSS');
-            $message->to('nidctanzania@gmail.com')
-                        ->subject($mail_subjects);
-        });
+
+        $discount =$request->discount;
+        $discount = $discount * 0.01;
+        $discount_value = $sub_total * $discount ;
+
+        // GRAND TOTAL PER PRODUCT
+        $grand_total = $sub_total - $discount_value;
+        $grand_total = $grand_total * $monthly_count;
+
+
+        // tax amount PER PRODUCT
+        //$tax_amount = DB::table('products')->whereIn('product_name', $service_lists)->sum('vat_amount');
+        $tax_amount = $grand_total / 1.18;
+        $tax_amount = $grand_total - $tax_amount;
+
+        // SUB TOTAL PER PRODUCT
+        $sub_total = $grand_total / 1.18;
+
+        $client_product = DB::table('productsserviceorders')
+                        ->insert([ 
+                                    'product_name' => $service_name, 
+                                    'description' => $description, 
+                                    'sub_total' => $sub_total, 
+                                    'vat_amount' => $tax_amount, 
+                                    'grand_total' => $grand_total, 
+                                    'order_i_d' => $request->order_i_d, 
+                                    'created_at' => $request->service_creation_date,]);
+        
+       $client_product = DB::table('clientproducts')
+                        ->insert(['client_no' => $customer_no, 
+                                    'product_name' => $service_name, 
+                                    'service_order_no' => $request->order_i_d, 
+                                    'created_at' => $request->service_creation_date,]);
+       }
+
+       
+        
+        $nexthandler_email = $this->next_handler_email_sent($request->order_i_d,$request->customer_name,$request->created_by);
 
         Flash::success('ServiceOrders saved successfully.');
 
@@ -172,7 +240,7 @@ class ServiceOrdersController extends InfyOmBaseController
     {
         $serviceOrders = $this->serviceOrdersRepository->findWithoutFail($id);
 
-        $service_name_description = DB::table('products')->whereIn('product_name', $serviceOrders->service_lists)->get();
+        $service_name_description = DB::table('productsserviceorders')->where('order_i_d', $serviceOrders->order_i_d)->get();
         $customer_details = DB::table('customers')->where('id', $serviceOrders->customer_no)->get();
         $comments_details = DB::table('comments')->where('order_i_d', $serviceOrders->order_i_d)->get();
         $tech_user = DB::table('role_users')->where('role_id', '5')
@@ -185,7 +253,7 @@ class ServiceOrdersController extends InfyOmBaseController
                             ->first()->payment_mode_name;
 
         
-       // dd($tech_user);
+        //dd($service_name_description);
 
 
        $serviceOrders = array(
@@ -320,7 +388,22 @@ class ServiceOrdersController extends InfyOmBaseController
 
        }
 
+    // SEND NEXT_HANDLER EMAIL FUNCTION
+    public function next_handler_email_sent($service_order_no,$customer_name,$created_by)
+    {
 
+        $mail_subjects = 'Service Order '.$service_order_no. ' for customer '.$customer_name. ' was created by '.$created_by;
+        $mail_content = 'Hello Gloria, Please login to BSS (10.60.83.218) to approve  the Service Order generated';
+
+        Mail::raw($mail_content, function ($message)use ($mail_subjects) {
+            $message->from('nidctanzania@gmail.com', 'NIDC-BSS');
+            $message->to('gloria.muhazi@nidc.co.tz')
+                    ->cc('commercial@nidc.co.tz')
+                    ->bcc('nidctanzania@gmail.com')
+                        ->subject($mail_subjects);
+        });
+     }
+     // END SEND NEXT_HANDLER EMAIL FUNCTION
        
 
 }
