@@ -112,14 +112,7 @@ class ServiceInvoiceController extends InfyOmBaseController
             $previous_dept = $previous_dept- $grand_total; 
         }
         $service_name = (array)json_decode($serviceInvoice['service_name'], true);
-        //$service_name=implode(",",$service_name);
-        //$service_name = $serviceInvoice->service_name;
-        $service_name_description =DB::table('productsserviceorders')->where('order_i_d', $serviceInvoice->service_order_no)->get();
-        //dd($service_name_description);
-
-        // tax amount
-        // $tax_amount_total = DB::table('products')->whereIn('product_name',  $service_name)
-        //                                     ->sum('vat_amount');
+        $service_name_description =DB::table('clientproducts')->where('service_order_no', $serviceInvoice->service_order_no)->get();
 
         // ED AMOUNT
         $ed_amount_total = DB::table('products')->whereIn('product_name', $service_name)
@@ -311,14 +304,9 @@ class ServiceInvoiceController extends InfyOmBaseController
             $previous_dept = $previous_dept- $grand_total; 
         }
         $service_name = (array)json_decode($serviceInvoice['service_name'], true);
-        //$service_name=implode(",",$service_name);
-        //$service_name = $serviceInvoice->service_name;
-        $service_name_description =DB::table('productsserviceorders')->where('order_i_d', $serviceInvoice->service_order_no)->get();
-        //dd($service_name_description);
-
-        // tax amount
-        // $tax_amount_total = DB::table('products')->whereIn('product_name',  $service_name)
-        //                                     ->sum('vat_amount');
+        
+        $service_name_description =DB::table('clientproducts')->where('service_order_no', $serviceInvoice->service_order_no)->get();
+        
 
         // ED AMOUNT
         $ed_amount_total = DB::table('products')->whereIn('product_name', $service_name)
@@ -451,10 +439,11 @@ class ServiceInvoiceController extends InfyOmBaseController
         $response = '';
         if ($httpCode == 200) {
             $response = $resp;
+            $gc = $this->verification_receipts_barcode($request);
+
         } else {
             $response = false;
         }
-        $gc = $this->verification_receipts_barcode($request);
 
         //dd($response);
         return $response;
@@ -490,8 +479,8 @@ class ServiceInvoiceController extends InfyOmBaseController
         $dc = $this->get_count($reg_data[0], 'dc');
         $rctvnum = $reg_data[0]->recptcode . $gc;
         $name = str_replace("'", "", $name);
-        $name = Str::substr($name, 1, 100);
-        $payload = '<RCT><DATE>' . date('Y-m-d') . '</DATE><TIME>' . date('H:i:s') . '</TIME><TIN>' . $tin . '</TIN><REGID>' . $reg_data[0]->regid . '</REGID><EFDSERIAL>' . $reg_data[0]->vfd . '</EFDSERIAL><CUSTIDTYPE>1</CUSTIDTYPE><CUSTID>'.$request->t_i_n_number.'</CUSTID><CUSTNAME>' . $name . '</CUSTNAME><MOBILENUM>' . (int)$mobile . '</MOBILENUM><RCTNUM>' . $gc . '</RCTNUM><DC>' . $dc . '</DC><GC>' . $gc . '</GC><ZNUM>' . date('Ymd') . '</ZNUM><RCTVNUM>' . $rctvnum . '</RCTVNUM><ITEMS><ITEM><ID>1</ID><DESC>'. $request->description .'</DESC><QTY>1</QTY><TAXCODE>1</TAXCODE><AMT>'. $request->price .'</AMT></ITEM></ITEMS><TOTALS><TOTALTAXEXCL>'. $request->price .'</TOTALTAXEXCL><TOTALTAXINCL>' . $request->grand_total . '</TOTALTAXINCL><DISCOUNT>0.00</DISCOUNT></TOTALS><PAYMENTS><PMTTYPE>INVOICE</PMTTYPE><PMTAMOUNT>' . $request->grand_total . '</PMTAMOUNT></PAYMENTS><VATTOTALS><VATRATE>A</VATRATE><NETTAMOUNT>' . $request->grand_total . '</NETTAMOUNT><TAXAMOUNT>'. $request->vat_amount .'</TAXAMOUNT></VATTOTALS></RCT>';
+        $name = Str::substr($name, 0, 99);
+        $payload = '<RCT><DATE>' . date('Y-m-d') . '</DATE><TIME>' . date('H:i:s') . '</TIME><TIN>' . $tin . '</TIN><REGID>' . $reg_data[0]->regid . '</REGID><EFDSERIAL>' . $reg_data[0]->vfd . '</EFDSERIAL><CUSTIDTYPE>1</CUSTIDTYPE><CUSTID>'.$request->t_i_n_number.'</CUSTID><CUSTNAME>' . $name . '</CUSTNAME><MOBILENUM>' . (int)$mobile . '</MOBILENUM><RCTNUM>' . $gc . '</RCTNUM><DC>' . $dc . '</DC><GC>' . $gc . '</GC><ZNUM>' . date('Ymd') . '</ZNUM><RCTVNUM>' . $rctvnum . '</RCTVNUM><ITEMS><ITEM><ID>1</ID><DESC>'. $request->description .'</DESC><QTY>'. $request->product_quantity .'</QTY><TAXCODE>1</TAXCODE><AMT>'. $request->price .'</AMT></ITEM></ITEMS><TOTALS><TOTALTAXEXCL>'. $request->price .'</TOTALTAXEXCL><TOTALTAXINCL>' . $request->grand_total . '</TOTALTAXINCL><DISCOUNT>0.00</DISCOUNT></TOTALS><PAYMENTS><PMTTYPE>INVOICE</PMTTYPE><PMTAMOUNT>' . $request->grand_total . '</PMTAMOUNT></PAYMENTS><VATTOTALS><VATRATE>A</VATRATE><NETTAMOUNT>' . $request->grand_total . '</NETTAMOUNT><TAXAMOUNT>'. $request->vat_amount .'</TAXAMOUNT></VATTOTALS></RCT>';
         $priv_key = $this->get_key_from_file("./" . $reg_data[0]->cert_path . ".pem", true, true, $reg_data[0]->cert_password);
         $signedPayload = $this->sign_payload_plain($payload, $priv_key);
         $update_invoice_rctvum_date = DB::table('serviceinvoices')

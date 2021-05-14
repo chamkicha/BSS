@@ -269,6 +269,7 @@ class ServiceapprovalController extends Controller
                 $nexthandler = DB::table('role_users')->where('role_id','3')->get();
                 $nexthandler = DB::table('users')->where('id',$nexthandler[0]->user_id)->get();
                 $nexthandler_role = $nexthandler[0]->id;
+                $nexthandler_email = $nexthandler[0]->email;
                 $nexthandler_role_id = '3';
                 $prevhandler_role = DB::table('role_users')->where('role_id','6')->get();
                 $prevhandler_role = DB::table('users')->where('id',$prevhandler_role[0]->user_id)->get();
@@ -279,7 +280,6 @@ class ServiceapprovalController extends Controller
                 $nexthandler3 = ' ';
                 $nexthandler = $nexthandler1.$nexthandler3.$nexthandler2;
 
-                $nexthandler_email = $nexthandler[0]->email;
                 $next_handler_email_sent = $this->next_handler_email_sent($nexthandler1,$nexthandler_email,$request->order_i_d,$request->req_status);
                 
                 $servicestatus = DB::table('serviceorderss')->where('order_i_d', $request->order_i_d)
@@ -357,6 +357,7 @@ class ServiceapprovalController extends Controller
 
                 $nexthandler = DB::table('role_users')->where('role_id','4')->get();
                 $nexthandler = DB::table('users')->where('id',$nexthandler[0]->user_id)->get();
+                $nexthandler_email = $nexthandler[0]->email;
                 $nexthandler_role = $nexthandler[0]->id;
                 $nexthandler_role_id = '4';
                 $prevhandler_role = DB::table('role_users')->where('role_id','6')->get();
@@ -368,7 +369,6 @@ class ServiceapprovalController extends Controller
                 $nexthandler3 = ' ';
                 $nexthandler = $nexthandler1.$nexthandler3.$nexthandler2;
 
-                $nexthandler_email = $nexthandler[0]->email;
                 $next_handler_email_sent = $this->next_handler_email_sent($nexthandler1,$nexthandler_email,$request->order_i_d,'process invoice of');
                 $send_service_activation_email = $this->send_service_activation_email($request->activated_by,$request->activation_date,$request->order_i_d);
                 $servicestatus = DB::table('serviceorderss')->where('order_i_d', $request->order_i_d)

@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Lang;
 use App\Models\Paymentanddue\PaymentAndDue;
 use Flash;
 use Prettus\Repository\Criteria\RequestCriteria;
+use App\Models\Customer\Customer;
 use Response;
 
 class PaymentAndDueController extends InfyOmBaseController
@@ -46,7 +47,9 @@ class PaymentAndDueController extends InfyOmBaseController
      */
     public function create()
     {
-        return view('admin.paymentAndDue.paymentAndDues.create');
+        $customer_list = Customer::get();
+        return view('admin.paymentAndDue.paymentAndDues.create')
+               ->with('customer_list', $customer_list);
     }
 
     /**

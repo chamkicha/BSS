@@ -22,9 +22,9 @@
             <td>{!! $product->description !!}</td>
             <td>{!! $product->product_unit !!}</td>
             <td>{!! $product->product_type !!}</td>
-            <td>{!! number_format($product->vat_amount) !!}</td>
-            <td>{!! number_format($product->price) !!}</td>
-            <td>{!! number_format($product->grand_total) !!}</td>
+            <td>{!! number_format($product->vat_amount,2) !!}</td>
+            <td>{!! number_format($product->price,2) !!}</td>
+            <td>{!! number_format($product->grand_total,2) !!}</td>
             <td>{!! $product->created_by !!}</td>
             <td>
                  <a href="{{ route('admin.product.products.show', collect($product)->first() ) }}">

@@ -164,8 +164,8 @@ function get_signature_by()
                                                     <th>SI No.</th>
                                                     <th>Item</th>
                                                     <th>Item Descriptions</th>
-                                                    <th>VAT</th>
                                                     <th>Amount</th>
+                                                    <th>VAT</th>
                                                     <th>Total</th>
                                                 </tr>
                                                 </thead>
@@ -174,10 +174,10 @@ function get_signature_by()
                                                 <tr>
                                                     <td>{{$loop->iteration}}</td>
                                                     <td>{{ $serviceInvoices->product_name }}</td>
-                                                    <td>{{ $serviceInvoices->description }}</td>
+                                                    <td>{{ $serviceInvoices->product_description }}*{{ $serviceInvoices->product_quantity }}</td>
+                                                    <td>{{ number_format($serviceInvoices->price, 2) }}</td>
                                                     <td>{{ number_format($serviceInvoices->vat_amount, 2) }}</td>
-                                                    <td>{{ number_format($serviceInvoices->sub_total, 2) }}</td>
-                                                    <td>{{number_format($serviceInvoices->grand_total, 2)  }}</td>
+                                                    <td>{{number_format($serviceInvoices->amount, 2)  }}</td>
                                                 </tr>
                                                 @endforeach
                                                 <tr>
@@ -354,43 +354,26 @@ function get_signature_by()
                                         
                                                 @foreach($serviceInvoice['service_name_description'] as $serviceInvoices)
                                                 
-                                                <input type="hidden" id="description" name="description" class="form-control" value="{{$serviceInvoices->description}}" >
-
-                                                @endforeach
-
-          
-                                        </div>
-
-                                        
-
-                                        
-                                        <!-- VAT Field -->
-                                        <div class="form-group col-sm-12">
-                                        
-                                                @foreach($serviceInvoice['service_name_description'] as $serviceInvoices)
-                                                
+                                                <input type="hidden" id="description" name="description" class="form-control" value="{{$serviceInvoices->product_description}}" >
                                                 <input type="hidden" id="vat_amount" name="vat_amount" class="form-control" value="{{ str_replace(',', '',number_format($serviceInvoices->vat_amount, 2))}}" >
+                                                <input type="hidden" id="price" name="price" class="form-control" value="{{ str_replace(',', '',number_format($serviceInvoices->price,2))}}" >
+                                                <input type="hidden" id="product_quantity" name="product_quantity" class="form-control" value="{{ $serviceInvoices->product_quantity}}" >
+                                             
+
 
                                                 @endforeach
 
           
                                         </div>
 
+                                        
+
+                                        
                                         
                                         <!-- customer no description Field -->
                                         <div class="form-group col-sm-12">
                                             <input type="hidden" id="customer_no" name="customer_no" class="form-control" value="{{$serviceInvoice['customer_no']}}" >
 
-                                        </div>
-
-                                        
-                                        <!-- amount/price Field -->
-                                        <div class="form-group col-sm-12">
-                                               @foreach($serviceInvoice['service_name_description'] as $serviceInvoices)
-                                                
-                                                <input type="hidden" id="price" name="price" class="form-control" value="{{ str_replace(',', '',number_format($serviceInvoices->sub_total,2))}}" >
-                                             
-                                                @endforeach
                                         </div>
 
                                         
@@ -436,7 +419,7 @@ function get_signature_by()
 
                                         </div>
 
-                                        @if(empty($serviceInvoice['qrcode_path']))
+                                        @if(empty($serviceInvoice['qrcode_path'])  or Sentinel::inRole('admin'))
 
                                         <button type="submit" class="btn btn_marTop button-alignment btn-secondary default_voice"
                                                 data-toggle="button">
