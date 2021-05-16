@@ -52,6 +52,21 @@ function nexthandler()
     return $nexthandler;
 } 
 
+function nexthandler_role()
+{      
+    $nexthandler = DB::table('role_users')->where('role_id','3')->get();
+    $nexthandler = DB::table('users')->where('id',$nexthandler[0]->user_id)->get();
+    $nexthandler = $nexthandler[0]->id;
+    return $nexthandler;
+} 
+
+function nexthandler_role_id()
+{      
+    $nexthandler = DB::table('role_users')->where('role_id','3')->get();
+    $nexthandler = $nexthandler[0]->role_id;
+    return $nexthandler;
+} 
+
 function serviceorder()
 {   
 
@@ -85,141 +100,227 @@ function serviceorder()
         return $serviceorder;
 } 
 
-function serviceprice()
-{      
-    $serviceprice = 10000;
-    return $serviceprice;
-}
 
 ?>
 
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <form class="form-horizontal">
+
+                                                     <!-- Customer Name Field -->
+                                                    <div class="form-group has-success">
+                                                        <div class="row">
+                                                            <label class="col-md-3 control-label"
+                                                                   for="form2inputSuccess">Customer Name</label>
+                                                            <div class="col-md-9">    
+                                                            
+                                                                <select name="customer_name" id="select21" class="form-control select2">
+                                                                        
+                                                                        <option value="">Select Customer Name</option>
+                                                                        @foreach($customer_list as $customer)
+                                                                        <option value="{{ $customer->customername}}">{{ $customer->customername }}</option>
+                                                                        @endforeach
+                                                                    </optgroup>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    
+                                                    <!-- Payment Mode Field -->
+                                                    <div class="form-group has-success">
+                                                        <div class="row">
+                                                            <label class="col-md-3 control-label"
+                                                                   for="form2inputsuccess">Payment Mode</label>
+                                                            <div class="col-md-9">
+                                                                
+                                                                    <select name="payment_mode" id="select21" class="form-control select2">
+                                                                            
+                                                                            <option value="">Select Payment Mode</option>
+                                                                            @foreach($paymentmode_list as $paymentmode)
+                                                                            <option value="{{ $paymentmode->payment_interval}}">{{ $paymentmode->payment_mode_name }}</option>
+                                                                            @endforeach
+                                                                        </optgroup>
+                                                                    </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- Service Order Type -->
+                                                    <div class="form-group has-success">
+                                                        <div class="row">
+                                                            <label class="col-md-3 control-label" for="form2inputfeedback">Service Order Type</label>
+                                                            <div class="col-md-9">
+                                                                <select name="serviceordertypes" id="select21" class="form-control select2">
+                                                                        
+                                                                        <option value="">Select Service Order Type</option>
+                                                                        @foreach($service_order_type as $serviceordertype)
+                                                                        <option value="{{ $serviceordertype->service_order_type_name}}">{{ $serviceordertype->service_order_type_name }}</option>
+                                                                        @endforeach
+                                                                    </optgroup>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+
+
+                                            <div class="col-md-6">
+
+                                                <!-- Service Creation Date Field -->
+                                                    <div class="form-group has-success has-feedback">
+                                                        <div class="row">
+                                                            <label class="col-md-3 control-label" for="inputSuccess1">Service Creation Date:</label>
+                                                            <div class="col-md-9">
+                                                                <div class="form-group col-sm-12">
+                                                                    {!! Form::date('service_creation_date', null, ['class' => 'form-control']) !!}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+                                                <!-- Service Ending Date Field -->
+                                                    <div class="form-group has-success has-feedback">
+                                                        <div class="row">
+                                                            <label class="col-md-3 control-label" for="inputSuccess1">Service Ending Date:</label>
+                                                            <div class="col-md-9">
+                                                                <div class="form-group col-sm-12">
+                                                                    {!! Form::date('service_ending_date', null, ['class' => 'form-control']) !!}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+                                                <!-- Service Descriptions Field -->
+                                                    <div class="form-group has-success has-feedback">
+                                                        <div class="row">
+                                                            <label class="col-md-3 control-label" for="inputSuccess1">Service Descriptions:</label>
+                                                            <div class="col-md-9">
+                                                                <div class="form-group col-sm-12">
+                                                                    {!! Form::text('service_descriptions', null, ['class' => 'form-control']) !!}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                            </div>
+                                        </div>
+                                    
 
 
 
-<!-- Order I D Field -->
-<div class="form-group col-sm-12">
-    
-    <input type="hidden" id="order_i_d"name="order_i_d" class="form-control" value = "{{serviceorder()}}">
-    
-</div>
 
-<!-- Customer Name Field -->
-<div class="form-group col-sm-12">
-
-    <label for="select21" class="control-label">
-        Customer:
-    </label>
-    <select name="customer_name" id="select21" class="form-control select2">
-            
-            <option value="">Select Customer Name</option>
-            @foreach($customer_list as $customer)
-            <option value="{{ $customer->customername}}">{{ $customer->customername }}</option>
-            @endforeach
-        </optgroup>
-    </select>
-</div>
+<!-- Discount Field -->
+    <div class="form-group has-success has-feedback">
+    <label for="fname" class="control-label has-success has-feedback">Discount(%):</label>&nbsp;&nbsp;&nbsp;
+        <input type="text" name="discount" id="discount" name="fname" style="width: 15%;">
+    </div>
 
 
-<!-- Payment Mode Field -->
-<div class="form-group col-sm-12">
-    <label for="select21" class="control-label">
-        Payment mode:
-    </label>
-    <select name="payment_mode" id="select21" class="form-control select2">
-            
-            <option value="">Select Payment Mode</option>
-            @foreach($paymentmode_list as $paymentmode)
-            <option value="{{ $paymentmode->payment_mode_name}}">{{ $paymentmode->payment_mode_name }}</option>
-            @endforeach
-        </optgroup>
-    </select>
-</div>
-
-<!-- Service Status Field -->
-<div class="form-group col-sm-12">
-    
-        <input type="hidden" id="service_status"name="service_status" class="form-control" value = "{{servicestatus()}}">
-    
-</div>
-
-<!-- Price Field -->
-<div class="form-group col-sm-12">
-        
-    <input type="hidden" id="price" name="price" class="form-control" value = "{{serviceprice()}}">
-    
-
-</div>
-
-<!-- Service Starting Date Field -->
-<div class="form-group col-sm-12">
-    {!! Form::label('service_starting_date', 'Service Starting Date:') !!}
-    {!! Form::date('service_starting_date', null, ['class' => 'form-control']) !!}
-</div>
-
-<!-- Service Ending Date Field -->
-<div class="form-group col-sm-12">
-    {!! Form::label('service_ending_date', 'Service Ending Date:') !!}
-    {!! Form::date('service_ending_date', null, ['class' => 'form-control']) !!}
-</div>
-
-<!-- Service Descriptions Field -->
-<div class="form-group col-sm-12">
-    {!! Form::label('service_descriptions', 'Service Descriptions:') !!}
-    {!! Form::text('service_descriptions', null, ['class' => 'form-control']) !!}
-</div>
 
 <!-- Service Lists Field -->
-<div class="form-group col-sm-12">
-    @foreach($product_list as $product_lists)
-    <label class="checkbox-inline">
-    <input type="checkbox" id="service_lists" name="service_lists[]" value="{{$product_lists->product_name}}"> {{$product_lists->product_name}}
-    </label>
-    @endforeach
+
+<div class="form-group has-success has-feedback">
+ <label class="control-label has-success has-feedback"><strong>Product List</strong></label>
+
+    {{--  @foreach($product_list->chunk(2) as $product_lists)  --}}
+        <div class="row">
+        @foreach($product_list as $product_lists)
+            <div class="col-md-6 portfolio-item">
+               <div class="checkbox mar-left5">
+                            <label for="form-checkbox1">
+                                <input type="checkbox" id="service_lists" name="service_lists[]" value="{{$product_lists->id}}" class="square-blue"> {{$product_lists->product_name}}
+                                &nbsp;&nbsp;&nbsp;<span><label class="control-label has-success has-feedback">Quantity:</label>&nbsp;<input style="width: 15%;" type="text" name="item_quantity[{{$product_lists->id}}]"> </span> 
+                                </label>
+                    </div>
+            </div>
+        @endforeach
+        </div>
+    {{--  @endforeach  --}}
 </div>
+
+{{--  
+
+                <br /> <br/>
+                <table class="table table-bordered" id="product_info_table">
+                  <thead>
+                    <tr>
+                      <th style="width:50%">Product</th>
+                      <th style="width:10%">Qty</th>
+                      <th style="width:10%">Rate</th>
+                      <th style="width:20%">Amount</th>
+                      <th style="width:10%"><button type="button" id="add_row" class="btn btn-default"><i class="fa fa-plus"></i></button></th>
+                    </tr>
+                  </thead>
+
+                   <tbody>
+                     <tr id="row_1">
+                       <td>
+                        <select class="form-control select_group product" data-row-id="row_1" id="product_1" name="product[]" style="width:100%;" onchange="getProductData(1)" required>
+                            <option value="">Select Product</option>
+                            @foreach ($product_listz as $product_list)
+                              <option value="{{$product_list->product_name}}">{{$product_list->product_name}}</option>
+                            @endforeach
+                          </select>
+                        </td>
+                        <td><input type="text" name="qty[]" id="qty_1" class="form-control" required onkeyup="getTotal(1)"></td>
+                        <td>
+                          <input type="text" name="rate[]" id="rate_1" class="form-control" disabled autocomplete="off">
+                          <input type="hidden" name="rate_value[]" id="rate_value_1" class="form-control" autocomplete="off">
+                        </td>
+                        <td>
+                          <input type="text" name="amount[]" id="amount_1" class="form-control" disabled autocomplete="off">
+                          <input type="hidden" name="amount_value[]" id="amount_value_1" class="form-control" autocomplete="off">
+                        </td>
+                        <td><button type="button" class="btn btn-default" onclick="removeRow('1')"><i class="fa fa-close"></i></button></td>
+                     </tr>
+                   </tbody>
+                </table>
+
+  --}}
+
 
 <!-- Next Handler Field -->
 <div class="form-group col-sm-12">
            
-    <input type="hidden" id="next_handler" name="next_handler" class="form-control" value = "{{nexthandler()}}">
+    <input type="hidden" id="next_handler" name="next_handler" class="form-control" value = "{{$serviceOrders->next_handler}}">
     
 </div>
 
-<!-- user Field -->
+<!-- req_status Field -->
+<div class="form-group col-sm-12">
+           
+    <input type="hidden" id="req_status" name="req_status" class="form-control" value = "created">
+    
+</div>
+
+<!-- Next Handler_role Field -->
+<div class="form-group col-sm-12">
+           
+    <input type="hidden" id="next_handler_role" name="next_handler_role" class="form-control" value = "{{$serviceOrders->next_handler_role}}">
+    
+</div>
+
+<!-- Next Handler_role_id Field -->
+<div class="form-group col-sm-12">
+           
+    <input type="hidden" id="next_handler_role_id" name="next_handler_role_id" class="form-control" value = "{{$serviceOrders->next_handler_role_id}}">
+    
+</div>
+
+
+<!-- created by Field -->
 <div class="form-group col-sm-12"> 
         
-    <input type="hidden" id="created_by" name="created_by" class="form-control" value = "{{createdby()}}">
+    <input type="hidden" id="created_by" name="created_by" class="form-control" value = "{{$serviceOrders->created_by}}">
     
 </div>
 
 
-<div class="form-group row">
-    <div class="col-sm-12">
-      <label for="status">Change Status:</label>
-        <select id="req_status" name="req_status">
-          <option disabled selected value> -- select status -- </option>
-          
-          @if (Sentinel::inRole('commercial-manager') )
-               <option value="verified">Verify</option>
-                <option value="cancelled">Cancel</option>
-          @elseif (Sentinel::inRole('user') && $request->next_handler==='finance')
-              <option value="approved">Approve</option>
-              <option value="cancelled">Cancel</option>
-          @elseif (Sentinel::inRole('user') && $request->next_handler==='store')
-              <option value="issued">Issue</option>
-              <option value="cancelled">Cancel</option>
-          @elseif (Sentinel::inRole('user') && $request->next_handler==='sales')
-              <option value="delivered">Deliver</option>
-              <option value="cancelled">Cancel</option>
-          @elseif (Sentinel::inRole('admin'))
-              <option value="verified">Verify</option>
-              <option value="approve">Approve</option>
-              <option value="issued">Issue</option>
-              <option value="delivered">Deliver</option>
-              <option value="cancelled">Cancel</option>
-          @endif
-          </select>
-</div>
-</div>
+
 
 
 <!-- Submit Field -->
@@ -229,6 +330,21 @@ function serviceprice()
 </div>
 
 
+<!-- Order I D Field -->
+<div class="form-group col-sm-12">
+    
+    <input type="hidden" id="order_i_d"name="order_i_d" class="form-control" value = "{{$serviceOrders->order_i_d}}">
+    
+</div>
+
+
+
+<!-- Service Status Field -->
+<div class="form-group col-sm-12">
+    
+        <input type="hidden" id="service_status"name="service_status" class="form-control" value = "{{$serviceOrders->service_status}}">
+    
+</div>
 
 
 @section('footer_scripts')
@@ -253,4 +369,8 @@ function serviceprice()
         src="{{ asset('vendors/card/js/jquery.card.js') }}"></script>
 <script language="javascript" type="text/javascript" src="{{ asset('js/pages/custom_elements.js') }}"></script>
 
+
+
 @stop
+
+

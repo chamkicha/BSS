@@ -2,14 +2,18 @@
 
 namespace App\Models\Serviceorders;
 
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 
 
 
 class ServiceOrders extends Model
 {
+    use SoftDeletes;
 
     public $table = 'serviceorderss';
+
+    protected $dates = ['deleted_at'];
     
 
 

@@ -1,59 +1,68 @@
-<!-- Customer Name Field -->
-<div class="form-group col-sm-12">
-    {!! Form::label('customer_name', 'Customer Name:') !!}
-    {!! Form::text('customer_name', null, ['class' => 'form-control']) !!}
-</div>
+@section('header_styles')
+
+<link type="text/css" href="{{ asset('vendors/bootstrap-multiselect/css/bootstrap-multiselect.css') }}"
+      rel="stylesheet"/>
+<link href="{{ asset('vendors/select2/css/select2.min.css') }}" rel="stylesheet"/>
+<link href="{{ asset('vendors/select2/css/select2-bootstrap.css') }}" rel="stylesheet"/>
+<link href="{{ asset('vendors/selectize/css/selectize.css') }}" rel="stylesheet"/>
+<link href="{{ asset('vendors/selectize/css/selectize.bootstrap3.css') }}" rel="stylesheet"/>
+<link href="{{ asset('vendors/iCheck/css/all.css') }}" rel="stylesheet"/>
+<link href="{{ asset('vendors/iCheck/css/line/line.css') }}" rel="stylesheet"/>
+<link href="{{ asset('vendors/bootstrap-switch/css/bootstrap-switch.css') }}" rel="stylesheet"/>
+<link href="{{ asset('vendors/switchery/css/switchery.css') }}" rel="stylesheet"/>
+<link href="{{ asset('css/pages/formelements.css') }}" rel="stylesheet"/>
+@stop
 
 
-    <!-- Customer Name Field -->
+
+
 <div class="form-group has-success">
     <div class="row">
-        <label class="col-md-3 control-label"
-                for="form2inputSuccess">Customer Name</label>
-        <div class="col-md-9">    
-        
-            <select name="customer_name" id="select21" class="form-control select2">
+      <div class="col-md-4">
+                <!-- Customer Name Field -->
+            <div class="form-group has-success">
+                <div class="row">
+                    <div class="col-md-12"> 
+                        <label class="control-label"
+                            for="form2inputSuccess">Customer Name</label>   
                     
-                    <option value="">Select Customer Name</option>
-                    @foreach($customer_list as $customer)
-                    <option value="{{ $customer->customername}}">{{ $customer->customername }}</option>
-                    @endforeach
-                </optgroup>
-            </select>
-        </div>
+                        <select name="customer_name" id="select21" class="form-control select2">
+                                
+                                <option value="">Select Customer Name</option>
+                                @foreach($customer_list as $customer)
+                                <option value="{{ $customer->customername}}">{{ $customer->customername }}</option>
+                                @endforeach
+                            </optgroup>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+      </div>
+
+      <div class="col-md-4">
+                <!-- Total Amount Field -->
+            <div class="form-group col-sm-12">
+                {!! Form::label('total_amount', 'Total Amount:') !!}
+                {!! Form::text('total_amount', null, ['class' => 'form-control']) !!}
+            </div>
+            
+            <!-- Submit Field -->
+            <div class="form-group col-sm-12 text-center">
+                {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}
+                <a href="{!! route('admin.paymentAndDue.paymentAndDues.index') !!}" class="btn btn-secondary">Cancel</a>
+            </div>
+
+      </div>
+
+      <div class="col-md-4">
+
+
+      </div>
     </div>
 </div>
 
 
-<!-- Total Amount Field -->
-<div class="form-group col-sm-12">
-    {!! Form::label('total_amount', 'Total Amount:') !!}
-    {!! Form::text('total_amount', null, ['class' => 'form-control']) !!}
-</div>
-
-<!-- Paid Amount Field -->
-<div class="form-group col-sm-12">
-    {!! Form::label('paid_amount', 'Paid Amount:') !!}
-    {!! Form::text('paid_amount', null, ['class' => 'form-control']) !!}
-</div>
-
-<!-- Balance Field -->
-<div class="form-group col-sm-12">
-    {!! Form::label('balance', 'Balance:') !!}
-    {!! Form::text('balance', null, ['class' => 'form-control']) !!}
-</div>
-
-<!-- Customer No Field -->
-<div class="form-group col-sm-12">
-    {!! Form::label('customer_no', 'Customer No:') !!}
-    {!! Form::text('customer_no', null, ['class' => 'form-control']) !!}
-</div>
-
-<!-- Submit Field -->
-<div class="form-group col-sm-12 text-center">
-    {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}
-    <a href="{!! route('admin.paymentAndDue.paymentAndDues.index') !!}" class="btn btn-secondary">Cancel</a>
-</div>
 
 
 

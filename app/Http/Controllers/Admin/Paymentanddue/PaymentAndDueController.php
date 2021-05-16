@@ -13,6 +13,7 @@ use App\Models\Paymentanddue\PaymentAndDue;
 use Flash;
 use Prettus\Repository\Criteria\RequestCriteria;
 use App\Models\Customer\Customer;
+use DB;
 use Response;
 
 class PaymentAndDueController extends InfyOmBaseController
@@ -62,12 +63,50 @@ class PaymentAndDueController extends InfyOmBaseController
     public function store(CreatePaymentAndDueRequest $request)
     {
         $input = $request->all();
+//dd($request);
+        
+        $customer_no = DB::table('customers')->where('customername', $request->customer_name)->first()->id;
+        //dd($customer_no);
+        $payment_due = DB::table('paymentanddues')->where('customer_no', $customer_no)->first();
 
-        $paymentAndDue = $this->paymentAndDueRepository->create($input);
+        if(is_null($payment_due)){
 
+        // PAYMENT AND DUE insert into database
+        $grand_total_due =$request->total_amount;
+        $bill_creation = DB::table('paymentanddues')
+                            ->insert(['customer_name' => $request->customer_name,
+                                    'total_amount' => $grand_total_due,
+                                    'balance' => $grand_total_due,
+                                    'customer_no' => $customer_no,]);
+                                    
         Flash::success('PaymentAndDue saved successfully.');
 
         return redirect(route('admin.paymentAndDue.paymentAndDues.index'));
+
+
+        }else{
+            
+            // PAYMENT AND DUE update into database
+            $grand_total3 = DB::table('paymentanddues')->where('customer_no', $customer_no)->get();
+            $grand_total2 = $grand_total3[0]->total_amount;
+            $grand_total1 = $request->total_amount;
+            $grand_total4 = $grand_total1 + $grand_total2;
+            $balance = $grand_total3[0]->balance;
+            $balance = $balance + $grand_total1;
+            
+            
+            $bill_creation = DB::table('paymentanddues')
+                                ->where('customer_no', $customer_no)
+                                ->update(['total_amount' => $grand_total4,
+                                        'balance' => $balance]);
+
+            Flash::success('PaymentAndDue saved successfully.');
+    
+            return redirect(route('admin.paymentAndDue.paymentAndDues.index'));
+        } // END PAYMEND AND DUE CREATIONM
+
+
+
     }
 
     /**

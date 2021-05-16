@@ -100,6 +100,12 @@ function activated_by()
                                 <td>{!! $serviceOrders['serviceordertypes'] !!}</td>
                             </tr>
 
+                            <!-- Discount Field -->
+                            <tr>
+                                <td>{!! Form::label('Discount', 'Discount:') !!}</td>
+                                <td>{!! $serviceOrders['discount'] !!}</td>
+                            </tr>
+
                             <!-- Service Status Field -->
                             <tr>
                                 <td>{!! Form::label('service_status', 'Service Status:') !!}</td>
@@ -259,6 +265,21 @@ function activated_by()
                                 {!! Form::date('activation_date', null, ['class' => 'form-control']) !!}
                             </div>
                             @endif
+
+                            {{--  ADMIN ACTIONS  --}}
+                           @if (Sentinel::inRole('admin')  && $serviceOrders['next_handler_role_id']==='6' && $serviceOrders['prev_handler_role_id']==='3' && $serviceOrders['req_status']==='activated_req')
+                                <div>
+                                    {!! Form::label('activation_date', 'Service Activation Date:') !!}
+                                    {!! Form::date('activation_date', null, ['class' => 'form-control']) !!}
+                                </div>
+                            @endif
+
+                           @if (Sentinel::inRole('admin')  && $serviceOrders['next_handler_role_id']==='6' && $serviceOrders['prev_handler_role_id']==='3' && $serviceOrders['req_status']==='approved')
+                                <div>
+                                    {!! Form::label('activation_date', 'Service Activation Date:') !!}
+                                    {!! Form::date('activation_date', null, ['class' => 'form-control']) !!}
+                                </div>
+                            @endif
                             
                             <br>
                             <div >
@@ -294,16 +315,37 @@ function activated_by()
                                     <option value="assigned_activated_req">Activate Service</option>
                                     <option value="cancelled">Cancel</option>
 
+                                {{--  ADMIN ACTIONS  --}}
 
-                                @elseif (Sentinel::inRole('user') && $request['next_handler']==='sales')
-                                    <option value="delivered">Deliver</option>
+                                @elseif (Sentinel::inRole('admin')  && $serviceOrders['next_handler_role_id']==='3' && $serviceOrders['prev_handler_role_id']===null)
+                                    <option value="approved">Approve</option>
+                                        <option value="cancelled">Cancel</option>
+
+                                @elseif (Sentinel::inRole('admin')  && $serviceOrders['next_handler_role_id']==='6' && $serviceOrders['prev_handler_role_id']==='3' && $serviceOrders['req_status']==='approved')
+                                    <option value="approved">Approve</option>
+                                    <option value="assigned" >Assign To</option>
                                     <option value="cancelled">Cancel</option>
-                                @elseif (Sentinel::inRole('admin'))
-                                    <option value="verified">Verify</option>
-                                    <option value="approve">Approve</option>
-                                    <option value="issued">Issue</option>
-                                    <option value="delivered">Deliver</option>
+
+                                    
+                                @elseif (Sentinel::inRole('admin')  && $serviceOrders['req_status']==='assigned')
+                                    <option value="assigned_approved" >Approve</option>
                                     <option value="cancelled">Cancel</option>
+
+
+                                @elseif (Sentinel::inRole('admin')  && $serviceOrders['next_handler_role_id']==='3' && $serviceOrders['prev_handler_role_id']==='6' )
+                                    <option value="activated_req">Request for Service Activation</option>
+                                    <option value="cancelled">Cancel</option>
+                                    
+                                @elseif (Sentinel::inRole('admin')  && $serviceOrders['next_handler_role_id']==='6' && $serviceOrders['prev_handler_role_id']==='3' && $serviceOrders['req_status']==='activated_req')
+                                    <option value="activate">Activate</option>
+                                    <option value="assigned_activate">Assign To</option>
+                                    <option value="cancelled">Cancel</option>
+                                    
+                                @elseif (Sentinel::inRole('admin')  && $serviceOrders['req_status']==='assigned_activate')
+                                    <option value="assigned_activated_req">Activate Service</option>
+                                    <option value="cancelled">Cancel</option>
+
+
                                 @endif
                                 </select>
 

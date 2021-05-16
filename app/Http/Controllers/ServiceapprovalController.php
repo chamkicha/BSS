@@ -869,7 +869,8 @@ else{
                     $invoice_number = $invoice_number->invoice_number + 1;
                 }
 
-                $activation_date = date('Y-m-d');
+                //$activation_date = date('Y-m-d');
+                $activation_date = $request->activation_date;
 
                 // next_invoice_date creation
                 $payment_mode_intervals = DB::table('paymentmodes')

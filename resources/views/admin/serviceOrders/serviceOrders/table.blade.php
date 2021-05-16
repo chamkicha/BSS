@@ -7,8 +7,6 @@
         <th>Service Status</th>
         <th>Service State</th>
         <th>Service Order Type</th>
-        <th>Service Createion Date</th>
-        <th>Service Lists</th>
         <th>Next Handler</th>
         <th>Created By</th>
         <th >Action</th>
@@ -18,7 +16,12 @@
     @foreach($serviceOrders as $serviceOrders)
         <tr>
             <td>{!! $serviceOrders->order_i_d !!}</td>
-            <td>{!! $serviceOrders->customer_name !!}</td>
+            
+                 <td>
+            <a href="{{ route('admin.serviceOrders.serviceOrders.show', collect($serviceOrders)->first() ) }}">
+                {!! $serviceOrders->customer_name !!}
+            </a>
+            </td>
             <td>
             @if ($serviceOrders->service_status === 'Active')
                 <span class="label label-sm bg-success text-white">{!! $serviceOrders->service_status !!}</span>
@@ -36,13 +39,7 @@
              @endif
             </td>
             <td>{!! $serviceOrders->serviceordertypes !!}</td>
-            <td>{!! \Carbon\Carbon::parse($serviceOrders->service_creation_date)->format('d/m/Y') !!}</td>
-            <td>
-
-                @foreach($client_product as $client_products)
-                {{$client_products->product_name}},
-                @endforeach
-            </td>
+            
             <td>{!! $serviceOrders->next_handler !!}</td>
             <td>{!! $serviceOrders->created_by !!}</td>
             <td>
