@@ -17,10 +17,10 @@
         <tr>
             <td>{!! $serviceOrders->order_i_d !!}</td>
             
-                 <td>
-            <a href="{{ route('admin.serviceOrders.serviceOrders.show', collect($serviceOrders)->first() ) }}">
-                {!! $serviceOrders->customer_name !!}
-            </a>
+            <td>
+                <a href="{{ route('admin.serviceOrders.serviceOrders.show', collect($serviceOrders)->first() ) }}">
+                    {!! $serviceOrders->customer_name !!}
+                </a>
             </td>
             <td>
             @if ($serviceOrders->service_status === 'Active')
@@ -41,6 +41,7 @@
             <td>{!! $serviceOrders->serviceordertypes !!}</td>
             
             <td>{!! $serviceOrders->next_handler !!}</td>
+
             <td>{!! $serviceOrders->created_by !!}</td>
             <td>
                  <a href="{{ route('admin.serviceOrders.serviceOrders.show', collect($serviceOrders)->first() ) }}">

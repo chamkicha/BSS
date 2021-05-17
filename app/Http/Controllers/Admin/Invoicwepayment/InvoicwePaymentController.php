@@ -14,6 +14,7 @@ use Flash;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
 use App\Models\Customer\Customer;
+use NumberFormatter;
 use DB;
 
 class InvoicwePaymentController extends InfyOmBaseController
@@ -83,14 +84,19 @@ class InvoicwePaymentController extends InfyOmBaseController
     public function show($id)
     {
         $invoicwePayment = $this->invoicwePaymentRepository->findWithoutFail($id);
-
+        $customerDetails = DB::table('customers')->where('id',$invoicwePayment->customer_no)->first();
+        $f = new NumberFormatter("en", NumberFormatter::SPELLOUT);
+        $payment_amount_spell = $f->format($invoicwePayment->payment_amount);
         if (empty($invoicwePayment)) {
             Flash::error('InvoicwePayment not found');
 
             return redirect(route('invoicwePayments.index'));
         }
 
-        return view('admin.invoicwePayment.invoicwePayments.show')->with('invoicwePayment', $invoicwePayment);
+        return view('admin.invoicwePayment.invoicwePayments.show')
+               ->with('customerDetails', $customerDetails)
+               ->with('payment_amount_spell', $payment_amount_spell)
+               ->with('invoicwePayment', $invoicwePayment);
     }
 
     /**

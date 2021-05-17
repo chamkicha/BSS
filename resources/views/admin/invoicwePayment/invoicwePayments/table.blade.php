@@ -6,7 +6,6 @@
         <th>Payment Amount</th>
         <th>Payment Type</th>
         <th>Payment Descriptions</th>
-        <th>Upload Supportingdocument</th>
         <th >Action</th>
      </tr>
     </thead>
@@ -17,7 +16,6 @@
             <td>{!! $invoicwePayment->payment_amount !!}</td>
             <td>{!! $invoicwePayment->payment_type !!}</td>
             <td>{!! $invoicwePayment->payment_descriptions !!}</td>
-            <td>{!! $invoicwePayment->upload_supportingdocument !!}</td>
             <td>
                  <a href="{{ route('admin.invoicwePayment.invoicwePayments.show', collect($invoicwePayment)->first() ) }}">
                      <i class="livicon" data-name="info" data-size="18" data-loop="true" data-c="#428BCA" data-hc="#428BCA" title="view invoicwePayment"></i>

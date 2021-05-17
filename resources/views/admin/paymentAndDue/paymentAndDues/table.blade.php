@@ -6,7 +6,6 @@
         <th>Total Amount</th>
         <th>Paid Amount</th>
         <th>Balance</th>
-        <th>Customer No</th>
         <th >Action</th>
      </tr>
     </thead>
@@ -14,10 +13,9 @@
     @foreach($paymentAndDues as $paymentAndDue)
         <tr>
             <td>{!! $paymentAndDue->customer_name !!}</td>
-            <td>{!! $paymentAndDue->total_amount !!}</td>
-            <td>{!! $paymentAndDue->paid_amount !!}</td>
-            <td>{!! $paymentAndDue->balance !!}</td>
-            <td>{!! $paymentAndDue->customer_no !!}</td>
+            <td>{!! number_format($paymentAndDue->total_amount,2) !!}</td>
+            <td>{!! number_format($paymentAndDue->paid_amount,2) !!}</td>
+            <td>{!! number_format($paymentAndDue->balance,2) !!}</td>
             <td>
                  <a href="{{ route('admin.paymentAndDue.paymentAndDues.show', collect($paymentAndDue)->first() ) }}">
                      <i class="livicon" data-name="info" data-size="18" data-loop="true" data-c="#428BCA" data-hc="#428BCA" title="view paymentAndDue"></i>

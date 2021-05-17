@@ -49,7 +49,7 @@ NIDC
                                     <div class="number">{{servicestatus()}}</div>
                                 </div>
                                 <div class="col-6">
-                                    <i class="livicon  float-right" data-name="eye-open" data-l="true" data-c="#fff"
+                                    <i class="livicon  float-right" data-name="users" data-l="true" data-c="#fff"
                                         data-hc="#fff" data-s="70"></i>
                                 </div>
 
@@ -147,7 +147,7 @@ NIDC
                                     <div class="number" >{{invoices()}}</div>
                                 </div>
                                 <div class="col-6">
-                                    <i class="livicon float-right" data-name="users" data-l="true" data-c="#fff"
+                                    <i class="livicon float-right" data-name="doc-portrait" data-l="true" data-c="#fff"
                                         data-hc="#fff" data-s="70"></i>
                                 </div>
                             </div>

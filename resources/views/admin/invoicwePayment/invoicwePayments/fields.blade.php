@@ -78,11 +78,11 @@
                 for="form2inputSuccess">Customer Name</label>
         <div class="col-md-4">    
         
-            <select name="customer_name" id="select21" class="form-control select2">
+            <select name="customer_no" id="select21" class="form-control select2">
                     
                     <option value="">Select Customer Name</option>
                     @foreach($customer_list as $customer)
-                    <option value="{{ $customer->customername}}">{{ $customer->customername }}</option>
+                    <option value="{{ $customer->id}}">{{ $customer->customername }}</option>
                     @endforeach
                 </optgroup>
             </select>

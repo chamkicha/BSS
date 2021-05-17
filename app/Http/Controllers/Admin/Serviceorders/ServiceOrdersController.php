@@ -49,7 +49,10 @@ class ServiceOrdersController extends InfyOmBaseController
             return view('admin.serviceOrders.serviceOrders.index')
             ->with('serviceOrders', $serviceOrders);
         }else{
-        $client_product = DB::table('clientproducts')->where('service_order_no',$serviceOrders[0]->order_i_d)->get();
+        foreach($serviceOrders as $serviceOrder){
+        $client_product[] = DB::table('clientproducts')->where('service_order_no',$serviceOrder->order_i_d)->count();
+        }
+        //dd($client_product);
         return view('admin.serviceOrders.serviceOrders.index')
             ->with('client_product', $client_product)
             ->with('serviceOrders', $serviceOrders);

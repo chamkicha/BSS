@@ -22,6 +22,9 @@ class InvoicwePayment extends Model
         'payment_amount',
         'payment_type',
         'payment_descriptions',
+        'cusromer_name',
+        'customer_no',
+        'grand_total',
         'upload_supportingdocument'
     ];
 
@@ -35,6 +38,9 @@ class InvoicwePayment extends Model
         'payment_amount' => 'string',
         'payment_type' => 'string',
         'payment_descriptions' => 'string',
+        'cusromer_name' => 'string',
+        'customer_no' => 'string',
+        'grand_total' => 'string',
         'upload_supportingdocument' => 'string'
     ];
 

@@ -123,7 +123,7 @@ function activated_by()
                             <!-- Service activation_date Field -->
                             <tr>
                                 <td>{!! Form::label('activation_date', 'Service Activation Date:') !!}</td>
-                                <td>{!! $serviceOrders['activation_date'] !!}</td>
+                                <td>{!! \Carbon\Carbon::parse($serviceOrders['activation_date'])->format('d-M-y') !!}</td>
                             </tr>
 
                             <!-- activated_by Field -->
@@ -135,13 +135,13 @@ function activated_by()
                             <!-- Service Ending Date Field -->
                             <tr>
                                 <td>{!! Form::label('service_ending_date', 'Service Ending Date:') !!}</td>
-                                <td>{!! $serviceOrders['service_ending_date'] !!}</td>
+                                <td>{!! \Carbon\Carbon::parse($serviceOrders['service_ending_date'])->format('d-M-y') !!}</td>
                             </tr>
 
                             <!-- Service Service Creation Date Field -->
                             <tr>
                                 <td>{!! Form::label('service_creation_date', 'Service Creation Date:') !!}</td>
-                                <td>{!! $serviceOrders['service_creation_date'] !!}</td>
+                                <td>{!! \Carbon\Carbon::parse($serviceOrders['service_creation_date'])->format('d-M-y') !!}</td>
                             </tr>
 
                             <!-- Next Handler Field -->

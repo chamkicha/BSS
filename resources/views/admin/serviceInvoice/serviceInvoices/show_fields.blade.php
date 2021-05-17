@@ -234,8 +234,11 @@ function get_signature_by()
                                                 
                                                 <br>
                                                 <strong>______________________________________________</strong><br>
-                                                <strong>S. Malimi</strong><br>
-                                                <strong>Head NIDC</strong>
+                                               <div class="text-center">
+                                                    <strong>S. Malimi</strong><br>
+                                                    <strong>Head NIDC</strong>
+
+                                               </div>
                                             </div>
                                         </div>
                                     </div>

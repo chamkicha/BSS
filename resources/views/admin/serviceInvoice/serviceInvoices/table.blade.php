@@ -5,11 +5,10 @@
         <th>Invoice Number</th>
         <th>Customer Name</th>
         <th>Invoice Created Date</th>
+        <th>Next Invoice Date</th>
         <th>Service Order No</th>
-        <th>Due Balance</th>
         <th>Current Charges</th>
         <th>Payment Status</th>
-        <th>Service Name</th>
         <th >Action</th>
      </tr>
     </thead>
@@ -17,20 +16,17 @@
     @foreach($serviceInvoices as $serviceInvoice)
         <tr>
             <td>{!! $serviceInvoice->invoice_number !!}</td>
-            <td>{!! $serviceInvoice->cusromer_name !!}</td>
-            <td>{!! $serviceInvoice->invoice_created_date !!}</td>
+            
+            <td>
+                <a href="{{ route('admin.serviceInvoice.serviceInvoices.show', collect($serviceInvoice)->first() ) }}">
+                    {!! $serviceInvoice->cusromer_name !!}
+                </a>
+            </td>
+            <td>{!! \Carbon\Carbon::parse($serviceInvoice->invoice_created_date)->format('d-M-y') !!}</td>
+            <td>{!! \Carbon\Carbon::parse($serviceInvoice->next_invoice_date)->format('d-M-y') !!}</td>
             <td>{!! $serviceInvoice->service_order_no !!}</td>
-            <td>{!! number_format($serviceInvoice->due_balance,2) !!}</td>
             <td>{!! number_format($serviceInvoice->current_charges,2) !!}</td>
             <td>{!! $serviceInvoice->payment_status !!}</td>
-            <td>
-            
-            
-                @foreach($client_product as $client_products)
-                {{$client_products->product_name}},
-                @endforeach
-                
-                </td>
             <td>
                  <a href="{{ route('admin.serviceInvoice.serviceInvoices.show', collect($serviceInvoice)->first() ) }}">
                      <i class="livicon" data-name="info" data-size="18" data-loop="true" data-c="#428BCA" data-hc="#428BCA" title="view serviceInvoice"></i>

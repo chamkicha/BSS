@@ -472,7 +472,7 @@ class ServiceapprovalController extends Controller
                                           ->first()->payment_interval;
                 $next_invoice_date = Carbon::parse($activation_date)->addDays($payment_mode_intervals)->format('Y-m-d');
                 // next_invoice_date creation
-                $invoice_due_date = Carbon::parse($next_invoice_date)->addDays(20)->format('Y-m-d');
+                $invoice_due_date = Carbon::parse($next_invoice_date)->addDays(4)->format('Y-m-d');
                 
                 $cusromer_name = $request->customer_name;
                 $customer_no = $request->customer_no;
@@ -663,7 +663,7 @@ class ServiceapprovalController extends Controller
                                           ->first()->payment_interval;
                 $next_invoice_date = Carbon::parse($activation_date)->addDays($payment_mode_intervals)->format('Y-m-d');
                 // next_invoice_date creation
-                $invoice_due_date = Carbon::parse($next_invoice_date)->addDays(20)->format('Y-m-d');
+                $invoice_due_date = Carbon::parse($next_invoice_date)->addDays(4)->format('Y-m-d');
                 
                 $cusromer_name = $request->customer_name;
                 $customer_no = $request->customer_no;
@@ -878,7 +878,7 @@ else{
                                           ->first()->payment_interval;
                 $next_invoice_date = Carbon::parse($activation_date)->addDays($payment_mode_intervals)->format('Y-m-d');
                 // next_invoice_date creation
-                $invoice_due_date = Carbon::parse($next_invoice_date)->addDays(20)->format('Y-m-d');
+                $invoice_due_date = Carbon::parse($next_invoice_date)->addDays(4)->format('Y-m-d');
 
                 $cusromer_name = $request->customer_name;
                 $customer_no = $request->customer_no;
@@ -1060,7 +1060,7 @@ else{
                                           ->first()->payment_interval;
                 $next_invoice_date = Carbon::parse($activation_date)->addDays($payment_mode_intervals)->format('Y-m-d');
                 // next_invoice_date creation
-                $invoice_due_date = Carbon::parse($next_invoice_date)->addDays(20)->format('Y-m-d');
+                $invoice_due_date = Carbon::parse($next_invoice_date)->addDays(4)->format('Y-m-d');
                 
                 $cusromer_name = $request->customer_name;
                 $customer_no = $request->customer_no;
