@@ -308,6 +308,7 @@ Route::group(array('prefix' => 'admin/serviceInvoice/','namespace' => 'Admin','m
 Route::get('serviceInvoices', ['as'=> 'serviceInvoices.index', 'uses' => 'Serviceinvoice\ServiceInvoiceController@index']);
 Route::post('serviceInvoices', ['as'=> 'serviceInvoices.store', 'uses' => 'Serviceinvoice\ServiceInvoiceController@store']);
 Route::post('nidcConfigs/traapi', ['as'=> 'serviceInvoices.traapi', 'uses' => 'Serviceinvoice\ServiceInvoiceController@processTraReceipt']);
+Route::get('nidcConfigs/post_tra_reg', ['as'=> 'serviceInvoices.post_tra_reg', 'uses' => 'Serviceinvoice\ServiceInvoiceController@post_tra_reg']);
 Route::get('serviceInvoices/create', ['as'=> 'serviceInvoices.create', 'uses' => 'Serviceinvoice\ServiceInvoiceController@create']);
 Route::put('serviceInvoices/{serviceInvoices}', ['as'=> 'serviceInvoices.update', 'uses' => 'Serviceinvoice\ServiceInvoiceController@update']);
 Route::patch('serviceInvoices/{serviceInvoices}', ['as'=> 'serviceInvoices.update', 'uses' => 'Serviceinvoice\ServiceInvoiceController@update']);
@@ -722,5 +723,20 @@ Route::get('productServiceOrderLists/{id}/delete', ['as' => 'productServiceOrder
 Route::get('productServiceOrderLists/{id}/confirm-delete', ['as' => 'productServiceOrderLists.confirm-delete', 'uses' => 'Productserviceorderlist\ProductServiceOrderListController@getModalDelete']);
 Route::get('productServiceOrderLists/{productServiceOrderLists}', ['as'=> 'productServiceOrderLists.show', 'uses' => 'Productserviceorderlist\ProductServiceOrderListController@show']);
 Route::get('productServiceOrderLists/{productServiceOrderLists}/edit', ['as'=> 'productServiceOrderLists.edit', 'uses' => 'Productserviceorderlist\ProductServiceOrderListController@edit']);
+
+});
+
+
+Route::group(array('prefix' => 'admin/agingAnalysisReport/','namespace' => 'Admin','middleware' => 'admin','as'=>'admin.agingAnalysisReport.'), function () {
+
+Route::get('aginganalysisreports', ['as'=> 'aginganalysisreports.index', 'uses' => 'Aginganalysisreport\AginganalysisreportController@index']);
+Route::post('aginganalysisreports', ['as'=> 'aginganalysisreports.store', 'uses' => 'Aginganalysisreport\AginganalysisreportController@store']);
+Route::get('aginganalysisreports/create', ['as'=> 'aginganalysisreports.create', 'uses' => 'Aginganalysisreport\AginganalysisreportController@create']);
+Route::put('aginganalysisreports/{aginganalysisreports}', ['as'=> 'aginganalysisreports.update', 'uses' => 'Aginganalysisreport\AginganalysisreportController@update']);
+Route::patch('aginganalysisreports/{aginganalysisreports}', ['as'=> 'aginganalysisreports.update', 'uses' => 'Aginganalysisreport\AginganalysisreportController@update']);
+Route::get('aginganalysisreports/{id}/delete', ['as' => 'aginganalysisreports.delete', 'uses' => 'Aginganalysisreport\AginganalysisreportController@getDelete']);
+Route::get('aginganalysisreports/{id}/confirm-delete', ['as' => 'aginganalysisreports.confirm-delete', 'uses' => 'Aginganalysisreport\AginganalysisreportController@getModalDelete']);
+Route::get('aginganalysisreports/{aginganalysisreports}', ['as'=> 'aginganalysisreports.show', 'uses' => 'Aginganalysisreport\AginganalysisreportController@show']);
+Route::get('aginganalysisreports/{aginganalysisreports}/edit', ['as'=> 'aginganalysisreports.edit', 'uses' => 'Aginganalysisreport\AginganalysisreportController@edit']);
 
 });

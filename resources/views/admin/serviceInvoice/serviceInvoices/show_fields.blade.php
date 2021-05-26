@@ -118,8 +118,8 @@ function get_signature_by()
                                         @if(!empty($serviceInvoice['qrcode_path']))
 
                                          <img src="{{ URL::asset('public/qrimages/'.$serviceInvoice['qrcode_path']) }}" /><br>
-                                        <strong>{!! $serviceInvoice['RCTVNUM'] !!}</strong>  &nbsp;
-                                        <strong>{!! $serviceInvoice['RCTVNUM_DATE'] !!}</strong>  <br><br>
+                                        Verification Code: <strong>{!! $serviceInvoice['RCTVNUM'] !!}</strong><br>
+                                        Verification Time: <strong>{!! $serviceInvoice['RCTVNUM_DATE'] !!}</strong>  <br><br>
                                         @endif
                                     </div>
                                     <div class="col-md-4 col-4 col-lg-4" style="padding-right:0; border: thin solid black">
@@ -287,7 +287,6 @@ function get_signature_by()
                                         </div>
 
 
-
                                         @if($serviceInvoice['payment_status'] !== 'Fully')
                                         <button type="submit" class="btn btn_marTop button-alignment btn-info"
                                                 data-toggle="button">
@@ -350,6 +349,23 @@ function get_signature_by()
                                             <input type="hidden" id="grand_total" name="grand_total" class="form-control" value="{{ str_replace(',', '', number_format($serviceInvoice['grand_total'],2))}}" >
 
                                         </div>
+                                        
+
+                                        
+                                        <!-- Sub total Field -->
+                                        <div class="form-group col-sm-12">
+                                            <input type="hidden" id="sub_total" name="sub_total" class="form-control" value="{{$serviceInvoice['sub_total'] }}" >
+
+                                        </div>
+                                        
+
+                                        
+                                        <!-- Total Vat Amount Field -->
+                                        <div class="form-group col-sm-12">
+                                            <input type="hidden" id="tax_amount_total" name="tax_amount_total" class="form-control" value="{{$serviceInvoice['tax_amount_total'] }}" >
+
+                                        </div>
+
 
                                         
                                         <!-- service_name_description Field -->

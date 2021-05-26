@@ -18,7 +18,12 @@
     @foreach($products as $product)
         <tr>
             <td>{!! $product->product_no !!}</td>
-            <td>{!! $product->product_name !!}</td>
+            
+            <td>
+                <a href="{{ route('admin.product.products.show', collect($product)->first() ) }}">
+                    {!! $product->product_name !!}
+                </a>
+            </td>
             <td>{!! $product->description !!}</td>
             <td>{!! $product->product_unit !!}</td>
             <td>{!! $product->product_type !!}</td>

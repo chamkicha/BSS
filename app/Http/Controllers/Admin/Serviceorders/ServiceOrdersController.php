@@ -52,7 +52,7 @@ class ServiceOrdersController extends InfyOmBaseController
         foreach($serviceOrders as $serviceOrder){
         $client_product[] = DB::table('clientproducts')->where('service_order_no',$serviceOrder->order_i_d)->count();
         }
-        //dd($client_product);
+        $customer_name = DB::table('customers')->where('customername',$serviceOrder->customer_name)->get();
         return view('admin.serviceOrders.serviceOrders.index')
             ->with('client_product', $client_product)
             ->with('serviceOrders', $serviceOrders);
@@ -93,7 +93,7 @@ class ServiceOrdersController extends InfyOmBaseController
         //dd($request->all());    
         
         $this->validate($request, [
-            'customer_name'  => 'required',
+            'customer_no'  => 'required',
             'payment_mode' => 'required',
             'serviceordertypes' => 'required',
             'service_creation_date' => 'required',
@@ -103,19 +103,12 @@ class ServiceOrdersController extends InfyOmBaseController
         $service_order_no = $this->serviceorder_no();
         $input = $request->all();
         $service_lists = $request->service_lists;
-        // //Get Month count
-        // $product_type = DB::table('products')->whereIn('id', $service_lists)->first()->product_type;
-        // if($product_type == 'Web Hosting'){
-        //     $monthly_count = 1 ;
-        // }else{
-        // $monthly_count = DB::table('paymentmodes')->where('payment_interval', $request->payment_mode)
-        //           ->first()->monthly_count;
-        // }
+        
         
         //customer no
-        $customer_name = $request->customer_name;
-        $customer_no = DB::table('customers')->where('customername', $customer_name)->get();
-        $customer_no = $customer_no[0]->id;
+        $customer_no = $request->customer_no;
+        $customer_name = DB::table('customers')->where('id', $customer_no)->first()->customername;
+        //dd($customer_name);
 
 
         // ED AMOUNT
@@ -141,193 +134,108 @@ class ServiceOrdersController extends InfyOmBaseController
             
             if($check_discount == 'COLOCATION' or $check_discount == 'Virtual Server' or $check_discount == 'VPN service(IPSec)'){
                 $grand_ttl = DB::table('products')->where('id', $product_id)->first()->grand_total;
-                $product = DB::table('products')->where('id', $product_id)->get();
+                $product = DB::table('products')->where('id', $product_id)->first();
                 $product_count = $request->item_quantity[$product_id];
+                $discount = $request->discount[$product_id];
                 $grand_ttl_product = $grand_ttl * $product_count;
                 
-                $discount =$request->discount;
                 $discount = $discount * 0.01;
 
                 $grand_ttl_product = $grand_ttl_product - ($grand_ttl_product * $discount);
 
-                $final_total[] = $grand_ttl_product;
+                //$final_total[] = $grand_ttl_product;
+
+                $product_sub_grand_value = $product->price * $monthly_count * $product_count;
+                $product_sub_grand_discounted_value = $product_sub_grand_value - ($product_sub_grand_value * $discount);
+                $product_sub_grand[] = $product_sub_grand_discounted_value;
+
+                $product_vat_value = $product->vat_amount * $monthly_count * $product_count;
+                $product_vat_discounted_value = $product_vat_value - ($product_vat_value * $discount);
+                $product_vat[] = $product_vat_discounted_value;
+
+                $product_grand_total_value = $product_sub_grand_discounted_value + $product_vat_discounted_value;
+                $product_grand_total[] = $product_grand_total_value;
                 
                 $client_product = DB::table('clientproducts')
                                     ->insert(['client_no' => $customer_no, 
                                                 'product_id' => $product_id, 
                                                 'service_order_no' => $service_order_no, 
                                                 'product_quantity' => $product_count, 
-                                                'product_name' => $product[0]->product_name, 
-                                                'product_description' => $product[0]->description, 
-                                                //'price' => $product[0]->price * $monthly_count, 
-                                                //'vat_amount' => $product[0]->vat_amount * $monthly_count, 
-                                                //'amount' => $final_total[0] * $monthly_count, 
+                                                'product_name' => $product->product_name, 
+                                                'product_description' => $product->description, 
+                                                'price' => $product_sub_grand_discounted_value, 
+                                                'vat_amount' => $product_vat_discounted_value, 
+                                                'amount' => $product_grand_total_value, 
                                                 'created_at' => $request->service_creation_date,]);
                 
-                foreach($final_total as $final_totals){
-                $client_product_amount = DB::table('clientproducts')
-                                    ->where('product_id',$product_id)
-                                    ->update(['amount' => $final_totals * $monthly_count]);
-                }
+                // foreach($final_total as $final_totals){
+                // $client_product_amount = DB::table('clientproducts')
+                //                     ->where('product_id',$product_id)
+                //                     ->update(['amount' => $grand_ttl_product * $monthly_count]);
+                // }
 
                 
             }else{
-            $grand_ttl = DB::table('products')->where('id', $product_id)->first()->grand_total;
-            $product = DB::table('products')->where('id', $product_id)->get();
-            $product_count = $request->item_quantity[$product_id];
-            $final_total[] = $grand_ttl * $product_count;
+                $grand_ttl = DB::table('products')->where('id', $product_id)->first()->grand_total;
+                $product = DB::table('products')->where('id', $product_id)->first();
+                $product_count = $request->item_quantity[$product_id];
+                $grand_ttl_product = $grand_ttl * $product_count;
                 
-            $client_product = DB::table('clientproducts')
-                            ->insert(['client_no' => $customer_no, 
-                                        'product_id' => $product_id, 
-                                        'service_order_no' => $service_order_no, 
-                                        'product_quantity' => $product_count, 
-                                        'product_name' => $product[0]->product_name, 
-                                        'product_description' => $product[0]->description, 
-                                        //'price' => $product[0]->price * $monthly_count, 
-                                        //'vat_amount' => $product[0]->vat_amount * $monthly_count, 
-                                        //'amount' => $final_total[0] * $monthly_count, 
-                                        'created_at' => $request->service_creation_date,]);
+                //$discount =$request->discount;
+                $discount = 0;
 
-            foreach($final_total as $final_totals){
-            $client_product_amount = DB::table('clientproducts')
-                                ->where('product_id',$product_id)
-                                ->update(['amount' => $final_totals * $monthly_count]);
-            }
+                //$grand_ttl_product = $grand_ttl_product - ($grand_ttl_product * $discount);
+
+                //$final_total[] = $grand_ttl_product;
+
+                $product_sub_grand_value = $product->price * $monthly_count * $product_count;
+                $product_sub_grand[] = $product_sub_grand_value;
+                //$product_sub_grand_discounted = $product_sub_grand - ($product_sub_grand * $discount);
+
+                $product_vat_value = $product->vat_amount * $monthly_count * $product_count;
+                $product_vat[] = $product_vat_value;
+                //$product_vat_discounted = $product_vat - ($product_vat * $discount);
+
+                $product_grand_total_value = ($product->price * $monthly_count * $product_count) + ($product->vat_amount * $monthly_count * $product_count);
+                $product_grand_total[] = $product_grand_total_value;
+
+                $client_product = DB::table('clientproducts')
+                                    ->insert(['client_no' => $customer_no, 
+                                                'product_id' => $product_id, 
+                                                'service_order_no' => $service_order_no, 
+                                                'product_quantity' => $product_count, 
+                                                'product_name' => $product->product_name, 
+                                                'product_description' => $product->description, 
+                                                'price' => $product_sub_grand_value, 
+                                                'vat_amount' => $product_vat_value, 
+                                                'amount' => $product_grand_total_value, 
+                                                'created_at' => $request->service_creation_date,]);
           }
         }
 
         // GRAND TOTAL
-        $grand_total = array_sum($final_total);
-        $grand_total = $grand_total * $monthly_count;
-
-
-
-        // TAX AMOUNT
-        $tax_amount = 0.00;
-
-        foreach($request->service_lists as $product_id){
-
-                //Get Month count
-            $product_type = DB::table('products')->whereIn('id', $service_lists)->first()->product_type;
-            if($product_type == 'Web Hosting'){
-                $monthly_count = 1 ;
-            }else{
-            $monthly_count = DB::table('paymentmodes')->where('payment_interval', $request->payment_mode)
-                    ->first()->monthly_count;
-            }
-
-            $check_discount = DB::table('products')->where('id', $product_id)->first()->product_type;
-            
-            if($check_discount == 'COLOCATION' or $check_discount == 'Virtual Server' or $check_discount == 'VPN service(IPSec)'){
-                $tax_amount = DB::table('products')->where('id', $product_id)->first()->vat_amount;
-                $product_count = $request->item_quantity[$product_id];
-                $tax_amount_product = $tax_amount * $product_count;
-                
-                $discount =$request->discount;
-                $discount = $discount * 0.01;
-                $tax_amount_product = $tax_amount_product - ($tax_amount_product * $discount);
-
-                $final_tax_amount[] = $tax_amount_product;
-                
-                
-                foreach($final_tax_amount as $final_tax_amounts){
-                $client_product_vat_update = DB::table('clientproducts')
-                                    ->where('product_id',$product_id)
-                                    ->update(['vat_amount' => $final_tax_amounts * $monthly_count,]);
-                }
-
-                
-            }else{
-            $tax_amount = DB::table('products')->where('id', $product_id)->first()->vat_amount;
-            $product_count = $request->item_quantity[$product_id];
-            $final_tax_amount[] = $tax_amount * $product_count;
-                
-                
-            foreach($final_tax_amount as $final_tax_amounts){
-            $client_product_vat_update = DB::table('clientproducts')
-                                ->where('product_id',$product_id)
-                                ->update(['vat_amount' => $final_tax_amounts * $monthly_count,]);
-            }
-          }
-        }
-
-        // TAX AMOUNT
-        $tax_amount = array_sum($final_tax_amount);
-        $tax_amount = $tax_amount * $monthly_count;
-
-        
-
-        // SUB TOTAL
-        $sub_total = 0.00;
-
-        foreach($request->service_lists as $product_id){
-
-                //Get Month count
-            $product_type = DB::table('products')->whereIn('id', $service_lists)->first()->product_type;
-            if($product_type == 'Web Hosting'){
-                $monthly_count = 1 ;
-            }else{
-            $monthly_count = DB::table('paymentmodes')->where('payment_interval', $request->payment_mode)
-                    ->first()->monthly_count;
-            }
-            
-            $check_discount = DB::table('products')->where('id', $product_id)->first()->product_type;
-            
-            if($check_discount == 'COLOCATION' or $check_discount == 'Virtual Server' or $check_discount == 'VPN service(IPSec)'){
-                $sub_total = DB::table('products')->where('id', $product_id)->first()->price;
-                $product_count = $request->item_quantity[$product_id];
-                $sub_total_product = $sub_total * $product_count;
-                
-                $discount =$request->discount;
-                $discount = $discount * 0.01;
-
-                $sub_total_product = $sub_total_product - ($sub_total_product * $discount);
-                $final_sub_total[] = $sub_total_product;
-
-
-                foreach($final_sub_total as $final_sub_totals){
-                $client_product_subtotal_update = DB::table('clientproducts')
-                                    ->where('product_id',$product_id)
-                                    ->update(['price' => $final_sub_totals * $monthly_count,]);
-                }
-
-                
-            }else{
-            $sub_total = DB::table('products')->where('id', $product_id)->first()->price;
-            $product_count = $request->item_quantity[$product_id];
-            $final_sub_total[] = $sub_total * $product_count;
-
-
-            foreach($final_sub_total as $final_sub_totals){
-            $client_product_subtotal_update = DB::table('clientproducts')
-                                ->where('product_id',$product_id)
-                                ->update(['price' => $final_sub_totals * $monthly_count,]);
-            }
-          }
-        }
-
-        // SUB TOTAL
-        $sub_total = array_sum($final_sub_total);
-        $sub_total = $sub_total * $monthly_count;
+        $grand_total_sub_grand = array_sum($product_sub_grand);
+        $grand_total_vat = array_sum($product_vat);
+        $grand_total = array_sum($product_grand_total);
+        //$grand_total = $grand_total * $monthly_count;
 
 
        
         $object = array(
             'order_i_d' => $service_order_no,
-            'customer_name' => $request->customer_name,
+            'customer_name' => $customer_name,
             'customer_no' => $customer_no,
             'payment_mode' => $request->payment_mode,
             'serviceordertypes' => $request->serviceordertypes,
             'service_status' => $request->service_status,
             //'item_quantity' => $request->item_quantity,
-            'sub_total' => $sub_total,
+            'sub_total' => $grand_total_sub_grand,
             'grand_total' => $grand_total,
-            'tax_amount' => $tax_amount,
+            'tax_amount' => $grand_total_vat,
             'ed_amount' => $ed_amount,
             'req_status' => $request->req_status,
             //'tax_value' => $request->tax_amount,
-            'discount' => $request->discount,
+            'discount' => $discount * 100,
             //'discount_value' => $discount_value,
             'service_creation_date' => $request->service_creation_date,
             'service_ending_date' => $request->service_ending_date,
@@ -343,49 +251,6 @@ class ServiceOrdersController extends InfyOmBaseController
 
        $serviceOrders = $this->serviceOrdersRepository->create($object);
 
-    //    foreach($request->service_lists as $service_name)
-    //    {
-        
-    //     // DISCOUNT PER PRODUCT
-    //     $sub_total = DB::table('products')->where('product_name', $service_name)
-    //                                     ->sum('grand_total');
-        
-    //     // DESCRIPTION PER PRODUCT
-    //     $description = DB::table('products')->where('product_name', $service_name)
-    //                                     ->first()->description;
-
-
-    //     $discount =$request->discount;
-    //     $discount = $discount * 0.01;
-    //     $discount_value = $sub_total * $discount ;
-
-    //     // GRAND TOTAL PER PRODUCT
-    //     $grand_total = $sub_total - $discount_value;
-    //     $grand_total = $grand_total * $monthly_count;
-
-
-    //     // tax amount PER PRODUCT
-    //     //$tax_amount = DB::table('products')->whereIn('product_name', $service_lists)->sum('vat_amount');
-    //     $tax_amount = $grand_total / 1.18;
-    //     $tax_amount = $grand_total - $tax_amount;
-
-    //     // SUB TOTAL PER PRODUCT
-    //     $sub_total = $grand_total / 1.18;
-
-    //     $client_product = DB::table('productsserviceorders')
-    //                     ->insert([ 
-    //                                 'product_name' => $service_name, 
-    //                                 'description' => $description, 
-    //                                 'sub_total' => $sub_total, 
-    //                                 'vat_amount' => $tax_amount, 
-    //                                 'grand_total' => $grand_total, 
-    //                                 'order_i_d' => $request->order_i_d, 
-    //                                 'created_at' => $request->service_creation_date,]);
-        
-    //    }
-
-       
-        
         $nexthandler_email = $this->next_handler_email_sent($service_order_no,$request->customer_name,$request->created_by);
 
         Flash::success('ServiceOrders saved successfully.');
@@ -403,7 +268,6 @@ class ServiceOrdersController extends InfyOmBaseController
     public function show($id)
     {
         $serviceOrders = $this->serviceOrdersRepository->findWithoutFail($id);
-//dd($serviceOrders);
         $service_name_description = DB::table('clientproducts')->where('service_order_no', $serviceOrders->order_i_d)->get();
         $customer_details = DB::table('customers')->where('id', $serviceOrders->customer_no)->get();
         $comments_details = DB::table('comments')->where('order_i_d', $serviceOrders->order_i_d)->get();
@@ -511,9 +375,9 @@ class ServiceOrdersController extends InfyOmBaseController
      */
     public function update($id, UpdateServiceOrdersRequest $request)
     {
-        
+        //dd($request);
         $this->validate($request, [
-            'customer_name'  => 'required',
+            'customer_no'  => 'required',
             'payment_mode' => 'required',
             'serviceordertypes' => 'required',
             'service_creation_date' => 'required',
@@ -523,29 +387,23 @@ class ServiceOrdersController extends InfyOmBaseController
         $service_order_no = $this->serviceorder_no();
         $input = $request->all();
         $service_lists = $request->service_lists;
-        // //Get Month count
-        // $product_type = DB::table('products')->whereIn('id', $service_lists)->first()->product_type;
-        // if($product_type == 'Web Hosting'){
-        //     $monthly_count = 1 ;
-        // }else{
-        // $monthly_count = DB::table('paymentmodes')->where('payment_interval', $request->payment_mode)
-        //           ->first()->monthly_count;
-        // }
+        
         
         //customer no
-        $customer_name = $request->customer_name;
-        $customer_no = DB::table('customers')->where('customername', $customer_name)->get();
-        $customer_no = $customer_no[0]->id;
+        $customer_no = $request->customer_no;
+        $customer_name = DB::table('customers')->where('id', $customer_no)->first()->customername;
+        //dd($customer_name);
 
 
         // ED AMOUNT
         $ed_amount = DB::table('products')->whereIn('id', $service_lists)
                                         ->sum('ed_amount');
 
+        // DELETE ON clientproducts table
+         DB::table('clientproducts')->where('service_order_no', $request->order_i_d)->delete();
 
         // GRAND TOTAL
         $grand_ttl_product = 0.00;
-
         foreach($request->service_lists as $product_id){
 
                 //Get Month count
@@ -561,202 +419,112 @@ class ServiceOrdersController extends InfyOmBaseController
             
             if($check_discount == 'COLOCATION' or $check_discount == 'Virtual Server' or $check_discount == 'VPN service(IPSec)'){
                 $grand_ttl = DB::table('products')->where('id', $product_id)->first()->grand_total;
-                $product = DB::table('products')->where('id', $product_id)->get();
+                $product = DB::table('products')->where('id', $product_id)->first();
                 $product_count = $request->item_quantity[$product_id];
+                $discount = $request->discount[$product_id];
                 $grand_ttl_product = $grand_ttl * $product_count;
                 
-                $discount =$request->discount;
                 $discount = $discount * 0.01;
 
                 $grand_ttl_product = $grand_ttl_product - ($grand_ttl_product * $discount);
 
-                $final_total[] = $grand_ttl_product;
+                //$final_total[] = $grand_ttl_product;
+
+                $product_sub_grand_value = $product->price * $monthly_count * $product_count;
+                $product_sub_grand_discounted_value = $product_sub_grand_value - ($product_sub_grand_value * $discount);
+                $product_sub_grand[] = $product_sub_grand_discounted_value;
+
+                $product_vat_value = $product->vat_amount * $monthly_count * $product_count;
+                $product_vat_discounted_value = $product_vat_value - ($product_vat_value * $discount);
+                $product_vat[] = $product_vat_discounted_value;
+
+                $product_grand_total_value = $product_sub_grand_discounted_value + $product_vat_discounted_value;
+                $product_grand_total[] = $product_grand_total_value;
                 
                 $client_product = DB::table('clientproducts')
                                     ->insert(['client_no' => $customer_no, 
                                                 'product_id' => $product_id, 
-                                                'service_order_no' => $service_order_no, 
+                                                'service_order_no' => $request->order_i_d, 
                                                 'product_quantity' => $product_count, 
-                                                'product_name' => $product[0]->product_name, 
-                                                'product_description' => $product[0]->description, 
-                                                //'price' => $product[0]->price * $monthly_count, 
-                                                //'vat_amount' => $product[0]->vat_amount * $monthly_count, 
-                                                //'amount' => $final_total[0] * $monthly_count, 
+                                                'product_name' => $product->product_name, 
+                                                'product_description' => $product->description, 
+                                                'price' => $product_sub_grand_discounted_value, 
+                                                'vat_amount' => $product_vat_discounted_value, 
+                                                'amount' => $product_grand_total_value, 
                                                 'created_at' => $request->service_creation_date,]);
                 
-                foreach($final_total as $final_totals){
-                $client_product_amount = DB::table('clientproducts')
-                                    ->where('product_id',$product_id)
-                                    ->update(['amount' => $final_totals * $monthly_count]);
-                }
+                // foreach($final_total as $final_totals){
+                // $client_product_amount = DB::table('clientproducts')
+                //                     ->where('product_id',$product_id)
+                //                     ->update(['amount' => $grand_ttl_product * $monthly_count]);
+                // }
 
                 
             }else{
-            $grand_ttl = DB::table('products')->where('id', $product_id)->first()->grand_total;
-            $product = DB::table('products')->where('id', $product_id)->get();
-            $product_count = $request->item_quantity[$product_id];
-            $final_total[] = $grand_ttl * $product_count;
+                $grand_ttl = DB::table('products')->where('id', $product_id)->first()->grand_total;
+                $product = DB::table('products')->where('id', $product_id)->first();
+                $product_count = $request->item_quantity[$product_id];
+                $grand_ttl_product = $grand_ttl * $product_count;
                 
-            $client_product = DB::table('clientproducts')
-                            ->insert(['client_no' => $customer_no, 
-                                        'product_id' => $product_id, 
-                                        'service_order_no' => $service_order_no, 
-                                        'product_quantity' => $product_count, 
-                                        'product_name' => $product[0]->product_name, 
-                                        'product_description' => $product[0]->description, 
-                                        //'price' => $product[0]->price * $monthly_count, 
-                                        //'vat_amount' => $product[0]->vat_amount * $monthly_count, 
-                                        //'amount' => $final_total[0] * $monthly_count, 
-                                        'created_at' => $request->service_creation_date,]);
+                //$discount =$request->discount;
+                $discount = 0;
 
-            foreach($final_total as $final_totals){
-            $client_product_amount = DB::table('clientproducts')
-                                ->where('product_id',$product_id)
-                                ->update(['amount' => $final_totals * $monthly_count]);
-            }
+                //$grand_ttl_product = $grand_ttl_product - ($grand_ttl_product * $discount);
+
+                //$final_total[] = $grand_ttl_product;
+
+                $product_sub_grand_value = $product->price * $monthly_count * $product_count;
+                $product_sub_grand[] = $product_sub_grand_value;
+                //$product_sub_grand_discounted = $product_sub_grand - ($product_sub_grand * $discount);
+
+                $product_vat_value = $product->vat_amount * $monthly_count * $product_count;
+                $product_vat[] = $product_vat_value;
+                //$product_vat_discounted = $product_vat - ($product_vat * $discount);
+
+                $product_grand_total_value = ($product->price * $monthly_count * $product_count) + ($product->vat_amount * $monthly_count * $product_count);
+                $product_grand_total[] = $product_grand_total_value;
+
+                $client_product = DB::table('clientproducts')
+                                    ->insert(['client_no' => $customer_no, 
+                                                'product_id' => $product_id, 
+                                                'service_order_no' => $request->order_i_d, 
+                                                'product_quantity' => $product_count, 
+                                                'product_name' => $product->product_name, 
+                                                'product_description' => $product->description, 
+                                                'price' => $product_sub_grand_value, 
+                                                'vat_amount' => $product_vat_value, 
+                                                'amount' => $product_grand_total_value, 
+                                                'created_at' => $request->service_creation_date,]);
           }
         }
 
         // GRAND TOTAL
-        $grand_total = array_sum($final_total);
-        $grand_total = $grand_total * $monthly_count;
+        $grand_total_sub_grand = array_sum($product_sub_grand);
+        $grand_total_vat = array_sum($product_vat);
+        $grand_total = array_sum($product_grand_total);
+        //$grand_total = $grand_total * $monthly_count;
 
-
-
-        // TAX AMOUNT
-        $tax_amount = 0.00;
-
-        foreach($request->service_lists as $product_id){
-
-                //Get Month count
-            $product_type = DB::table('products')->whereIn('id', $service_lists)->first()->product_type;
-            if($product_type == 'Web Hosting'){
-                $monthly_count = 1 ;
-            }else{
-            $monthly_count = DB::table('paymentmodes')->where('payment_interval', $request->payment_mode)
-                    ->first()->monthly_count;
-            }
-
-            $check_discount = DB::table('products')->where('id', $product_id)->first()->product_type;
-            
-            if($check_discount == 'COLOCATION' or $check_discount == 'Virtual Server' or $check_discount == 'VPN service(IPSec)'){
-                $tax_amount = DB::table('products')->where('id', $product_id)->first()->vat_amount;
-                $product_count = $request->item_quantity[$product_id];
-                $tax_amount_product = $tax_amount * $product_count;
-                
-                $discount =$request->discount;
-                $discount = $discount * 0.01;
-                $tax_amount_product = $tax_amount_product - ($tax_amount_product * $discount);
-
-                $final_tax_amount[] = $tax_amount_product;
-                
-                
-                foreach($final_tax_amount as $final_tax_amounts){
-                $client_product_vat_update = DB::table('clientproducts')
-                                    ->where('product_id',$product_id)
-                                    ->update(['vat_amount' => $final_tax_amounts * $monthly_count,]);
-                }
-
-                
-            }else{
-            $tax_amount = DB::table('products')->where('id', $product_id)->first()->vat_amount;
-            $product_count = $request->item_quantity[$product_id];
-            $final_tax_amount[] = $tax_amount * $product_count;
-                
-                
-            foreach($final_tax_amount as $final_tax_amounts){
-            $client_product_vat_update = DB::table('clientproducts')
-                                ->where('product_id',$product_id)
-                                ->update(['vat_amount' => $final_tax_amounts * $monthly_count,]);
-            }
-          }
-        }
-
-        // TAX AMOUNT
-        $tax_amount = array_sum($final_tax_amount);
-        $tax_amount = $tax_amount * $monthly_count;
-
-        
-
-        // SUB TOTAL
-        $sub_total = 0.00;
-
-        foreach($request->service_lists as $product_id){
-
-                //Get Month count
-            $product_type = DB::table('products')->whereIn('id', $service_lists)->first()->product_type;
-            if($product_type == 'Web Hosting'){
-                $monthly_count = 1 ;
-            }else{
-            $monthly_count = DB::table('paymentmodes')->where('payment_interval', $request->payment_mode)
-                    ->first()->monthly_count;
-            }
-            
-            $check_discount = DB::table('products')->where('id', $product_id)->first()->product_type;
-            
-            if($check_discount == 'COLOCATION' or $check_discount == 'Virtual Server' or $check_discount == 'VPN service(IPSec)'){
-                $sub_total = DB::table('products')->where('id', $product_id)->first()->price;
-                $product_count = $request->item_quantity[$product_id];
-                $sub_total_product = $sub_total * $product_count;
-                
-                $discount =$request->discount;
-                $discount = $discount * 0.01;
-
-                $sub_total_product = $sub_total_product - ($sub_total_product * $discount);
-                $final_sub_total[] = $sub_total_product;
-
-
-                foreach($final_sub_total as $final_sub_totals){
-                $client_product_subtotal_update = DB::table('clientproducts')
-                                    ->where('product_id',$product_id)
-                                    ->update(['price' => $final_sub_totals * $monthly_count,]);
-                }
-
-                
-            }else{
-            $sub_total = DB::table('products')->where('id', $product_id)->first()->price;
-            $product_count = $request->item_quantity[$product_id];
-            $final_sub_total[] = $sub_total * $product_count;
-
-
-            foreach($final_sub_total as $final_sub_totals){
-            $client_product_subtotal_update = DB::table('clientproducts')
-                                ->where('product_id',$product_id)
-                                ->update(['price' => $final_sub_totals * $monthly_count,]);
-            }
-          }
-        }
-
-        // SUB TOTAL
-        $sub_total = array_sum($final_sub_total);
-        $sub_total = $sub_total * $monthly_count;
 
 
        
         $object = array(
             'order_i_d' => $request->order_i_d,
-            'customer_name' => $request->customer_name,
+            'customer_name' => $customer_name,
             'customer_no' => $customer_no,
             'payment_mode' => $request->payment_mode,
             'serviceordertypes' => $request->serviceordertypes,
-            'service_status' => $request->service_status,
             //'item_quantity' => $request->item_quantity,
-            'sub_total' => $sub_total,
+            'sub_total' => $grand_total_sub_grand,
             'grand_total' => $grand_total,
-            'tax_amount' => $tax_amount,
+            'tax_amount' => $grand_total_vat,
             'ed_amount' => $ed_amount,
-            'req_status' => $request->req_status,
             //'tax_value' => $request->tax_amount,
-            'discount' => $request->discount,
+            'discount' => $discount * 100,
             //'discount_value' => $discount_value,
             'service_creation_date' => $request->service_creation_date,
             'service_ending_date' => $request->service_ending_date,
             'service_descriptions' => $request->service_descriptions,
             'service_lists' => $request->service_lists,
-            'next_handler' => $request->next_handler,
-            'next_handler_role' => $request->next_handler_role,
-            'next_handler_role_id' => $request->next_handler_role_id,
-            'created_by' => $request->created_by
         );
 
         $serviceOrders = $this->serviceOrdersRepository->findWithoutFail($id);

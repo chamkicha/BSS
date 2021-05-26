@@ -152,7 +152,7 @@ class ProductController extends InfyOmBaseController
     public function show($id)
     {
         $product = $this->productRepository->findWithoutFail($id);
-
+//dd($product);
         if (empty($product)) {
             Flash::error('Product not found');
 

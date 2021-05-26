@@ -2,12 +2,11 @@
 <table class="table table-striped table-bordered" id="customers-table" width="100%">
     <thead>
      <tr>
-        <th>Customername</th>
         <th>Customer Number</th>
+        <th>Customername</th>
         <th>T I N Number</th>
         <th>Contact Telephone</th>
         <th>Email</th>
-        <th>Region</th>
         <th>Customer Type</th>
         <th >Action</th>
      </tr>
@@ -15,12 +14,16 @@
     <tbody>
     @foreach($customers as $customer)
         <tr>
-            <td>{!! $customer->customername !!}</td>
+            
             <td>{!! $customer->customer_no !!}</td>
+            <td>
+                <a href="{{ route('admin.serviceInvoice.serviceInvoices.show', collect($customer)->first() ) }}">
+                    {!! $customer->customername !!}
+                </a>
+            </td>
             <td>{!! $customer->t_i_n_number !!}</td>
             <td>{!! $customer->contact_telephone !!}</td>
             <td>{!! $customer->email !!}</td>
-            <td>{!! $customer->region !!}</td>
             <td>{!! $customer->customer_type !!}</td>
             <td>
                  <a href="{{ route('admin.customer.customers.show', collect($customer)->first() ) }}">

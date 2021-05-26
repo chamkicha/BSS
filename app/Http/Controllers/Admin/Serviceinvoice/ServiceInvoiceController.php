@@ -93,6 +93,7 @@ class ServiceInvoiceController extends InfyOmBaseController
         //dd($serviceInvoice);
         
         $customer_details = DB::table('customers')->where('id', $serviceInvoice->customer_no)->first();
+        //dd($customer_details);
         $postal_address = $customer_details->postal_address;
         $mobile_number = $customer_details->office_telephone;
         $district = $customer_details->district;
@@ -146,11 +147,11 @@ class ServiceInvoiceController extends InfyOmBaseController
         $serviceInvoice = array(
             "id" => $serviceInvoice->id,
             "invoice_number" => $serviceInvoice->invoice_number,
-            "customer_no" => $serviceInvoice->customer_no,
+            "customer_no" => $serviceInvoice->customer_name,
             "invoice_created_date" => Carbon::parse($serviceInvoice->invoice_created_date)->format('d-m-Y'),
             "next_invoice_date" => Carbon::parse($serviceInvoice->next_invoice_date)->format('d-m-Y'),
             "invoice_due_date" => Carbon::parse($serviceInvoice->invoice_due_date)->format('d-m-Y'),
-            "cusromer_name" => $serviceInvoice->cusromer_name,
+            "cusromer_name" => $customer_details->customername,
             "service_order_no" => $serviceInvoice->service_order_no,
             "sub_total" => $serviceInvoice->sub_total,
             "qrcode_path" => $qrcode_path,
@@ -286,6 +287,7 @@ class ServiceInvoiceController extends InfyOmBaseController
         
         $customer_details = DB::table('customers')->where('id', $serviceInvoice->customer_no)->first();
         $postal_address = $customer_details->postal_address;
+        //dd($customer_details->customername);
         $mobile_number = $customer_details->office_telephone;
         $district = $customer_details->district;
         $region = $customer_details->region;
@@ -344,7 +346,7 @@ class ServiceInvoiceController extends InfyOmBaseController
             "invoice_created_date" => Carbon::parse($serviceInvoice->invoice_created_date)->format('d-m-Y'),
             "next_invoice_date" => Carbon::parse($serviceInvoice->next_invoice_date)->format('d-m-Y'),
             "invoice_due_date" => Carbon::parse($serviceInvoice->invoice_due_date)->format('d-m-Y'),
-            "cusromer_name" => $serviceInvoice->cusromer_name,
+            "cusromer_name" => $customer_details->customername,
             "service_order_no" => $serviceInvoice->service_order_no,
             "sub_total" => $serviceInvoice->sub_total,
             "qrcode_path" => $qrcode_path,
@@ -424,7 +426,9 @@ class ServiceInvoiceController extends InfyOmBaseController
 
             $resp = curl_exec($curl);
         //dd($xmlReq);
-        $httpCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+            activity('HEADER '.$name)->log(json_encode($headers));
+
+           $httpCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 
             if (FALSE === $resp) {
                 throw new Exception(curl_error($curl), curl_errno($curl));
@@ -439,7 +443,46 @@ class ServiceInvoiceController extends InfyOmBaseController
         $response = '';
         if ($httpCode == 200) {
             $response = $resp;
-            $gc = $this->verification_receipts_barcode($request);
+            $xml = simplexml_load_string($response);
+            $response_msg = $xml->RCTACK->ACKCODE;
+            $responce_code = json_decode($response_msg);
+            //dd(json_decode($response_msg));
+            if(json_decode($response_msg) == 0){
+
+                $subjects = 'SUCCESS to get signature for '.$name. ' from '.Carbon::now()->format('d-m-Y');
+                $content = $responce_code.' payload successful sent to TRA';
+
+                Mail::raw($content, function ($message)use ($subjects) {
+                    $message->from('nidctanzania@gmail.com', 'NIDC-BSS');
+                    $message->to('jchamkicha@gmail.com')
+                             ->subject($subjects)
+                            ->cc('nidctanzania@gmail.com');
+                });
+                //activity log
+                 activity('SUCCESS_SENT_TRA ')->log($responce_code);
+                 // update status
+                 $gc = $this->verification_receipts_barcode($request,'success',$responce_code);
+
+            }else{
+                $subjects = 'FAILED to get signature for '.$name. ' from '.Carbon::now()->format('d-m-Y');
+                $content = $responce_code.' payload not successful sent to TRA';
+
+                Mail::raw($content, function ($message)use ($subjects) {
+                    $message->from('nidctanzania@gmail.com', 'NIDC-BSS');
+                    $message->to('jchamkicha@gmail.com')
+                             ->subject($subjects)
+                            ->cc('nidctanzania@gmail.com');
+                });
+                //activity log
+                 activity('FAILED_SENT_TRA ')->log($responce_code);
+                 // update status
+                 $gc = $this->verification_receipts_barcode($request,'failed',$responce_code);
+ 
+
+                //dd('failed');
+
+
+            }
 
         } else {
             $response = false;
@@ -450,7 +493,7 @@ class ServiceInvoiceController extends InfyOmBaseController
     }
 
 
-    public function verification_receipts_barcode($request)
+    public function verification_receipts_barcode($request, $status,$responce_code)
     {
         $RCTVNUM = DB::table('serviceinvoices')->where('invoice_number', $request->invoice_number)->get();
        $RCTVNUM_DATE = $RCTVNUM[0]->RCTVNUM_DATE;
@@ -465,6 +508,8 @@ class ServiceInvoiceController extends InfyOmBaseController
         $qrcode_path = DB::table('serviceinvoices')
                        ->where('invoice_number', $request->invoice_number)
                        ->update(['qrcode_path'=>$qrcode_path,
+                                 'RCTVNUM_STATUS'=>$status,
+                                 'responce_code'=>$responce_code,
                                  'get_signature_by'=>$request->get_signature_by]);
         return null;
 
@@ -473,26 +518,55 @@ class ServiceInvoiceController extends InfyOmBaseController
     
     public function get_receipt_posted_data($reg_data, $name, $mobile, $amount, $request)
     {
-        //dd($request);
+        $customer_tin = str_replace("-", "", $request->t_i_n_number);
+        if($customer_tin == "")
+        {
+            $customer_tin = $customer_tin;
+            $customer_id_type = 6;
+
+        }
+        else{
+            $customer_tin = $customer_tin;
+            $customer_id_type = 1;
+
+        }
+        $service_name_description =DB::table('clientproducts')->where('service_order_no', $request->service_order_no)->get();
+        $items = "<ITEMS>";
+        $ID = 1;
+        $TAXCODE = 1;
+        foreach($service_name_description as $item){
+            $items .= "<ITEM><ID>".$ID++."</ID><DESC>".$item->product_description."</DESC><QTY>".$item->product_quantity."</QTY><TAXCODE>".$TAXCODE."</TAXCODE><AMT>". round($item->amount, 2) ."</AMT></ITEM>";
+        }
+        $items.="</ITEMS>";
+        //dd($items);
         $tin = str_replace("-", "", $reg_data[0]->tin_num);
         $gc = $this->get_count($reg_data[0], 'gc');
         $dc = $this->get_count($reg_data[0], 'dc');
         $rctvnum = $reg_data[0]->recptcode . $gc;
         $name = str_replace("'", "", $name);
+        $name = str_replace(",", "", $name);
+        $name = str_replace("&", "", $name);
         $name = Str::substr($name, 0, 99);
-        $payload = '<RCT><DATE>' . date('Y-m-d') . '</DATE><TIME>' . date('H:i:s') . '</TIME><TIN>' . $tin . '</TIN><REGID>' . $reg_data[0]->regid . '</REGID><EFDSERIAL>' . $reg_data[0]->vfd . '</EFDSERIAL><CUSTIDTYPE>1</CUSTIDTYPE><CUSTID>'.$request->t_i_n_number.'</CUSTID><CUSTNAME>' . $name . '</CUSTNAME><MOBILENUM>' . (int)$mobile . '</MOBILENUM><RCTNUM>' . $gc . '</RCTNUM><DC>' . $dc . '</DC><GC>' . $gc . '</GC><ZNUM>' . date('Ymd') . '</ZNUM><RCTVNUM>' . $rctvnum . '</RCTVNUM><ITEMS><ITEM><ID>1</ID><DESC>'. $request->description .'</DESC><QTY>'. $request->product_quantity .'</QTY><TAXCODE>1</TAXCODE><AMT>'. $request->price .'</AMT></ITEM></ITEMS><TOTALS><TOTALTAXEXCL>'. $request->price .'</TOTALTAXEXCL><TOTALTAXINCL>' . $request->grand_total . '</TOTALTAXINCL><DISCOUNT>0.00</DISCOUNT></TOTALS><PAYMENTS><PMTTYPE>INVOICE</PMTTYPE><PMTAMOUNT>' . $request->grand_total . '</PMTAMOUNT></PAYMENTS><VATTOTALS><VATRATE>A</VATRATE><NETTAMOUNT>' . $request->grand_total . '</NETTAMOUNT><TAXAMOUNT>'. $request->vat_amount .'</TAXAMOUNT></VATTOTALS></RCT>';
+        $payload = '<RCT><DATE>' . date('Y-m-d') . '</DATE><TIME>' . date('H:i:s') . '</TIME><TIN>' . $tin . '</TIN><REGID>' . $reg_data[0]->regid . '</REGID><EFDSERIAL>' . $reg_data[0]->vfd . '</EFDSERIAL><CUSTIDTYPE>'.$customer_id_type.'</CUSTIDTYPE><CUSTID>'.$customer_tin.'</CUSTID><CUSTNAME>' . $name . '</CUSTNAME><MOBILENUM>' . (int)$mobile . '</MOBILENUM><RCTNUM>' . $gc . '</RCTNUM><DC>' . $dc . '</DC><GC>' . $gc . '</GC><ZNUM>' . date('Ymd') . '</ZNUM><RCTVNUM>' . $rctvnum . '</RCTVNUM>'. $items .'<TOTALS><TOTALTAXEXCL>'. round($request->sub_total, 2) .'</TOTALTAXEXCL><TOTALTAXINCL>' . round($request->grand_total, 2) . '</TOTALTAXINCL><DISCOUNT>0.00</DISCOUNT></TOTALS><PAYMENTS><PMTTYPE>INVOICE</PMTTYPE><PMTAMOUNT>' . round($request->grand_total, 2) . '</PMTAMOUNT></PAYMENTS><VATTOTALS><VATRATE>A</VATRATE><NETTAMOUNT>' . round($request->sub_total, 2) . '</NETTAMOUNT><TAXAMOUNT>'. round($request->tax_amount_total, 2) .'</TAXAMOUNT></VATTOTALS></RCT>';
         $priv_key = $this->get_key_from_file("./" . $reg_data[0]->cert_path . ".pem", true, true, $reg_data[0]->cert_password);
         $signedPayload = $this->sign_payload_plain($payload, $priv_key);
         $update_invoice_rctvum_date = DB::table('serviceinvoices')
                                           ->where('invoice_number', $request->invoice_number)
-                                          ->update(['RCTVNUM'=> $rctvnum , 'RCTVNUM_DATE'=>date('H:i:s')]);
-        //dd($payload);
+                                          ->update(['RCTVNUM'=> $rctvnum , 
+                                                     'tra_dc'=> $dc , 
+                                                     'tra_gc'=> $gc , 
+                                                     'RCTVNUM_DATE'=>date('H:i:s')]);
+        //dd($signedPayload);
+        
+        activity('payload '. $name)->log($payload);
+
         $recXML = "<EFDMS>
 					$payload
 					<EFDMSSIGNATURE>
 					$signedPayload
 					</EFDMSSIGNATURE>
 				</EFDMS>";
+        activity('recXML '. $name)->log($recXML);
         //dd($recXML);
         return $recXML;
     }
@@ -589,6 +663,7 @@ class ServiceInvoiceController extends InfyOmBaseController
 					</EFDMSSIGNATURE>
 				</EFDMS>';
         $reg_resp = $this->send_reg_request_tra($reg_xml, $cert_serial);
+        dd($reg_resp);
         return $reg_resp;
     }
     public function send_reg_request_tra($xml, $cert_serial)
@@ -674,21 +749,26 @@ class ServiceInvoiceController extends InfyOmBaseController
     public function auto_invoice_generator(){
         $today =  date('Y-m-d');
         $invoice_details_load = DB::table('serviceinvoices')->where('next_invoice_date',$today)->get();
+       
+        //dd($invoice_details_load);
         foreach($invoice_details_load as $invoice_details)
         {
              // check contract validation
-        $end_contract_date = DB::table('serviceorderss')
+            $service_validation = DB::table('serviceorderss')
                                  ->where('order_i_d', $invoice_details->service_order_no)
-                                 ->first()
-                                 ->service_ending_date;
-        $todayDate = Carbon::now();
-        $end_contract_date = Carbon::parse($end_contract_date)->format('Y-m-d');
-        //  $result = $todayDate->gt($end_contract_date);
-        //  dd($result);
-            if($todayDate->gt($end_contract_date) != 'true'){
+                                 ->first();
+            $service_status = $service_validation->service_status;
+
+            //dd($invoice_details_load);
+            // check invoice deletion
+           $service_deletion = DB::table('serviceinvoices')
+                                ->where('invoice_number', $invoice_details->invoice_number)
+                                ->first()->deleted_at;
+
+            if($service_status == 'Active' && is_null($service_deletion)){
 
                 // Payment and Due creation
-                
+                //dd('sisi');
                 $customer_no = $invoice_details->customer_no;
 
                 $payment_due = DB::table('paymentanddues')->where('customer_no', $customer_no)->first();

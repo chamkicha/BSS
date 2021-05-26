@@ -329,55 +329,55 @@ use App\Models\User;
 
     function serviceorder()
     {      
-        $serviceorder = DB::table('serviceorderss')->count();
+        $serviceorder = DB::table('serviceorderss')->where('deleted_at',NULL)->count();
         return $serviceorder;
     } 
 
     function serviceorderactive()
     {      
-        $serviceorder = DB::table('serviceorderss')->where('service_status', 'active')->count();
+        $serviceorder = DB::table('serviceorderss')->where('service_status', 'active')->where('deleted_at',NULL)->count();
         return $serviceorder;
     } 
 
     function serviceorderinactive()
     {      
-        $serviceorder = DB::table('serviceorderss')->where('service_status', 'inactive')->count();
+        $serviceorder = DB::table('serviceorderss')->where('service_status', 'inactive')->where('deleted_at',NULL)->count();
         return $serviceorder;
     } 
 
     function totalincome()
     {      
-        $serviceorder = DB::table('serviceinvoices')->sum('grand_total');
+        $serviceorder = DB::table('serviceinvoices')->where('deleted_at',NULL)->sum('grand_total');
         return $serviceorder;
     } 
 
     function paid()
     {      
-        $serviceorder = DB::table('paymentanddues')->sum('paid_amount');
+        $serviceorder = DB::table('paymentanddues')->where('deleted_at',NULL)->sum('paid_amount');
         return $serviceorder;
     } 
 
     function dept()
     {      
-        $serviceorder = DB::table('paymentanddues')->sum('balance');
+        $serviceorder = DB::table('paymentanddues')->where('deleted_at',NULL)->sum('balance');
         return $serviceorder;
     } 
 
     function invoices()
     {      
-        $invoices = DB::table('serviceinvoices')->count();
+        $invoices = DB::table('serviceinvoices')->where('deleted_at',NULL)->count();
         return $invoices;
     } 
 
     function paidinvoices()
     {      
-        $paidinvoices = DB::table('serviceinvoices')->where('payment_status','Fully')->count();
+        $paidinvoices = DB::table('serviceinvoices')->where(['payment_status'=>'Fully','deleted_at'=>NULL])->count();
         return $paidinvoices;
     } 
 
     function unpaidinvoices()
     {      
-        $unpaidinvoices = DB::table('serviceinvoices')->where('payment_status','!=','Fully')->count();
+        $unpaidinvoices = DB::table('serviceinvoices')->where('payment_status','!=','Fully')->where('deleted_at',NULL)->count();
         return $unpaidinvoices;
     } 
 

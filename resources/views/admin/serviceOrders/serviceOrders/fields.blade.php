@@ -115,11 +115,11 @@ function serviceorder()
                                                                    for="form2inputSuccess">Customer Name</label>
                                                             <div class="col-md-9">    
                                                             
-                                                                <select name="customer_name" id="select21" class="form-control select2">
+                                                                <select name="customer_no" id="select21" class="form-control select2">
                                                                         
                                                                         <option value="">Select Customer Name</option>
                                                                         @foreach($customer_list as $customer)
-                                                                        <option value="{{ $customer->customername}}">{{ $customer->customername }}</option>
+                                                                        <option value="{{ $customer->id}}">{{ $customer->customername }}</option>
                                                                         @endforeach
                                                                     </optgroup>
                                                                 </select>
@@ -212,15 +212,6 @@ function serviceorder()
 
 
 
-
-<!-- Discount Field -->
-    <div class="form-group has-success has-feedback">
-    <label for="fname" class="control-label has-success has-feedback">Discount(%):</label>&nbsp;&nbsp;&nbsp;
-        <input type="text" name="discount" id="discount" name="fname" style="width: 15%;">
-    </div>
-
-
-
 <!-- Service Lists Field -->
 
 <div class="form-group has-success has-feedback">
@@ -228,59 +219,46 @@ function serviceorder()
 
     {{--  @foreach($product_list->chunk(2) as $product_lists)  --}}
         <div class="row">
-        @foreach($product_list as $product_lists)
-            <div class="col-md-6 portfolio-item">
+            <div class="col-md-9 portfolio-item">
                <div class="checkbox mar-left5">
-                            <label for="form-checkbox1">
+                            {{--  <label for="form-checkbox1">
                                 <input type="checkbox" id="service_lists" name="service_lists[]" value="{{$product_lists->id}}" class="square-blue"> {{$product_lists->product_name}}
-                                &nbsp;&nbsp;&nbsp;<span><label class="control-label has-success has-feedback">Quantity:</label>&nbsp;<input style="width: 15%;" type="text" name="item_quantity[{{$product_lists->id}}]"> </span> 
-                                </label>
+                                &nbsp;&nbsp;&nbsp;<span><label class="control-label has-success has-feedback">Quantity:</label>&nbsp;<input style="width: 7%;" type="text" name="item_quantity[{{$product_lists->id}}]"> </span> 
+                                &nbsp;&nbsp;&nbsp;<span><label class="control-label has-success has-feedback">Discount(%):</label>&nbsp;<input style="width: 7%;" type="text" name="discount[{{$product_lists->id}}]"> </span>
+                                </label>  --}}
+                                <table class="table table-bordered" id="product_info_table">
+                                    <thead>
+                                        <tr>
+                                            <th style="width:5%">No</th>
+                                            <th style="width:60%">Product</th>
+                                            <th style="width:10%">Quantity</th>
+                                            <th style="width:10%">Discount(%)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                     @foreach($product_list as $product_lists)
+                                        <tr id="row_1">
+                                            <td>
+                                            {{$loop->iteration}}
+                                            </td>
+                                            <td>
+                                            <input type="checkbox" id="service_lists" name="service_lists[]" value="{{$product_lists->id}}" class="square-blue"> {{$product_lists->product_name}}
+                                            </td>
+                                            <td>
+                                            <input style="width: 100%;" type="text" name="item_quantity[{{$product_lists->id}}]">
+                                            </td>
+                                            <td>
+                                            <input style="width: 100%;" type="text" name="discount[{{$product_lists->id}}]">
+                                            </td>
+                                         </tr>
+                                    @endforeach
+                                    </tbody>
+                                </table>
                     </div>
             </div>
-        @endforeach
         </div>
     {{--  @endforeach  --}}
 </div>
-
-{{--  
-
-                <br /> <br/>
-                <table class="table table-bordered" id="product_info_table">
-                  <thead>
-                    <tr>
-                      <th style="width:50%">Product</th>
-                      <th style="width:10%">Qty</th>
-                      <th style="width:10%">Rate</th>
-                      <th style="width:20%">Amount</th>
-                      <th style="width:10%"><button type="button" id="add_row" class="btn btn-default"><i class="fa fa-plus"></i></button></th>
-                    </tr>
-                  </thead>
-
-                   <tbody>
-                     <tr id="row_1">
-                       <td>
-                        <select class="form-control select_group product" data-row-id="row_1" id="product_1" name="product[]" style="width:100%;" onchange="getProductData(1)" required>
-                            <option value="">Select Product</option>
-                            @foreach ($product_listz as $product_list)
-                              <option value="{{$product_list->product_name}}">{{$product_list->product_name}}</option>
-                            @endforeach
-                          </select>
-                        </td>
-                        <td><input type="text" name="qty[]" id="qty_1" class="form-control" required onkeyup="getTotal(1)"></td>
-                        <td>
-                          <input type="text" name="rate[]" id="rate_1" class="form-control" disabled autocomplete="off">
-                          <input type="hidden" name="rate_value[]" id="rate_value_1" class="form-control" autocomplete="off">
-                        </td>
-                        <td>
-                          <input type="text" name="amount[]" id="amount_1" class="form-control" disabled autocomplete="off">
-                          <input type="hidden" name="amount_value[]" id="amount_value_1" class="form-control" autocomplete="off">
-                        </td>
-                        <td><button type="button" class="btn btn-default" onclick="removeRow('1')"><i class="fa fa-close"></i></button></td>
-                     </tr>
-                   </tbody>
-                </table>
-
-  --}}
 
 
 <!-- Next Handler Field -->
