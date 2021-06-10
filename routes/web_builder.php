@@ -37,6 +37,7 @@ Route::group(array('prefix' => 'admin/customer/','namespace' => 'Admin','middlew
 
 Route::get('customers', ['as'=> 'customers.index', 'uses' => 'Customer\CustomerController@index']);
 Route::post('customers', ['as'=> 'customers.store', 'uses' => 'Customer\CustomerController@store']);
+Route::get('deactivate_customer', ['as'=> 'customers.deactivate_customer', 'uses' => 'Customer\CustomerController@deactivate_customer']);
 Route::get('customers/create', ['as'=> 'customers.create', 'uses' => 'Customer\CustomerController@create']);
 Route::put('customers/{customers}', ['as'=> 'customers.update', 'uses' => 'Customer\CustomerController@update']);
 Route::patch('customers/{customers}', ['as'=> 'customers.update', 'uses' => 'Customer\CustomerController@update']);
@@ -153,39 +154,41 @@ Route::get('productTypes/{productTypes}/edit', ['as'=> 'productTypes.edit', 'use
 });
 
 
-Route::group(array('prefix' => 'admin/serviceOrder/','namespace' => 'Admin','middleware' => 'admin','as'=>'admin.serviceOrder.'), function () {
+// Route::group(array('prefix' => 'admin/serviceOrder/','namespace' => 'Admin','middleware' => 'admin','as'=>'admin.serviceOrder.'), function () {
 
-Route::get('serviceOrders', ['as'=> 'serviceOrders.index', 'uses' => 'Service Order\Service OrderController@index']);
-Route::post('serviceOrders', ['as'=> 'serviceOrders.store', 'uses' => 'Service Order\Service OrderController@store']);
-Route::get('serviceOrders/create', ['as'=> 'serviceOrders.create', 'uses' => 'Service Order\Service OrderController@create']);
-Route::put('serviceOrders/{serviceOrders}', ['as'=> 'serviceOrders.update', 'uses' => 'Service Order\Service OrderController@update']);
-Route::patch('serviceOrders/{serviceOrders}', ['as'=> 'serviceOrders.update', 'uses' => 'Service Order\Service OrderController@update']);
-Route::get('serviceOrders/{id}/delete', ['as' => 'serviceOrders.delete', 'uses' => 'Service Order\Service OrderController@getDelete']);
-Route::get('serviceOrders/{id}/confirm-delete', ['as' => 'serviceOrders.confirm-delete', 'uses' => 'Service Order\Service OrderController@getModalDelete']);
-Route::get('serviceOrders/{serviceOrders}', ['as'=> 'serviceOrders.show', 'uses' => 'Service Order\Service OrderController@show']);
-Route::get('serviceOrders/{serviceOrders}/edit', ['as'=> 'serviceOrders.edit', 'uses' => 'Service Order\Service OrderController@edit']);
+// Route::get('serviceOrders', ['as'=> 'serviceOrders.index', 'uses' => 'Service Order\Service OrderController@index']);
+// Route::get('deactivate_service', ['as'=> 'serviceOrders.deactivate_service', 'uses' => 'Service Order\Service OrderController@deactivate_service']);
+// Route::post('serviceOrders', ['as'=> 'serviceOrders.store', 'uses' => 'Service Order\Service OrderController@store']);
+// Route::get('serviceOrders/create', ['as'=> 'serviceOrders.create', 'uses' => 'Service Order\Service OrderController@create']);
+// Route::put('serviceOrders/{serviceOrders}', ['as'=> 'serviceOrders.update', 'uses' => 'Service Order\Service OrderController@update']);
+// Route::patch('serviceOrders/{serviceOrders}', ['as'=> 'serviceOrders.update', 'uses' => 'Service Order\Service OrderController@update']);
+// Route::get('serviceOrders/{id}/delete', ['as' => 'serviceOrders.delete', 'uses' => 'Service Order\Service OrderController@getDelete']);
+// Route::get('serviceOrders/{id}/confirm-delete', ['as' => 'serviceOrders.confirm-delete', 'uses' => 'Service Order\Service OrderController@getModalDelete']);
+// Route::get('serviceOrders/{serviceOrders}', ['as'=> 'serviceOrders.show', 'uses' => 'Service Order\Service OrderController@show']);
+// Route::get('serviceOrders/{serviceOrders}/edit', ['as'=> 'serviceOrders.edit', 'uses' => 'Service Order\Service OrderController@edit']);
 
-});
+// });
 
 
-Route::group(array('prefix' => 'admin/serviceOrders/','namespace' => 'Admin','middleware' => 'admin','as'=>'admin.serviceOrders.'), function () {
+// Route::group(array('prefix' => 'admin/serviceOrders/','namespace' => 'Admin','middleware' => 'admin','as'=>'admin.serviceOrders.'), function () {
 
-Route::get('serviceOrders', ['as'=> 'serviceOrders.index', 'uses' => 'Service Orders\ServiceOrdersController@index']);
-Route::post('serviceOrders', ['as'=> 'serviceOrders.store', 'uses' => 'Service Orders\ServiceOrdersController@store']);
-Route::get('serviceOrders/create', ['as'=> 'serviceOrders.create', 'uses' => 'Service Orders\ServiceOrdersController@create']);
-Route::put('serviceOrders/{serviceOrders}', ['as'=> 'serviceOrders.update', 'uses' => 'Service Orders\ServiceOrdersController@update']);
-Route::patch('serviceOrders/{serviceOrders}', ['as'=> 'serviceOrders.update', 'uses' => 'Service Orders\ServiceOrdersController@update']);
-Route::get('serviceOrders/{id}/delete', ['as' => 'serviceOrders.delete', 'uses' => 'Service Orders\ServiceOrdersController@getDelete']);
-Route::get('serviceOrders/{id}/confirm-delete', ['as' => 'serviceOrders.confirm-delete', 'uses' => 'Service Orders\ServiceOrdersController@getModalDelete']);
-Route::get('serviceOrders/{serviceOrders}', ['as'=> 'serviceOrders.show', 'uses' => 'Service Orders\ServiceOrdersController@show']);
-Route::get('serviceOrders/{serviceOrders}/edit', ['as'=> 'serviceOrders.edit', 'uses' => 'Service Orders\ServiceOrdersController@edit']);
+// Route::get('serviceOrders', ['as'=> 'serviceOrders.index', 'uses' => 'Service Orders\ServiceOrdersController@index']);
+// Route::post('serviceOrders', ['as'=> 'serviceOrders.store', 'uses' => 'Service Orders\ServiceOrdersController@store']);
+// Route::get('serviceOrders/create', ['as'=> 'serviceOrders.create', 'uses' => 'Service Orders\ServiceOrdersController@create']);
+// Route::put('serviceOrders/{serviceOrders}', ['as'=> 'serviceOrders.update', 'uses' => 'Service Orders\ServiceOrdersController@update']);
+// Route::patch('serviceOrders/{serviceOrders}', ['as'=> 'serviceOrders.update', 'uses' => 'Service Orders\ServiceOrdersController@update']);
+// Route::get('serviceOrders/{id}/delete', ['as' => 'serviceOrders.delete', 'uses' => 'Service Orders\ServiceOrdersController@getDelete']);
+// Route::get('serviceOrders/{id}/confirm-delete', ['as' => 'serviceOrders.confirm-delete', 'uses' => 'Service Orders\ServiceOrdersController@getModalDelete']);
+// Route::get('serviceOrders/{serviceOrders}', ['as'=> 'serviceOrders.show', 'uses' => 'Service Orders\ServiceOrdersController@show']);
+// Route::get('serviceOrders/{serviceOrders}/edit', ['as'=> 'serviceOrders.edit', 'uses' => 'Service Orders\ServiceOrdersController@edit']);
 
-});
+// });
 
 
 Route::group(array('prefix' => 'admin/serviceOrders/','namespace' => 'Admin','middleware' => 'admin','as'=>'admin.serviceOrders.'), function () {
 
 Route::get('serviceOrders', ['as'=> 'serviceOrders.index', 'uses' => 'Serviceorders\ServiceOrdersController@index']);
+Route::get('deactivate_service', ['as'=> 'serviceOrders.deactivate_service', 'uses' => 'Serviceorders\ServiceOrdersController@deactivate_service']);
 Route::post('serviceOrders', ['as'=> 'serviceOrders.store', 'uses' => 'Serviceorders\ServiceOrdersController@store']);
 Route::get('serviceOrders/create', ['as'=> 'serviceOrders.create', 'uses' => 'Serviceorders\ServiceOrdersController@create']);
 Route::put('serviceOrders/{serviceOrders}', ['as'=> 'serviceOrders.update', 'uses' => 'Serviceorders\ServiceOrdersController@update']);
@@ -429,6 +432,7 @@ Route::get('agingAnalysisReports/{agingAnalysisReports}/edit', ['as'=> 'agingAna
 Route::group(array('prefix' => 'admin/revenuePerCustomerReport/','namespace' => 'Admin','middleware' => 'admin','as'=>'admin.revenuePerCustomerReport.'), function () {
 
 Route::get('revenuePerCustomerReports', ['as'=> 'revenuePerCustomerReports.index', 'uses' => 'Revenuepercustomerreport\RevenuePerCustomerReportController@index']);
+Route::get('datepicker', ['as'=> 'revenuePerCustomerReports.datepicker', 'uses' => 'Revenuepercustomerreport\RevenuePerCustomerReportController@datepicker']);
 Route::post('revenuePerCustomerReports', ['as'=> 'revenuePerCustomerReports.store', 'uses' => 'Revenuepercustomerreport\RevenuePerCustomerReportController@store']);
 Route::get('revenuePerCustomerReports/create', ['as'=> 'revenuePerCustomerReports.create', 'uses' => 'Revenuepercustomerreport\RevenuePerCustomerReportController@create']);
 Route::put('revenuePerCustomerReports/{revenuePerCustomerReports}', ['as'=> 'revenuePerCustomerReports.update', 'uses' => 'Revenuepercustomerreport\RevenuePerCustomerReportController@update']);
@@ -738,5 +742,35 @@ Route::get('aginganalysisreports/{id}/delete', ['as' => 'aginganalysisreports.de
 Route::get('aginganalysisreports/{id}/confirm-delete', ['as' => 'aginganalysisreports.confirm-delete', 'uses' => 'Aginganalysisreport\AginganalysisreportController@getModalDelete']);
 Route::get('aginganalysisreports/{aginganalysisreports}', ['as'=> 'aginganalysisreports.show', 'uses' => 'Aginganalysisreport\AginganalysisreportController@show']);
 Route::get('aginganalysisreports/{aginganalysisreports}/edit', ['as'=> 'aginganalysisreports.edit', 'uses' => 'Aginganalysisreport\AginganalysisreportController@edit']);
+
+});
+
+
+Route::group(array('prefix' => 'admin/agingAnalysisReport/','namespace' => 'Admin','middleware' => 'admin','as'=>'admin.agingAnalysisReport.'), function () {
+
+Route::get('aginganalysisreports', ['as'=> 'aginganalysisreports.index', 'uses' => 'Aginganalysisreport\AginganalysisreportController@index']);
+Route::post('aginganalysisreports', ['as'=> 'aginganalysisreports.store', 'uses' => 'Aginganalysisreport\AginganalysisreportController@store']);
+Route::get('aginganalysisreports/create', ['as'=> 'aginganalysisreports.create', 'uses' => 'Aginganalysisreport\AginganalysisreportController@create']);
+Route::put('aginganalysisreports/{aginganalysisreports}', ['as'=> 'aginganalysisreports.update', 'uses' => 'Aginganalysisreport\AginganalysisreportController@update']);
+Route::patch('aginganalysisreports/{aginganalysisreports}', ['as'=> 'aginganalysisreports.update', 'uses' => 'Aginganalysisreport\AginganalysisreportController@update']);
+Route::get('aginganalysisreports/{id}/delete', ['as' => 'aginganalysisreports.delete', 'uses' => 'Aginganalysisreport\AginganalysisreportController@getDelete']);
+Route::get('aginganalysisreports/{id}/confirm-delete', ['as' => 'aginganalysisreports.confirm-delete', 'uses' => 'Aginganalysisreport\AginganalysisreportController@getModalDelete']);
+Route::get('aginganalysisreports/{aginganalysisreports}', ['as'=> 'aginganalysisreports.show', 'uses' => 'Aginganalysisreport\AginganalysisreportController@show']);
+Route::get('aginganalysisreports/{aginganalysisreports}/edit', ['as'=> 'aginganalysisreports.edit', 'uses' => 'Aginganalysisreport\AginganalysisreportController@edit']);
+
+});
+
+
+Route::group(array('prefix' => 'admin/revenuePerCustomerReport/','namespace' => 'Admin','middleware' => 'admin','as'=>'admin.revenuePerCustomerReport.'), function () {
+
+Route::get('revenuePerCustomerReports', ['as'=> 'revenuePerCustomerReports.index', 'uses' => 'Revenuepercustomerreport\RevenuePerCustomerReportController@index']);
+Route::post('revenuePerCustomerReports', ['as'=> 'revenuePerCustomerReports.store', 'uses' => 'Revenuepercustomerreport\RevenuePerCustomerReportController@store']);
+Route::get('revenuePerCustomerReports/create', ['as'=> 'revenuePerCustomerReports.create', 'uses' => 'Revenuepercustomerreport\RevenuePerCustomerReportController@create']);
+Route::put('revenuePerCustomerReports/{revenuePerCustomerReports}', ['as'=> 'revenuePerCustomerReports.update', 'uses' => 'Revenuepercustomerreport\RevenuePerCustomerReportController@update']);
+Route::patch('revenuePerCustomerReports/{revenuePerCustomerReports}', ['as'=> 'revenuePerCustomerReports.update', 'uses' => 'Revenuepercustomerreport\RevenuePerCustomerReportController@update']);
+Route::get('revenuePerCustomerReports/{id}/delete', ['as' => 'revenuePerCustomerReports.delete', 'uses' => 'Revenuepercustomerreport\RevenuePerCustomerReportController@getDelete']);
+Route::get('revenuePerCustomerReports/{id}/confirm-delete', ['as' => 'revenuePerCustomerReports.confirm-delete', 'uses' => 'Revenuepercustomerreport\RevenuePerCustomerReportController@getModalDelete']);
+Route::get('revenuePerCustomerReports/{revenuePerCustomerReports}', ['as'=> 'revenuePerCustomerReports.show', 'uses' => 'Revenuepercustomerreport\RevenuePerCustomerReportController@show']);
+Route::get('revenuePerCustomerReports/{revenuePerCustomerReports}/edit', ['as'=> 'revenuePerCustomerReports.edit', 'uses' => 'Revenuepercustomerreport\RevenuePerCustomerReportController@edit']);
 
 });

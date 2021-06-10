@@ -12,8 +12,8 @@ use Illuminate\Support\Facades\Lang;
 use App\Models\Aginganalysisreport\Aginganalysisreport;
 use Flash;
 use Prettus\Repository\Criteria\RequestCriteria;
-Use \Carbon\Carbon;
 use Response;
+use Carbon\Carbon;
 use DB;
 
 class AginganalysisreportController extends InfyOmBaseController
@@ -34,28 +34,49 @@ class AginganalysisreportController extends InfyOmBaseController
      */
     public function index(Request $request)
     {
+    
+        $aginganalysisreports = DB::table('serviceinvoices')->where('payment_status', '!=' , 'Fully')->get();
 
+        foreach($aginganalysisreports as $aginganalysisreport){ 
         
-        $aginganalysisreports = DB::table('paymentanddues')->get();
-           // dd($aginganalysisreports);
-        
-        foreach($aginganalysisreports as $aginganalysisreport){
-            $invoice_balance = DB::table('serviceinvoices')->where('customer_no',$aginganalysisreport->customer_no)->get();
-        dd($invoice_balance);
-        $to = \Carbon\Carbon::createFromFormat('Y-m-d', $invoice_balance->invoice_created_date);
-            $from = Carbon::now()->format('Y-m-d');
-            $diff_in_days = $to->diffInDays($from);
-            if($diff_in_days >= 30 && $invoice_balances->payment_status != 'Paid')
-            {
-                $days30[] = $invoice_balances->current_charges;
-                //dd($days30);
+
+            if(is_null($request->aging_date)){
+                $aging_date = 30;
+    
             }else{
-            //dd($invoice_balances);
+                $aging_date = $request->aging_date;
             }
-        }
-        dd($invoice_balance);
+
+        $invoice_due_date = $aginganalysisreport->invoice_due_date;
+        
+        $due_date_add_aging = Carbon::parse($invoice_due_date)->addDays($aging_date)->format('Y-m-d');
+        $today = Carbon::now()->format('Y-m-d');
+        $today = \Carbon\Carbon::createFromFormat('Y-m-d', $today);
+        $due_date = \Carbon\Carbon::createFromFormat('Y-m-d', $due_date_add_aging);
+        $diff_in_days =  $today->diffInDays($due_date);
+       // dd($diff_in_days);
+       
+        if($aging_date >= $diff_in_days)
+            {
+                $aginganalysisreporte[]=array(
+                    'cusromer_name' => $aginganalysisreport->cusromer_name,
+                    'invoice_number' => $aginganalysisreport->invoice_number,
+                    'current_charges' => $aginganalysisreport->current_charges,
+                    'invoice_due_date' => $aginganalysisreport->invoice_due_date,
+                    'diff_in_days' => $diff_in_days,
+                );
+                    $aging_date = $aging_date;
+                    $total_amounts[] = $aginganalysisreport->current_charges;
+            }
+         
+         }
+        //dd($aginganalysisreporte);
+        $aginganalysisreport = $aginganalysisreporte;
+        $total_amount = array_sum($total_amounts);
         return view('admin.agingAnalysisReport.aginganalysisreports.index')
-            ->with('aginganalysisreports', $aginganalysisreports);
+            ->with('aging_date', $aging_date)
+            ->with('aginganalysisreports', $aginganalysisreport)
+            ->with('total_amount', $total_amount);
     }
 
     /**

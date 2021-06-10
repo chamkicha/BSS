@@ -14,8 +14,8 @@ RevenuePerCustomerReports
                 Dashboard
             </a>
         </li>
-        <li>Revenue PerCustomer Reports</li>
-        <li class="active">Revenue Per Customer Reports List</li>
+        <li>Revenue Per Customer</li>
+        <li class="active">Revenue Per Customer</li>
     </ol>
 </section>
 
@@ -27,7 +27,7 @@ RevenuePerCustomerReports
         <div class="card border-primary ">
             <div class="card-header bg-primary text-white">
                 <h4 class="card-title float-left"> <i class="livicon" data-name="list-ul" data-size="16" data-loop="true" data-c="#fff" data-hc="white"></i>
-                    Revenue Per Customer Reports List
+                    Revenue Per Customer
                 </h4>
             </div>
             <br />

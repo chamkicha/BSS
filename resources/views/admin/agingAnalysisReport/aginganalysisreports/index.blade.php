@@ -8,7 +8,6 @@ Aginganalysisreports
 {{-- Page content --}}
 @section('content')
 <section class="content-header">
-    <h1>Aginganalysisreports</h1>
     <ol class="breadcrumb">
         <li>
             <a href="{{ route('admin.dashboard') }}"> <i class="livicon" data-name="home" data-size="16" data-color="#000"></i>
@@ -16,7 +15,7 @@ Aginganalysisreports
             </a>
         </li>
         <li>Aginganalysisreports</li>
-        <li class="active">Aginganalysisreports List</li>
+        <li class="active">Aging Analysisreports</li>
     </ol>
 </section>
 
@@ -28,11 +27,8 @@ Aginganalysisreports
         <div class="card border-primary ">
             <div class="card-header bg-primary text-white">
                 <h4 class="card-title float-left"> <i class="livicon" data-name="list-ul" data-size="16" data-loop="true" data-c="#fff" data-hc="white"></i>
-                    Aginganalysisreports List
+                   Aging Analysis Report
                 </h4>
-                <div class="float-right">
-                    <a href="{{ route('admin.agingAnalysisReport.aginganalysisreports.create') }}" class="btn btn-sm btn-secondary"><span class="fa fa-plus"></span> @lang('button.create')</a>
-                </div>
             </div>
             <br />
             <div class="card-body table-responsive">

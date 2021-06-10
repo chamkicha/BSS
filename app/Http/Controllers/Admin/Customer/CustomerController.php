@@ -43,6 +43,58 @@ class CustomerController extends InfyOmBaseController
         return view('admin.customer.customers.index')
             ->with('customers', $customers);
     }
+    
+   public function deactivate_customer(Request $request)
+   {
+        
+    $customer_details_update = DB::table('customers')->where('id', $request->id)->update(['customer_status'=> $request->customer_status]);
+    $customer = $this->customerRepository->findWithoutFail($request->id);
+    $serviceorder_details = DB::table('serviceorderss')->where('customer_no', $customer->id)->where('deleted_at', NULL)->get();
+    //dd( $comments_details);
+
+
+    $customer = array(
+        "id" => $customer->id,
+        "customername" => $customer->customername,
+        "customer_no" => $customer->customer_no,
+        "t_i_n_number" => $customer->t_i_n_number,
+        "serviceorder_details" => $serviceorder_details,
+        "v_a_t_registration_number" => $customer->v_a_t_registration_number,
+        "business_license_number" => $customer->business_license_number,
+        "contact_person" => $customer->contact_person,
+        "position_held" => $customer->position_held,
+        "contact_telephone" => $customer->contact_telephone,
+        "office_telephone" => $customer->office_telephone,
+        "email" => $customer->email,
+        "postal_address" => $customer->postal_address,
+        "region" => $customer->region,
+        "district" => $customer->district,
+        "fax" => $customer->fax,
+        "customer_type" => $customer->customer_type,
+        "created_at" => $customer->created_at,
+        "updated_at" => $customer->updated_at,
+        "deleted_at" => $customer->deleted_at,
+        "country" => $customer->country,
+        "created_by" => $customer->created_by,
+        "customer_status" => $customer->customer_status,
+
+
+
+
+    );
+    // dd($customer);
+
+    if (empty($customer)) {
+        Flash::error('Customer not found');
+
+        return redirect(route('customers.index'));
+    }
+
+    return view('admin.customer.customers.show')->with('customer', $customer);
+
+
+
+   }
 
     /**
      * Show the form for creating a new Customer.
@@ -195,7 +247,7 @@ class CustomerController extends InfyOmBaseController
     public function show($id)
     {
         $customer = $this->customerRepository->findWithoutFail($id);
-        $serviceorder_details = DB::table('serviceorderss')->where('customer_no', $customer->id)->get();
+        $serviceorder_details = DB::table('serviceorderss')->where('customer_no', $customer->id)->where('deleted_at', NULL)->get();
         //dd( $comments_details);
 
 
@@ -222,6 +274,7 @@ class CustomerController extends InfyOmBaseController
             "deleted_at" => $customer->deleted_at,
             "country" => $customer->country,
             "created_by" => $customer->created_by,
+            "customer_status" => $customer->customer_status,
 
 
 

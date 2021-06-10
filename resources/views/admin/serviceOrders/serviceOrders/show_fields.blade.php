@@ -13,9 +13,6 @@ function activated_by()
 
 
 
-<form action="{{ route('serviceapprove') }}" method = "post"><!-- form add -->
-    {{ csrf_field() }}
-
     <section class="content pl-3 pr-3">
         <div class="row">
             <div class="col-lg-12">
@@ -75,7 +72,7 @@ function activated_by()
 
                             </table>
                         </div>
-                    
+
                     </div>
 
                     <div id="tab2" class="tab-pane fade" role="tabpanel">
@@ -156,13 +153,45 @@ function activated_by()
                                 <td>{!! $serviceOrders['created_by'] !!}</td>
                             </tr>
                             </table>
-                                
+                             
+                        
+                 @if (Sentinel::inRole('admin') or Sentinel::inRole('commercial-manager'))
+                            
+                            <form action="{{ route('admin.serviceOrders.serviceOrders.deactivate_service') }}" method = "get" id="form1"> 
+                                    </br>
+                                    <div >
+                                    <label for="fname">Change Customer Status:
+                                    <span>&nbsp;
+                                        <select name="service_status" id="service_status">
+                                            <option hidden selected></option>
+                                            
+
+                                            @if ($serviceOrders['service_status'] === 'Inactive')
+                                                <option value="Active">Activate</option>
+                                            @elseif ($serviceOrders['service_status'] === 'Active')
+                                                 <option value="Inactive">Deactivate</option>
+                                            @endif
+                                        </select>
+                                        <span>
+                                            &nbsp;<button type="submit" id="" name="" class="btn btn-success  waves-light" form="form1" ><i class="icofont icofont-check-circled"></i>Update</button>
+                                        </span>
+                                    </span>
+                                        </label>
+                                    </div>
+                                    
+                                    <!-- order number -->
+                                    <div class="form-group">
+                                        <input type="hidden" id="id"name="id" class="form-control" value = "{{$serviceOrders['id']}}">
+                                    </div>
+                            </form>
+                    @endif
+                       
 
                     </div>
 
 
                     <div id="tab3" class="tab-pane fade" role="tabpanel">
-                    <br>
+                    
                     
                         <table class="table table-bordered table-hover" style="width: 90%;">
                             <thead>
@@ -216,8 +245,12 @@ function activated_by()
 
 
                     </div>
+
+                    
+
                     <div id="tab4" class="tab-pane fade" role="tabpanel">
-                     <br>
+<form action="{{ route('serviceapprove') }}" method = "post"><!-- form add -->
+    {{ csrf_field() }}
                       {{--  comment begin  --}}
                      <div class="row">
                         <div class="col-md-6">

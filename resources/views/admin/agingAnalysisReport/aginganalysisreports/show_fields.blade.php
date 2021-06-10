@@ -19,52 +19,17 @@
     <hr>
 </div>
 
-<!-- Total Field -->
+<!-- Amount Due Field -->
 <div class="form-group">
-    {!! Form::label('total', 'Total:') !!}
-    <p>{!! $aginganalysisreport->total !!}</p>
+    {!! Form::label('amount_due', 'Amount Due:') !!}
+    <p>{!! $aginganalysisreport->amount_due !!}</p>
     <hr>
 </div>
 
-<!-- 0-30 Days Field -->
+<!-- Days Field -->
 <div class="form-group">
-    {!! Form::label('0-30_days', '0-30 Days:') !!}
-    <p>{!! $aginganalysisreport->0-30_days !!}</p>
-    <hr>
-</div>
-
-<!-- 31-60 Days Field -->
-<div class="form-group">
-    {!! Form::label('31-60_days', '31-60 Days:') !!}
-    <p>{!! $aginganalysisreport->31-60_days !!}</p>
-    <hr>
-</div>
-
-<!-- 61-90 Days Field -->
-<div class="form-group">
-    {!! Form::label('61-90_days', '61-90 Days:') !!}
-    <p>{!! $aginganalysisreport->61-90_days !!}</p>
-    <hr>
-</div>
-
-<!-- 91-120 Days Field -->
-<div class="form-group">
-    {!! Form::label('91-120_days', '91-120 Days:') !!}
-    <p>{!! $aginganalysisreport->91-120_days !!}</p>
-    <hr>
-</div>
-
-<!-- 121-180 Days Field -->
-<div class="form-group">
-    {!! Form::label('121-180_days', '121-180 Days:') !!}
-    <p>{!! $aginganalysisreport->121-180_days !!}</p>
-    <hr>
-</div>
-
-<!-- 181+ Days Field -->
-<div class="form-group">
-    {!! Form::label('181+_days', '181+ Days:') !!}
-    <p>{!! $aginganalysisreport->181+_days !!}</p>
+    {!! Form::label('days', 'Days:') !!}
+    <p>{!! $aginganalysisreport->days !!}</p>
     <hr>
 </div>
 

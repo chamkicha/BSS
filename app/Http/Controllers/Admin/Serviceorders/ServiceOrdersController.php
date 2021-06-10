@@ -59,6 +59,85 @@ class ServiceOrdersController extends InfyOmBaseController
         }
     }
 
+
+
+    public function deactivate_service(Request $request)
+    {
+         
+     $serviceorder_details_update = DB::table('serviceorderss')->where('id', $request->id)->update(['service_status'=> $request->service_status]);
+     //dd( $comments_details);
+
+        $serviceOrders = $this->serviceOrdersRepository->findWithoutFail($request->id);
+        $service_name_description = DB::table('clientproducts')->where('service_order_no', $serviceOrders->order_i_d)->get();
+        $customer_details = DB::table('customers')->where('id', $serviceOrders->customer_no)->get();
+        $comments_details = DB::table('comments')->where('order_i_d', $serviceOrders->order_i_d)->get();
+        $tech_user = DB::table('role_users')->where('role_id', '5')
+                                            ->leftJoin('users', 'users.id', '=', 'role_users.user_id')
+                                            ->select('users.id','users.first_name','users.last_name')
+                                           ->get();
+
+        $payment_mode = DB::table('paymentmodes')
+                            ->where('payment_interval', $serviceOrders->payment_mode)
+                            ->first()->payment_mode_name;
+
+        
+        //dd($service_name_description);
+
+
+       $serviceOrders = array(
+        "id" => $serviceOrders->id,
+        "order_i_d" =>$serviceOrders->order_i_d,
+        "customer_name" => $serviceOrders->customer_name,
+        "customer_no" => $serviceOrders->customer_no,
+        "comments_details" => $comments_details,
+        "customer_details" => $customer_details,
+        "payment_mode" => $payment_mode,
+        "serviceordertypes" => $serviceOrders->serviceordertypes,
+        "service_status" => $serviceOrders->service_status,
+        "sub_total" => $serviceOrders->sub_total,
+        "tax_amount" => $serviceOrders->tax_amount,
+        "ed_amount" => $serviceOrders->ed_amount,
+        "grand_total" => $serviceOrders->grand_total,
+        "service_creation_date" =>$serviceOrders->service_creation_date,
+        "service_ending_date" => $serviceOrders->service_ending_date,
+        "service_descriptions" => $serviceOrders->service_descriptions,
+        "service_lists" => $serviceOrders->service_lists,
+        "service_name_description" => $service_name_description,
+        "next_handler" => $serviceOrders->next_handler,
+        "created_at" => $serviceOrders->created_at,
+        "updated_at" => $serviceOrders->updated_at,
+        "created_by" => $serviceOrders->created_by,
+        "next_handler_role" => $serviceOrders->next_handler_role,
+        "next_handler_role_id" => $serviceOrders->next_handler_role_id,
+        "prev_handler_role" => $serviceOrders->prev_handler_role,
+        "prev_handler_role_id" => $serviceOrders->prev_handler_role_id,
+        "req_status" => $serviceOrders->req_status,
+        "activation_date" => $serviceOrders->activation_date,
+        "activated_by" => $serviceOrders->activated_by,
+        "discount" => $serviceOrders->discount,
+        "ed_value" => $serviceOrders->ed_value,
+        "tax_value" => $serviceOrders->tax_value,
+        "tech_user" => $tech_user,
+       );
+
+      //dd($serviceOrders);
+
+
+
+
+
+        if (empty($serviceOrders)) {
+            Flash::error('ServiceOrders not found');
+
+            return redirect(route('serviceOrders.index'));
+        }
+
+        return view('admin.serviceOrders.serviceOrders.show')->with('serviceOrders', $serviceOrders);
+    
+
+    }
+
+
     /**
      * Show the form for creating a new ServiceOrders.
      *
@@ -122,17 +201,16 @@ class ServiceOrdersController extends InfyOmBaseController
         foreach($request->service_lists as $product_id){
 
                 //Get Month count
-            $product_type = DB::table('products')->whereIn('id', $service_lists)->first()->product_type;
-            if($product_type == 'Web Hosting'){
-                $monthly_count = 1 ;
+            $product_type = DB::table('products')->where('id', $product_id)->first()->product_type;
+            if($product_type == 'Web Hosting' or $product_type == 'Initial Payment'){
+            $monthly_count = 1 ;
             }else{
             $monthly_count = DB::table('paymentmodes')->where('payment_interval', $request->payment_mode)
                     ->first()->monthly_count;
             }
 
-            $check_discount = DB::table('products')->where('id', $product_id)->first()->product_type;
             
-            if($check_discount == 'COLOCATION' or $check_discount == 'Virtual Server' or $check_discount == 'VPN service(IPSec)'){
+            if($product_type == 'COLOCATION' or $product_type == 'Virtual Server' or $product_type == 'VPN service(IPSec)'){
                 $grand_ttl = DB::table('products')->where('id', $product_id)->first()->grand_total;
                 $product = DB::table('products')->where('id', $product_id)->first();
                 $product_count = $request->item_quantity[$product_id];
@@ -143,7 +221,6 @@ class ServiceOrdersController extends InfyOmBaseController
 
                 $grand_ttl_product = $grand_ttl_product - ($grand_ttl_product * $discount);
 
-                //$final_total[] = $grand_ttl_product;
 
                 $product_sub_grand_value = $product->price * $monthly_count * $product_count;
                 $product_sub_grand_discounted_value = $product_sub_grand_value - ($product_sub_grand_value * $discount);
@@ -251,7 +328,7 @@ class ServiceOrdersController extends InfyOmBaseController
 
        $serviceOrders = $this->serviceOrdersRepository->create($object);
 
-        $nexthandler_email = $this->next_handler_email_sent($service_order_no,$request->customer_name,$request->created_by);
+        $nexthandler_email = $this->next_handler_email_sent($service_order_no,$customer_name,$request->created_by);
 
         Flash::success('ServiceOrders saved successfully.');
 

@@ -72,7 +72,7 @@ class PaymentAndDueController extends InfyOmBaseController
         if(is_null($payment_due)){
 
         // PAYMENT AND DUE insert into database
-        $grand_total_due =$request->total_amount;
+        $grand_total_due = str_replace(',', '', $request->total_amount);
         $bill_creation = DB::table('paymentanddues')
                             ->insert(['customer_name' => $request->customer_name,
                                     'total_amount' => $grand_total_due,

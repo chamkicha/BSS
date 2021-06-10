@@ -6,7 +6,6 @@ ServiceOrders
 @stop
 
 @section('content')
-@include('common.errors')
 <section class="content-header">
     <ol class="breadcrumb">
         <li>

@@ -17,7 +17,7 @@
             
             <td>{!! $customer->customer_no !!}</td>
             <td>
-                <a href="{{ route('admin.serviceInvoice.serviceInvoices.show', collect($customer)->first() ) }}">
+                <a href="{{ route('admin.customer.customers.show', collect($customer)->first() ) }}">
                     {!! $customer->customername !!}
                 </a>
             </td>

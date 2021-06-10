@@ -5,17 +5,17 @@
     <hr>
 </div>
 
+<!-- Customer Id Field -->
+<div class="form-group">
+    {!! Form::label('customer_id', 'Customer Id:') !!}
+    <p>{!! $revenuePerCustomerReport->customer_id !!}</p>
+    <hr>
+</div>
+
 <!-- Customer Name Field -->
 <div class="form-group">
     {!! Form::label('customer_name', 'Customer Name:') !!}
     <p>{!! $revenuePerCustomerReport->customer_name !!}</p>
-    <hr>
-</div>
-
-<!-- Customer No Field -->
-<div class="form-group">
-    {!! Form::label('customer_no', 'Customer No:') !!}
-    <p>{!! $revenuePerCustomerReport->customer_no !!}</p>
     <hr>
 </div>
 
@@ -26,17 +26,10 @@
     <hr>
 </div>
 
-<!-- Services Field -->
+<!-- Excise Duty Field -->
 <div class="form-group">
-    {!! Form::label('services', 'Services:') !!}
-    <p>{!! $revenuePerCustomerReport->services !!}</p>
-    <hr>
-</div>
-
-<!-- Excise Dutty Field -->
-<div class="form-group">
-    {!! Form::label('excise_dutty', 'Excise Dutty:') !!}
-    <p>{!! $revenuePerCustomerReport->excise_dutty !!}</p>
+    {!! Form::label('excise_duty', 'Excise Duty:') !!}
+    <p>{!! $revenuePerCustomerReport->excise_duty !!}</p>
     <hr>
 </div>
 
@@ -47,10 +40,10 @@
     <hr>
 </div>
 
-<!-- Total Wit Vat Field -->
+<!-- Total With Vat Field -->
 <div class="form-group">
-    {!! Form::label('total_wit_vat', 'Total Wit Vat:') !!}
-    <p>{!! $revenuePerCustomerReport->total_wit_vat !!}</p>
+    {!! Form::label('total_with_vat', 'Total With Vat:') !!}
+    <p>{!! $revenuePerCustomerReport->total_with_vat !!}</p>
     <hr>
 </div>
 

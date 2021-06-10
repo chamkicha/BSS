@@ -113,8 +113,12 @@ class ServiceInvoiceController extends InfyOmBaseController
             $previous_dept = $previous_dept- $grand_total; 
         }
         $service_name = (array)json_decode($serviceInvoice['service_name'], true);
-        $service_name_description =DB::table('clientproducts')->where('service_order_no', $serviceInvoice->service_order_no)->get();
 
+        if($serviceInvoice->first_invoice == 1){
+        $service_name_description =DB::table('clientproducts')->where('service_order_no', $serviceInvoice->service_order_no)->get();
+        }else{
+        $service_name_description =DB::table('invoice_product')->where('invoice_no', $serviceInvoice->invoice_number)->get();
+        }
         // ED AMOUNT
         $ed_amount_total = DB::table('products')->whereIn('product_name', $service_name)
                                         ->sum('ed_amount');
@@ -133,7 +137,7 @@ class ServiceInvoiceController extends InfyOmBaseController
         $grand_total = $grand_total - $discount;
 
         // TOTAL PREVIOUS AND CURRENT BILL
-        $Prev_current_total = $serviceInvoice->grand_total + $previous_dept;
+        $Prev_current_total = $serviceInvoice->grand_total + $serviceInvoice->previous_dept;
 
         //   QR CODE LINK
         $qrcode = DB::table('serviceinvoices')->where('invoice_number', $serviceInvoice->invoice_number)
@@ -171,7 +175,7 @@ class ServiceInvoiceController extends InfyOmBaseController
             "updated_at" => $serviceInvoice->updated_at,
             "deleted_at" => $serviceInvoice->deleted_at,
             "postal_address" => $postal_address,
-            "previous_dept" => $previous_dept,
+            "previous_dept" => $serviceInvoice->previous_dept,
             "previous_paid" => $previous_paid,
             "Prev_current_total" => $Prev_current_total,
             "district" => $district,
@@ -280,112 +284,7 @@ class ServiceInvoiceController extends InfyOmBaseController
            $this->send_efdrec_request_tra($tra_details, $tokenAuth['token_type'], $tokenAuth['access_token'], $request->cusromer_name, $request->mobile_number, $request->grand_total, $request);
            
 
-
-         
-        $serviceInvoice = $this->serviceInvoiceRepository->findWithoutFail($request->id);
-        //dd($serviceInvoice);
-        
-        $customer_details = DB::table('customers')->where('id', $serviceInvoice->customer_no)->first();
-        $postal_address = $customer_details->postal_address;
-        //dd($customer_details->customername);
-        $mobile_number = $customer_details->office_telephone;
-        $district = $customer_details->district;
-        $region = $customer_details->region;
-        $country = $customer_details->country;
-        $t_i_n_number = $customer_details->t_i_n_number;
-        $v_a_t_registration_number = $customer_details->v_a_t_registration_number;
-        $previous_dept = DB::table('paymentanddues')->where('customer_no', $serviceInvoice->customer_no)->first();
-        $previous_dept = $previous_dept->total_amount;
-        $previous_paid = DB::table('paymentanddues')->where('customer_no', $serviceInvoice->customer_no)->first()->paid_amount;
-        if($previous_dept === $serviceInvoice->grand_total){
-            
-            $previous_dept ='0';
-        }
-        else{
-            $grand_total = $serviceInvoice->grand_total;
-            $previous_dept = $previous_dept- $grand_total; 
-        }
-        $service_name = (array)json_decode($serviceInvoice['service_name'], true);
-        
-        $service_name_description =DB::table('clientproducts')->where('service_order_no', $serviceInvoice->service_order_no)->get();
-        
-
-        // ED AMOUNT
-        $ed_amount_total = DB::table('products')->whereIn('product_name', $service_name)
-                                        ->sum('ed_amount');
-
-        // SUB TOTAL
-        $sub_total = DB::table('products')->whereIn('product_name', $service_name)
-                                        ->sum('price');
-
-
-        // DISCOUNT
-        $discount =$serviceInvoice->discount;
-
-        // GRAND TOTAL
-        $grand_total = DB::table('products')->whereIn('product_name', $service_name)
-                  ->sum('grand_total');
-        $grand_total = $grand_total - $discount;
-
-        // TOTAL PREVIOUS AND CURRENT BILL
-        $Prev_current_total = $serviceInvoice->grand_total + $previous_dept;
-
-        //   QR CODE LINK
-        $qrcode = DB::table('serviceinvoices')->where('invoice_number', $serviceInvoice->invoice_number)
-                  ->get();
-        $qrcode_path = $qrcode[0]->qrcode_path;
-        $RCTVNUM_DATE = $qrcode[0]->RCTVNUM_DATE;
-        $RCTVNUM = $qrcode[0]->RCTVNUM;
-        
-
-
-        $serviceInvoice = array(
-            "id" => $serviceInvoice->id,
-            "invoice_number" => $serviceInvoice->invoice_number,
-            "customer_no" => $serviceInvoice->customer_no,
-            "invoice_created_date" => Carbon::parse($serviceInvoice->invoice_created_date)->format('d-m-Y'),
-            "next_invoice_date" => Carbon::parse($serviceInvoice->next_invoice_date)->format('d-m-Y'),
-            "invoice_due_date" => Carbon::parse($serviceInvoice->invoice_due_date)->format('d-m-Y'),
-            "cusromer_name" => $customer_details->customername,
-            "service_order_no" => $serviceInvoice->service_order_no,
-            "sub_total" => $serviceInvoice->sub_total,
-            "qrcode_path" => $qrcode_path,
-            "RCTVNUM" => $RCTVNUM,
-            "RCTVNUM_DATE" => $RCTVNUM_DATE,
-            "tax_amount_total" => $serviceInvoice->tax_amount,
-            "ed_amount_total" => $ed_amount_total,
-            "discount" => $serviceInvoice->discount,
-            "grand_total" => $serviceInvoice->grand_total,
-            "due_balance" => $serviceInvoice->due_balance,
-            "current_charges" => $serviceInvoice->current_charges,
-            "payment_amount" => $serviceInvoice->payment_amount,
-            "payment_status" => $serviceInvoice->payment_status,
-            "service_name" => $service_name,
-            "service_name_description" => $service_name_description,
-            "created_at" => $serviceInvoice->created_at,
-            "updated_at" => $serviceInvoice->updated_at,
-            "deleted_at" => $serviceInvoice->deleted_at,
-            "postal_address" => $postal_address,
-            "previous_dept" => $previous_dept,
-            "previous_paid" => $previous_paid,
-            "Prev_current_total" => $Prev_current_total,
-            "district" => $district,
-            "mobile_number" => $mobile_number,
-            "serviceordertypes" => $serviceInvoice->serviceordertypes,
-            "region" => $region,
-            "country" => $country,
-            "t_i_n_number" => $t_i_n_number,
-            "v_a_t_registration_number" => $v_a_t_registration_number,
-        );
-        //dd($service_name_description);
-
-        if (empty($serviceInvoice)) {
-            Flash::error('ServiceInvoice not found');
-
-            return redirect(route('serviceInvoices.index'));
-        }
-
-        return view('admin.serviceInvoice.serviceInvoices.show')->with('serviceInvoice', $serviceInvoice);
+           return redirect(route('admin.serviceInvoice.serviceInvoices.show', [$request->id]))->with('success', 'to Get Signature');
     }
 
        
@@ -406,8 +305,8 @@ class ServiceInvoiceController extends InfyOmBaseController
 
         );
         //1. Prepare the connectivity parameters.
-        $url = "https://virtual.tra.go.tz/efdmsRctApi/api/efdmsRctInfo";
-        //$url = "https://vfd.tra.go.tz/api/efdmsRctInfo"; LIVE
+        // $url = "https://virtual.tra.go.tz/efdmsRctApi/api/efdmsRctInfo"; TEST
+        $url = "https://vfd.tra.go.tz/api/efdmsRctInfo"; 
         //3.Send the Request to the API
         //dd($xmlReq);
         try {
@@ -499,7 +398,7 @@ class ServiceInvoiceController extends InfyOmBaseController
        $RCTVNUM_DATE = $RCTVNUM[0]->RCTVNUM_DATE;
         $RCTVNUM_DATE = str_replace(":", "", $RCTVNUM_DATE);
         //1. Prepare the connectivity parameters.
-        $url = "https://virtual.tra.go.tz/efdmsRctVerify"."/".$RCTVNUM[0]->RCTVNUM."_".$RCTVNUM_DATE;
+        $url = "https://verify.tra.go.tz"."/".$RCTVNUM[0]->RCTVNUM."_".$RCTVNUM_DATE;
         //$url = "https://vfd.tra.go.tz/api/efdmsRctInfo"; LIVE
         //3.Send the Request to the API
         $file = public_path('qrimages/'.'QR-'.$RCTVNUM[0]->RCTVNUM.'.png');
@@ -608,8 +507,8 @@ class ServiceInvoiceController extends InfyOmBaseController
     {
         $postData = "username=$username&password=$password&grant_type=password";
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, "https://virtual.tra.go.tz/efdmsRctApi/vfdtoken");
-        // curl_setopt($ch, CURLOPT_URL, "https://vfd.tra.go.tz/vfdtoken"); LIVE
+        // curl_setopt($ch, CURLOPT_URL, "https://virtual.tra.go.tz/efdmsRctApi/vfdtoken"); TEST
+        curl_setopt($ch, CURLOPT_URL, "https://vfd.tra.go.tz/vfdtoken");
         curl_setopt($ch, CURLOPT_POST, 1);
         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
@@ -670,8 +569,8 @@ class ServiceInvoiceController extends InfyOmBaseController
     {
         $response = false;
         //1. Prepare the connectivity parameters.
-        $url = "https://virtual.tra.go.tz/efdmsRctApi/api/vfdRegReq";
-        // $url = "https://vfd.tra.go.tz/api/vfdRegReq";  LIVE
+        // $url = "https://virtual.tra.go.tz/efdmsRctApi/api/vfdRegReq"; TEST
+        $url = "https://vfd.tra.go.tz/api/vfdRegReq";  
         //3.Send the Request to the API
         try {
             $curl = curl_init();
@@ -753,13 +652,19 @@ class ServiceInvoiceController extends InfyOmBaseController
         //dd($invoice_details_load);
         foreach($invoice_details_load as $invoice_details)
         {
+            // INVOICE creation
+            $invoice_number = DB::table('serviceinvoices')->orderBy('invoice_number', 'desc')->first();
+            if(is_null($invoice_number)){
+            $invoice_number = 1000;
+            }else{
+                $invoice_number = $invoice_number->invoice_number + 1;
+            }  
              // check contract validation
             $service_validation = DB::table('serviceorderss')
                                  ->where('order_i_d', $invoice_details->service_order_no)
                                  ->first();
             $service_status = $service_validation->service_status;
 
-            //dd($invoice_details_load);
             // check invoice deletion
            $service_deletion = DB::table('serviceinvoices')
                                 ->where('invoice_number', $invoice_details->invoice_number)
@@ -767,49 +672,60 @@ class ServiceInvoiceController extends InfyOmBaseController
 
             if($service_status == 'Active' && is_null($service_deletion)){
 
-                // Payment and Due creation
-                //dd('sisi');
-                $customer_no = $invoice_details->customer_no;
 
-                $payment_due = DB::table('paymentanddues')->where('customer_no', $customer_no)->first();
-
-                if(is_null($payment_due)){
-
-                // PAYMENT AND DUE insert into database
-                $grand_total_due =$invoice_details->grand_total;
-                $bill_creation = DB::table('paymentanddues')
-                ->insert(['customer_name' => $customer_name,
-                        'total_amount' => $grand_total_due,
-                        'balance' => $grand_total_due,
-                        'customer_no' => $customer_no,]);
-
-
-                }else{
-                    
-                    // PAYMENT AND DUE update into database
-                    $grand_total3 = DB::table('paymentanddues')->where('customer_no', $customer_no)->get();
-                    $grand_total2 = $grand_total3[0]->total_amount;
-                    $grand_total1 = $invoice_details->grand_total;
-                    $grand_total4 = $grand_total1 + $grand_total2;
-                    $balance = $grand_total3[0]->balance;
-                    $balance = $balance + $grand_total1;
-                    //dd($grand_total4);
-                    
-                    $bill_creation = DB::table('paymentanddues')
-                    ->where('customer_no', $customer_no)
-                    ->update(['total_amount' => $grand_total4,
-                            'balance' => $balance]);
-                } // END PAYMEND AND DUE CREATIONM
-
+                        
+                $service_order_no = $invoice_details->service_order_no;
                 
+                
+                //customer no
+                $customer_no = $invoice_details->customer_no;
+                $customer_name = DB::table('customers')->where('id', $customer_no)->first()->customername;
 
-                // INVOICE creation
-                $invoice_number = DB::table('serviceinvoices')->orderBy('invoice_number', 'desc')->first();
-                if(is_null($invoice_number)){
-            $invoice_number = 1000;
-                }else{
-                    $invoice_number = $invoice_number->invoice_number + 1;
-                }
+                // GRAND TOTAL
+                $products_list = DB::table('clientproducts')->where('service_order_no', $service_order_no)->get();
+                $service_order_details = DB::table('serviceorderss')->where('order_i_d', $service_order_no)->first();
+                    // GRAND TOTAL
+
+                foreach($products_list as $product_list){
+
+                        //Get Month count
+                    $product_type = DB::table('products')->where('id', $product_list->product_id)->first()->product_type;
+                    
+                   if($product_type != 'Initial Payment'){
+                       
+                    // Sub Total
+                    $price = $product_list->price;
+                    $product_sub_grand[] = $price;
+                    
+                    // Tax Total
+                    $vat_amount = $product_list->vat_amount;
+                    $product_vat[] = $vat_amount;
+                    
+                    // Grand Total
+                    $amount = $product_list->amount;
+                    $product_grand_total[] = $amount;
+
+
+                    $client_product = DB::table('invoice_product')
+                                        ->insert(['client_no' => $product_list->client_no, 
+                                                    'product_id' => $product_list->product_id, 
+                                                    'service_order_no' => $product_list->service_order_no, 
+                                                    'product_quantity' => $product_list->product_quantity, 
+                                                    'product_name' => $product_list->product_name, 
+                                                    'product_description' => $product_list->product_description, 
+                                                    'price' => $price, 
+                                                    'vat_amount' => $vat_amount, 
+                                                    'amount' => $amount, 
+                                                    'invoice_no' => $invoice_number, 
+                                                    'created_at' => date('Y-m-d H:i:s'),]);
+                    }
+                 }
+
+                // GRAND TOTAL + SUB TOTAL + TAX AMOUNT
+                $grand_total_sub_grand = array_sum($product_sub_grand);
+                $grand_total_vat = array_sum($product_vat);
+                $grand_total = array_sum($product_grand_total);
+
                 $activation_date = date('Y-m-d');
                 
                 // next_invoice_date creation
@@ -823,36 +739,15 @@ class ServiceInvoiceController extends InfyOmBaseController
                 $service_order_no =$invoice_details->service_order_no;
                 $due_balance = DB::table('paymentanddues')->where('customer_no', $customer_no)->first();
                 $due_balance = $due_balance->total_amount;
-                $current_charges =$invoice_details->grand_total;
-                $payment_amount =$invoice_details->grand_total;
+                $current_charges =$grand_total;
+                $payment_amount =$grand_total;
                 $payment_status =DB::table('paymenttypes')->where('id', '2')->get();
                 $payment_status = $payment_status[0]->payment_type_name;
-                $service_name = $invoice_details->service_name;
-                $sub_total = $invoice_details->sub_total;
-                $tax_amount = $invoice_details->tax_amount;
-                $ed_amount = $invoice_details->ed_amount;
+                $sub_total = $grand_total_sub_grand;
+                $tax_amount = $grand_total_vat;
                 $discount = $invoice_details->discount;
-                $grand_total = $invoice_details->grand_total;
-
-                // CUSTOMER REVENUE REPORT GENERATION POSTPAID
-                $invoice_details = array(
-                'invoice_number' => $invoice_number,
-                'cusromer_name' => $cusromer_name, 
-                'customer_no' => $customer_no, 
-                'current_charges' => $current_charges, 
-                'service_order_no' => $service_order_no,
-                'invoice_created_date' => $activation_date,
-                'due_balance' => $due_balance,
-                'service_name' => $service_name,
-                'payment_amount' => $payment_amount,
-                'payment_status' => $payment_status,
-                'sub_total' => $sub_total,
-                'tax_amount' => $tax_amount,
-                'ed_amount' => $ed_amount,
-                'discount' => $discount,
-                'grand_total' => $grand_total
-                );
-                $customer_report_run = $this->customer_report_revenue($invoice_details);
+                $grand_total = $grand_total;
+                $previous_dept = $this->previous_dept($customer_no,$grand_total);
 
                 // INVOICE insert into database
                 $invoice_creation = DB::table('serviceinvoices')
@@ -865,13 +760,13 @@ class ServiceInvoiceController extends InfyOmBaseController
                         'next_invoice_date' => $next_invoice_date,
                         'invoice_due_date' => $invoice_due_date,
                         'due_balance' => $due_balance,
-                        'service_name' => $service_name,
                         'payment_amount' => $payment_amount,
                         'payment_status' => $payment_status,
                         'sub_total' => $sub_total,
                         'tax_amount' => $tax_amount,
-                        'ed_amount' => $ed_amount,
+                        'first_invoice' => 0,
                         'discount' => $discount,
+                        'previous_dept' => $previous_dept,
                         'grand_total' => $grand_total]);
 
                         $subjects = 'Invoice '.$invoice_number. ' generated for '.$cusromer_name.' from '.Carbon::parse($activation_date)->format('d-m-Y').' to '.Carbon::parse($next_invoice_date)->format('d-m-Y');
@@ -879,82 +774,66 @@ class ServiceInvoiceController extends InfyOmBaseController
 
                         Mail::raw($content, function ($message)use ($subjects) {
                             $message->from('nidctanzania@gmail.com', 'NIDC-BSS');
-                            $message->to('jchamkicha@gmail.com')
+                            $message->to('commercial@nidc.co.tz','bahati.otaigo@nidc.co.tz','augustino.irafay@nidc.co.tz')
                                      ->subject($subjects)
                                     ->cc('nidctanzania@gmail.com');
                         });
 
-                    }
 
 
+                        // Payment and Due creation
+                        $customer_no = $invoice_details->customer_no;
+
+                        $payment_due = DB::table('paymentanddues')->where('customer_no', $customer_no)->first();
+
+                        if(is_null($payment_due)){
+
+                        // PAYMENT AND DUE insert into database
+                        $bill_creation = DB::table('paymentanddues')
+                        ->insert(['customer_name' => $customer_name,
+                                'total_amount' => $grand_total,
+                                'balance' => $grand_total,
+                                'customer_no' => $customer_no,]);
+
+
+                        }else{
+                            
+                            // PAYMENT AND DUE update into database
+                            $grand_total3 = DB::table('paymentanddues')->where('customer_no', $customer_no)->get();
+                            $grand_total2 = $grand_total3[0]->total_amount;
+                            $grand_total1 = $grand_total;
+                            $grand_total4 = $grand_total1 + $grand_total2;
+                            $balance = $grand_total3[0]->balance;
+                            $balance = $balance + $grand_total1;
+                            //dd($grand_total4);
+                            
+                            $bill_creation = DB::table('paymentanddues')
+                            ->where('customer_no', $customer_no)
+                            ->update(['total_amount' => $grand_total4,
+                                    'balance' => $balance]);
+                        } // END PAYMEND AND DUE CREATIONM
+
+          }    
 
         }
     }
 
-    // CUSTOMER REVENUE REPORT CLASS
-    public function customer_report_revenue($clientreport)
-    {
 
-        $service_order_type = DB::table('revenuepercustomerreports')
-                            ->where('customer_no', $clientreport['customer_no'])
-                            ->first();
+    public function previous_dept($customer_no,$grand_total){
 
-        $customer_type = DB::table('customers')
-                            ->where('id', $clientreport['customer_no'])
-                            ->first()
-                            ->customer_type;
-
-    $service_name = (array)json_decode($clientreport['service_name'], true);
         
-        $excise_dutty = DB::table('products')
-                            ->whereIn('product_name', $service_name)
-                            ->sum('ed_amount');
-        
-        $created_at = date('Y-m-d H:i:s');
-        $updated_at = date('Y-m-d H:i:s');
-
-        if(is_null($service_order_type)){
-
-        $service_order_type = DB::table('revenuepercustomerreports')
-                                    ->insert([
-                                        'customer_name' => $clientreport['cusromer_name'],
-                                        'customer_no' => $clientreport['customer_no'],
-                                        'customer_type' => $customer_type,
-                                        'services' => $clientreport['service_name'],
-                                        'excise_dutty' => (int)$excise_dutty,
-                                        'v_a_t' => (int)$clientreport['tax_amount'],
-                                        'total_wit_vat' => (int)$clientreport['grand_total'],
-                                        'created_at' => $created_at
-                                    ]);
-
-
-        }else{
-        //dd($clientreport);
-
-            $service_order_type = DB::table('revenuepercustomerreports')
-                            ->where('customer_no', $clientreport['customer_no'])
-                            ->first();
-            $excise_dutty = (int)$service_order_type->excise_dutty + (int)$excise_dutty;
-            $tax_amount = (int)$service_order_type->v_a_t + (int)$clientreport['tax_amount'];
-            $grand_total = (int)$service_order_type->total_wit_vat + (int)$clientreport['grand_total'];
-            //$service_name = $service_order_type->services + $clientreport['service_name'];
-
-            $service_order_type = DB::table('revenuepercustomerreports')
-                            ->where('customer_no', $clientreport['customer_no'])
-                            ->update([
-                                //'services' => $service_name,
-                                'excise_dutty' => $excise_dutty,
-                                'v_a_t' => $tax_amount,
-                                'total_wit_vat' => $grand_total,
-                                'updated_at' => $updated_at,
-                            ]);
-
+        $previous_dept = DB::table('paymentanddues')->where('customer_no', $customer_no)->where('customer_no', $customer_no)->first();
+        $previous_dept = $previous_dept->total_amount;
+        if($previous_dept === $grand_total){
+            
+            $previous_dept ='0';
+            return $previous_dept;
         }
-        //dd($clientreport);
-        
-
-    } // END CUSTOMER REVENUE REPORT CLASS
-
+        else{
+            $previous_dept = $previous_dept; 
+            return $previous_dept;
+        }
+    }
 
 
 

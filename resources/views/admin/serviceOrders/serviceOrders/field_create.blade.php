@@ -129,6 +129,7 @@ function serviceorder()
                                                                         @endforeach
                                                                     </optgroup>
                                                                 </select>
+                                                                <span style="color: red">@error('customer_no'){{'The customer name field is required.'}}@enderror</span>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -149,6 +150,7 @@ function serviceorder()
                                                                             @endforeach
                                                                         </optgroup>
                                                                     </select>
+                                                                    <span style="color: red">@error('payment_mode'){{$message}}@enderror</span>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -166,6 +168,7 @@ function serviceorder()
                                                                         @endforeach
                                                                     </optgroup>
                                                                 </select>
+                                                                    <span style="color: red">@error('serviceordertypes'){{$message}}@enderror</span>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -183,6 +186,7 @@ function serviceorder()
                                                                 <div class="form-group col-sm-12">
                                                                     {!! Form::date('service_creation_date', null, ['class' => 'form-control']) !!}
                                                                 </div>
+                                                                    <span style="color: red">@error('service_creation_date'){{$message}}@enderror</span>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -196,6 +200,7 @@ function serviceorder()
                                                                 <div class="form-group col-sm-12">
                                                                     {!! Form::date('service_ending_date', null, ['class' => 'form-control']) !!}
                                                                 </div>
+                                                                    <span style="color: red">@error('service_ending_date'){{$message}}@enderror</span>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -236,11 +241,8 @@ function serviceorder()
         <div class="row">
             <div class="col-md-9 portfolio-item">
                <div class="checkbox mar-left5">
-                            {{--  <label for="form-checkbox1">
-                                <input type="checkbox" id="service_lists" name="service_lists[]" value="{{$product_lists->id}}" class="square-blue"> {{$product_lists->product_name}}
-                                &nbsp;&nbsp;&nbsp;<span><label class="control-label has-success has-feedback">Quantity:</label>&nbsp;<input style="width: 7%;" type="text" name="item_quantity[{{$product_lists->id}}]"> </span> 
-                                &nbsp;&nbsp;&nbsp;<span><label class="control-label has-success has-feedback">Discount(%):</label>&nbsp;<input style="width: 7%;" type="text" name="discount[{{$product_lists->id}}]"> </span>
-                                </label>  --}}
+                                 <span style="color: red">@error('service_lists'){{$message}}@enderror</span>
+
                                 <table class="table table-striped table-bordered" id="product_info_table">
                                     <thead>
                                         <tr>

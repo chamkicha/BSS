@@ -485,6 +485,7 @@ class ServiceapprovalController extends Controller
                 $payment_status = $payment_status[0]->payment_type_name;
                 $current_charges =$request->grand_total;
                 $service_name =$request->service_lists;
+                $previous_dept = $this->previous_dept($customer_no,$grand_total);
 
                 // CUSTOMER REVENUE REPORT GENERATION POSTPAID
                 $invoice_details = array(
@@ -526,6 +527,8 @@ class ServiceapprovalController extends Controller
                         'tax_amount' => $tax_amount,
                         'ed_amount' => $ed_amount,
                         'discount' => $discount,
+                        'previous_dept' => $previous_dept,
+                        'first_invoice' => 1,
                         'grand_total' => $grand_total]);
 
 
@@ -676,6 +679,7 @@ class ServiceapprovalController extends Controller
                 $payment_status = $payment_status[0]->payment_type_name;
                 $current_charges =$request->grand_total;
                 $service_name =$request->service_lists;
+                $previous_dept = $this->previous_dept($customer_no,$grand_total);
 
                 // INVOICE insert into database
                 $invoice_creation = DB::table('serviceinvoices')
@@ -695,7 +699,9 @@ class ServiceapprovalController extends Controller
                         'sub_total' => $sub_total,
                         'tax_amount' => $tax_amount,
                         'ed_amount' => $ed_amount,
+                        'first_invoice' => 1,
                         'discount' => $discount,
+                        'previous_dept' => $previous_dept,
                         'grand_total' => $grand_total]);
 
 
@@ -891,6 +897,7 @@ else{
                 $payment_status = $payment_status[0]->payment_type_name;
                 $current_charges =$request->grand_total;
                 $service_name =$request->service_lists;
+                $previous_dept = $this->previous_dept($customer_no,$grand_total);
 
                 // CUSTOMER REVENUE REPORT GENERATION PREPAID
                 $invoice_details = array(
@@ -930,7 +937,9 @@ else{
                         'sub_total' => $sub_total,
                         'tax_amount' => $tax_amount,
                         'ed_amount' => $ed_amount,
+                        'first_invoice' => 1,
                         'discount' => $discount,
+                        'previous_dept' => $previous_dept,
                         'grand_total' => $grand_total]);
 
 
@@ -1073,6 +1082,7 @@ else{
                 $payment_status = $payment_status[0]->payment_type_name;
                 $current_charges =$request->grand_total;
                 $service_name =$request->service_lists;
+                $previous_dept = $this->previous_dept($customer_no,$grand_total);
 
                 // INVOICE insert into database
                 $invoice_creation = DB::table('serviceinvoices')
@@ -1092,7 +1102,9 @@ else{
                         'sub_total' => $sub_total,
                         'tax_amount' => $tax_amount,
                         'ed_amount' => $ed_amount,
+                        'first_invoice' => 1,
                         'discount' => $discount,
+                        'previous_dept' => $previous_dept,
                         'grand_total' => $grand_total]);
 
 
@@ -1444,12 +1456,30 @@ public function customer_report_revenue($clientreport)
 
         Mail::raw($mail_content, function ($message)use ($mail_subjects,$nexthandler_email) {
             $message->from('nidctanzania@gmail.com', 'NIDC-BSS');
-            $message->to('bahati.otaigo@nidc.co.tz')
+            $message->to('bahati.otaigo@nidc.co.tz','commercial@nidc.co.tz')
                     ->cc('augustino.irafay@nidc.co.tz')
                     ->bcc('nidctanzania@gmail.com')
                         ->subject($mail_subjects);
         });
      }
      // END SEND NEXT_HANDLER EMAIL FUNCTION
+
+     
+
+
+    public function previous_dept($customer_no,$grand_total){
+        
+        $previous_dept = DB::table('paymentanddues')->where('customer_no', $customer_no)->first();
+        $previous_dept = $previous_dept->total_amount;
+        if($previous_dept === $grand_total){
+            
+            $previous_dept ='0';
+            return $previous_dept;
+        }
+        else{
+            $previous_dept = $previous_dept- $grand_total;
+            return $previous_dept;
+        }
+    }
 }
 

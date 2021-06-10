@@ -8,7 +8,7 @@
 @section('content')
 
 <section class="content-header">
-                <h1>Invoice</h1>
+                <h1>Credit Note</h1>
                 <ol class="breadcrumb">
                     <li>
                         <a href="{{ route('admin.dashboard') }}">
@@ -17,7 +17,7 @@
                         </a>
                     </li>
                     <li ><a href="#"> Service Invoice</a></li>
-                    <li class="active">Invoice</li>
+                    <li class="active">Credit Note</li>
                 </ol>
             </section>
             <!-- Main content -->
@@ -194,7 +194,7 @@
                                                 
                                                 <strong>______________________________________________</strong><br>
                                                 <strong>Authorized By:</strong><br>
-                                                <strong>G. Mpangala</strong><br>
+                                                <strong>S. Malimi</strong><br>
                                                 <strong>Head NIDC</strong>
                                             </div>
                                         </div>

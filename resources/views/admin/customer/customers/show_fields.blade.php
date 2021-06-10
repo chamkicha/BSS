@@ -60,8 +60,52 @@
                                     <td>{!! $customer['business_license_number'] !!}</td>
                                 </tr>
 
+                                <!-- Business License Number Field  -->
+                                <tr>
+                                    <td><strong>{!! Form::label('customer_status', 'Customer Status:') !!}</strong></td>
+                                    <td>
+                                    
+                                    @if ($customer['customer_status'] === 'active')
+                                        <span class="label label-sm bg-success text-white">{!! $customer['customer_status'] !!}</span>
+                                    
+                                    @elseif ($customer['customer_status'] === 'inactive')
+                                        <span class="label label-sm bg-danger text-white   ">{!! $customer['customer_status'] !!}</span>
+                                    @endif
+                                    {{--  {!! $customer['customer_status'] !!}  --}}
+                                    </td>
+                                </tr>
+
                             </table>
-                    
+                 @if (Sentinel::inRole('admin') or Sentinel::inRole('commercial-manager'))
+                            
+                            <form action="{{ route('admin.customer.customers.deactivate_customer') }}" method = "get"> 
+                                    </br>
+                                    <div >
+                                    <label for="fname">Change Customer Status:
+                                    <span>&nbsp;
+                                        <select name="customer_status" id="deactivate_customer">
+                                            <option value=""></option>
+                                            
+
+                                            @if ($customer['customer_status'] === 'inactive')
+                                                <option value="active">Activate</option>
+                                            @elseif ($customer['customer_status'] === 'active')
+                                                 <option value="inactive">Deactivate</option>
+                                            @endif
+                                        </select>
+                                        <span>
+                                            &nbsp;<button type="submit" id="" name="" class="btn btn-success  waves-light" ><i class="icofont icofont-check-circled"></i>Update</button>
+                                        </span>
+                                    </span>
+                                        </label>
+                                    </div>
+                                    
+                                    <!-- customer number -->
+                                    <div class="form-group">
+                                        <input type="hidden" id="id"name="id" class="form-control" value = "{{$customer['id']}}">
+                                    </div>
+                            </form>
+                    @endif
                     </div>
 
                     <div id="tab2" class="tab-pane fade" role="tabpanel">
@@ -160,7 +204,6 @@
                                 <th>#</th>
                                 <th>Order No.</th>
                                 <th>Status</th>
-                                <th>Products</th>
                                 <th>Created By</th>
                                 <th>Service Order Type</th>
                                 <th>Payment Model</th>
@@ -173,7 +216,6 @@
                                 <td>{{$loop->iteration}}</td>
                                 <td>{{$value->order_i_d}}</td>
                                 <td>{{$value->service_status}}</td>
-                                <td>{{$value->service_lists}}</td>
                                 <td>{{$value->created_by}}</td>
                                 <td>{{$value->serviceordertypes}}</td>
                                 <td>{{$value->payment_mode}}</td>

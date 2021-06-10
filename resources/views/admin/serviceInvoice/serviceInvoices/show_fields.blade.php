@@ -321,7 +321,6 @@ function get_signature_by()
                                         </form><!-- form add end -->
                                     </div>
 
-
                                     
                                     <div style="margin:10px 20px;text-align:center;" class="btn-section">
 
@@ -342,7 +341,6 @@ function get_signature_by()
                                             <input type="hidden" id="mobile_number" name="mobile_number" class="form-control" value="{{$serviceInvoice['mobile_number']}}" >
 
                                         </div>
-
                                         
                                         <!-- Payment amount Field -->
                                         <div class="form-group col-sm-12">
@@ -351,7 +349,6 @@ function get_signature_by()
                                         </div>
                                         
 
-                                        
                                         <!-- Sub total Field -->
                                         <div class="form-group col-sm-12">
                                             <input type="hidden" id="sub_total" name="sub_total" class="form-control" value="{{$serviceInvoice['sub_total'] }}" >
@@ -359,15 +356,12 @@ function get_signature_by()
                                         </div>
                                         
 
-                                        
                                         <!-- Total Vat Amount Field -->
                                         <div class="form-group col-sm-12">
                                             <input type="hidden" id="tax_amount_total" name="tax_amount_total" class="form-control" value="{{$serviceInvoice['tax_amount_total'] }}" >
 
                                         </div>
 
-
-                                        
                                         <!-- service_name_description Field -->
                                         <div class="form-group col-sm-12">
                                         
@@ -385,9 +379,6 @@ function get_signature_by()
           
                                         </div>
 
-                                        
-
-                                        
                                         
                                         <!-- customer no description Field -->
                                         <div class="form-group col-sm-12">

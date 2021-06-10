@@ -4,9 +4,9 @@
      <tr>
         <th>Invoice Number</th>
         <th>Customer Name</th>
+        <th>TRA Signature</th>
         <th>Invoice Created Date</th>
         <th>Next Invoice Date</th>
-        <th>Service Order No</th>
         <th>Current Charges</th>
         <th>Payment Status</th>
         <th >Action</th>
@@ -22,11 +22,35 @@
                     {!! $serviceInvoice->cusromer_name !!}
                 </a>
             </td>
+            <td>
+            
+                @if($serviceInvoice->RCTVNUM === null)
+                    <span class="label label-sm bg-danger text-white">No signature</span>
+                @else
+                    <span class="label label-sm bg-success text-white">{!! $serviceInvoice->RCTVNUM !!}</span>
+                @endif
+            </td>
             <td>{!! \Carbon\Carbon::parse($serviceInvoice->invoice_created_date)->format('d-M-y') !!}</td>
             <td>{!! \Carbon\Carbon::parse($serviceInvoice->next_invoice_date)->format('d-M-y') !!}</td>
-            <td>{!! $serviceInvoice->service_order_no !!}</td>
             <td>{!! number_format($serviceInvoice->current_charges,2) !!}</td>
-            <td>{!! $serviceInvoice->payment_status !!}</td>
+            <td>
+
+                @if($serviceInvoice->payment_status === 'Fully')
+
+                    <h5 style="color:green; ">PAID</h5>
+                @endif
+
+                @if($serviceInvoice->payment_status === 'Not Paid')
+
+                    <h5 style="color:red;  ">NOT PAID</h5>
+                @endif
+
+                @if($serviceInvoice->payment_status === 'Fully')
+
+                    <h5 style="color:orange;  ">PARTIALLY PAID</h5>
+                @endif
+            
+            </td>
             <td>
                  <a href="{{ route('admin.serviceInvoice.serviceInvoices.show', collect($serviceInvoice)->first() ) }}">
                      <i class="livicon" data-name="info" data-size="18" data-loop="true" data-c="#428BCA" data-hc="#428BCA" title="view serviceInvoice"></i>

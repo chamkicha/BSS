@@ -4,27 +4,22 @@ namespace App\Models\Revenuepercustomerreport;
 
 use Illuminate\Database\Eloquent\Model;
 
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 
 class RevenuePerCustomerReport extends Model
 {
-    use SoftDeletes;
 
-    public $table = 'revenuepercustomerreports';
+    public $table = 'RevenuePerCustomerReports';
     
-
-    protected $dates = ['deleted_at'];
 
 
     public $fillable = [
+        'customer_id',
         'customer_name',
-        'customer_no',
         'customer_type',
-        'services',
-        'excise_dutty',
+        'excise_duty',
         'v_a_t',
-        'total_wit_vat'
+        'total_with_vat'
     ];
 
     /**
@@ -33,13 +28,12 @@ class RevenuePerCustomerReport extends Model
      * @var array
      */
     protected $casts = [
+        'customer_id' => 'string',
         'customer_name' => 'string',
-        'customer_no' => 'string',
         'customer_type' => 'string',
-        'services' => 'string',
-        'excise_dutty' => 'string',
+        'excise_duty' => 'string',
         'v_a_t' => 'string',
-        'total_wit_vat' => 'string'
+        'total_with_vat' => 'string'
     ];
 
     /**

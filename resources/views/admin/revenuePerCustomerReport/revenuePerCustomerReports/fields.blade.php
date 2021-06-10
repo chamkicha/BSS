@@ -1,13 +1,13 @@
+<!-- Customer Id Field -->
+<div class="form-group col-sm-12">
+    {!! Form::label('customer_id', 'Customer Id:') !!}
+    {!! Form::text('customer_id', null, ['class' => 'form-control']) !!}
+</div>
+
 <!-- Customer Name Field -->
 <div class="form-group col-sm-12">
     {!! Form::label('customer_name', 'Customer Name:') !!}
     {!! Form::text('customer_name', null, ['class' => 'form-control']) !!}
-</div>
-
-<!-- Customer No Field -->
-<div class="form-group col-sm-12">
-    {!! Form::label('customer_no', 'Customer No:') !!}
-    {!! Form::text('customer_no', null, ['class' => 'form-control']) !!}
 </div>
 
 <!-- Customer Type Field -->
@@ -16,16 +16,10 @@
     {!! Form::text('customer_type', null, ['class' => 'form-control']) !!}
 </div>
 
-<!-- Services Field -->
+<!-- Excise Duty Field -->
 <div class="form-group col-sm-12">
-    {!! Form::label('services', 'Services:') !!}
-    {!! Form::text('services', null, ['class' => 'form-control']) !!}
-</div>
-
-<!-- Excise Dutty Field -->
-<div class="form-group col-sm-12">
-    {!! Form::label('excise_dutty', 'Excise Dutty:') !!}
-    {!! Form::text('excise_dutty', null, ['class' => 'form-control']) !!}
+    {!! Form::label('excise_duty', 'Excise Duty:') !!}
+    {!! Form::text('excise_duty', null, ['class' => 'form-control']) !!}
 </div>
 
 <!-- V A T Field -->
@@ -34,10 +28,10 @@
     {!! Form::text('v_a_t', null, ['class' => 'form-control']) !!}
 </div>
 
-<!-- Total Wit Vat Field -->
+<!-- Total With Vat Field -->
 <div class="form-group col-sm-12">
-    {!! Form::label('total_wit_vat', 'Total Wit Vat:') !!}
-    {!! Form::text('total_wit_vat', null, ['class' => 'form-control']) !!}
+    {!! Form::label('total_with_vat', 'Total With Vat:') !!}
+    {!! Form::text('total_with_vat', null, ['class' => 'form-control']) !!}
 </div>
 
 <!-- Submit Field -->
