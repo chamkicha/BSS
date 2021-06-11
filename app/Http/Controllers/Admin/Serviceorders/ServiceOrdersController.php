@@ -64,7 +64,12 @@ class ServiceOrdersController extends InfyOmBaseController
     public function deactivate_service(Request $request)
     {
          
-     $serviceorder_details_update = DB::table('serviceorderss')->where('id', $request->id)->update(['service_status'=> $request->service_status]);
+     $serviceorder_details_update = DB::table('serviceorderss')->where('id', $request->id)
+                                                               ->update(['service_status'=> $request->service_status,
+                                                                         'deactivated_by'=> $request->deactivated_by,
+                                                                         'deactivated_at'=> $request->deactivated_at,
+                                                                         'reactivated_by'=> $request->reactivated_by,
+                                                                         'reactivated_at'=> $request->reactivated_at]);
      //dd( $comments_details);
 
         $serviceOrders = $this->serviceOrdersRepository->findWithoutFail($request->id);
@@ -330,9 +335,11 @@ class ServiceOrdersController extends InfyOmBaseController
 
         $nexthandler_email = $this->next_handler_email_sent($service_order_no,$customer_name,$request->created_by);
 
-        Flash::success('ServiceOrders saved successfully.');
+        //Flash::success('ServiceOrders saved successfully.');
+        $request_id = DB::table('serviceorderss')->where('order_i_d',$service_order_no)->first()->id;
+        return redirect(route('admin.serviceOrders.serviceOrders.show', [$request_id]))->with('success', 'Creare Service Order');
 
-        return redirect(route('admin.serviceOrders.serviceOrders.index'));
+        //return redirect(route('admin.serviceOrders.serviceOrders.index'));
     }
 
     /**
@@ -656,7 +663,7 @@ class ServiceOrdersController extends InfyOmBaseController
         Mail::raw($mail_content, function ($message)use ($mail_subjects) {
             $message->from('nidctanzania@gmail.com', 'NIDC-BSS');
             $message->to('gloria.muhazi@nidc.co.tz')
-                    ->cc('commercial@nidc.co.tz')
+                    ->cc('commercial@nidc.co.tz','bssadmin@nidc.co.tz')
                     ->bcc('nidctanzania@gmail.com')
                         ->subject($mail_subjects);
         });

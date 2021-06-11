@@ -133,8 +133,8 @@ class ServiceapprovalController extends Controller
             $comment_insert = DB::table('comments')
             ->insert(['comment' => $comment, 'order_i_d' => $request->order_i_d, 'username' => $username]);
 
-            return redirect(route('admin.serviceOrders.serviceOrders.index'))
-            ->with('success', 'Order Approved and Sent to Technical Department');
+            $request_id = DB::table('serviceorderss')->where('order_i_d',$request->order_i_d)->first()->id;
+            return redirect(route('admin.serviceOrders.serviceOrders.show', [$request_id]))->with('success', 'Update Service Order');
         
             } elseif($request->next_handler_role_id==='6' && $request->req_status==='approved') {
 
@@ -173,8 +173,9 @@ class ServiceapprovalController extends Controller
             
         
 
-            return redirect(route('admin.serviceOrders.serviceOrders.index'))
-            ->with('success', 'Order successfull Approved and Sent to Commercial Department for activation request');
+
+            $request_id = DB::table('serviceorderss')->where('order_i_d',$request->order_i_d)->first()->id;
+            return redirect(route('admin.serviceOrders.serviceOrders.show', [$request_id]))->with('success', 'Order successfull Approved and Sent to Commercial Department for activation request');
 
             }
             // if tech manager assign to user
@@ -214,8 +215,9 @@ class ServiceapprovalController extends Controller
             ->insert(['comment' => $comment, 'order_i_d' => $request->order_i_d, 'username' => $username]);
         
 
-            return redirect(route('admin.serviceOrders.serviceOrders.index'))
-            ->with('success', 'Order successfull Approved and Sent to Techical manager');
+            $request_id = DB::table('serviceorderss')->where('order_i_d',$request->order_i_d)->first()->id;
+            return redirect(route('admin.serviceOrders.serviceOrders.show', [$request_id]))->with('success', 'Order successfull Approved and Sent to Techical manager');
+
 
             }
 
@@ -257,8 +259,10 @@ class ServiceapprovalController extends Controller
             ->insert(['comment' => $comment, 'order_i_d' => $request->order_i_d, 'username' => $username]);
         
 
-            return redirect(route('admin.serviceOrders.serviceOrders.index'))
-            ->with('success', 'Order successfull Approved and Sent to Technical Team for Activation');
+
+            $request_id = DB::table('serviceorderss')->where('order_i_d',$request->order_i_d)->first()->id;
+            return redirect(route('admin.serviceOrders.serviceOrders.show', [$request_id]))->with('success', 'Order successfull Approved and Sent to Technical Team for Activation');
+
 
             }
 
@@ -298,8 +302,11 @@ class ServiceapprovalController extends Controller
             ->insert(['comment' => $comment, 'order_i_d' => $request->order_i_d, 'username' => $username]);
         
 
-            return redirect(route('admin.serviceOrders.serviceOrders.index'))
-            ->with('success', 'Order successfull Approved and Sent to Commercial Department for activation request');
+
+
+            $request_id = DB::table('serviceorderss')->where('order_i_d',$request->order_i_d)->first()->id;
+            return redirect(route('admin.serviceOrders.serviceOrders.show', [$request_id]))->with('success', 'Order successfull Approved and Sent to Commercial Department for activation request');
+
 
             }
             
@@ -342,10 +349,11 @@ class ServiceapprovalController extends Controller
                 ->insert(['comment' => $comment, 'order_i_d' => $request->order_i_d, 'username' => $username]);
 
                 
-            return redirect(route('admin.serviceOrders.serviceOrders.index'))
-            ->with('success', 'activation request was successfull sent to technical department');
 
-            
+
+            $request_id = DB::table('serviceorderss')->where('order_i_d',$request->order_i_d)->first()->id;
+            return redirect(route('admin.serviceOrders.serviceOrders.show', [$request_id]))->with('success', 'activation request was successfull sent to technical department');
+
             }
 
             
@@ -533,8 +541,8 @@ class ServiceapprovalController extends Controller
 
 
 
-                        return redirect(route('admin.serviceOrders.serviceOrders.index'))
-                        ->with('success', 'service wa successful activated');
+                        $request_id = DB::table('serviceorderss')->where('order_i_d',$request->order_i_d)->first()->id;
+                        return redirect(route('admin.serviceOrders.serviceOrders.show', [$request_id]))->with('success', 'service wa successful activated');
             
                 
                         } // end IF kubwa
@@ -706,9 +714,8 @@ class ServiceapprovalController extends Controller
 
 
 
-                        return redirect(route('admin.serviceOrders.serviceOrders.index'))
-                        ->with('success', 'service wa successful activated');
-            
+                        $request_id = DB::table('serviceorderss')->where('order_i_d',$request->order_i_d)->first()->id;
+                        return redirect(route('admin.serviceOrders.serviceOrders.show', [$request_id]))->with('success', 'service wa successful activated');
                 
                         } // end IF kubwa
 
@@ -760,9 +767,11 @@ else{
             ->insert(['comment' => $comment, 'order_i_d' => $request->order_i_d, 'username' => $username]);
         
 
-            return redirect(route('admin.serviceOrders.serviceOrders.index'))
-            ->with('success', 'Order Approved and Sent to Technical Department');
-        
+
+            $request_id = DB::table('serviceorderss')->where('order_i_d',$request->order_i_d)->first()->id;
+            return redirect(route('admin.serviceOrders.serviceOrders.show', [$request_id]))->with('success', 'Order Approved and Sent to Technical Department');
+    
+
             } elseif($request->next_handler_role_id==='6' && $request->req_status==='approved') {
 
                 // if technical manager aprove
@@ -943,11 +952,9 @@ else{
                         'grand_total' => $grand_total]);
 
 
-        
-
-            return redirect(route('admin.serviceOrders.serviceOrders.index'))
-            ->with('success', 'Order successfull Approved and Sent to Commercial Department for activation request');
-
+            $request_id = DB::table('serviceorderss')->where('order_i_d',$request->order_i_d)->first()->id;
+            return redirect(route('admin.serviceOrders.serviceOrders.show', [$request_id]))->with('success', 'Order successfull Approved and Sent to Commercial Department for activation request');
+    
             }
             // if tech manager assign to user
             
@@ -1109,10 +1116,9 @@ else{
 
 
         
-
-            return redirect(route('admin.serviceOrders.serviceOrders.index'))
-            ->with('success', 'Order successfull Approved and Sent to Techical manager');
-
+                        $request_id = DB::table('serviceorderss')->where('order_i_d',$request->order_i_d)->first()->id;
+                        return redirect(route('admin.serviceOrders.serviceOrders.show', [$request_id]))->with('success', 'Order successfull Approved and Sent to Techical manager');
+                
             }
 
             
@@ -1152,10 +1158,10 @@ else{
             $comment_insert = DB::table('comments')
             ->insert(['comment' => $comment, 'order_i_d' => $request->order_i_d, 'username' => $username]);
         
-
-            return redirect(route('admin.serviceOrders.serviceOrders.index'))
-            ->with('success', 'Order successfull Approved and Sent to Technical Team for Activation');
-
+        
+            $request_id = DB::table('serviceorderss')->where('order_i_d',$request->order_i_d)->first()->id;
+            return redirect(route('admin.serviceOrders.serviceOrders.show', [$request_id]))->with('success', 'Order successfull Approved and Sent to Technical Team for Activation');
+    
             }
 
             // technical staff aprove from assigned
@@ -1194,9 +1200,9 @@ else{
             ->insert(['comment' => $comment, 'order_i_d' => $request->order_i_d, 'username' => $username]);
         
 
-            return redirect(route('admin.serviceOrders.serviceOrders.index'))
-            ->with('success', 'Order successfull Approved and Sent to Commercial Department for activation request');
-
+            $request_id = DB::table('serviceorderss')->where('order_i_d',$request->order_i_d)->first()->id;
+            return redirect(route('admin.serviceOrders.serviceOrders.show', [$request_id]))->with('success', 'Order successfull Approved and Sent to Commercial Department for activation request');
+    
             }
             
             
@@ -1237,10 +1243,11 @@ else{
                 $comment_insert = DB::table('comments')
                 ->insert(['comment' => $comment, 'order_i_d' => $request->order_i_d, 'username' => $username]);
 
-                
-            return redirect(route('admin.serviceOrders.serviceOrders.index'))
-            ->with('success', 'activation request was successfull sent to technical department');
 
+                $request_id = DB::table('serviceorderss')->where('order_i_d',$request->order_i_d)->first()->id;
+                return redirect(route('admin.serviceOrders.serviceOrders.show', [$request_id]))->with('success', 'activation request was successfull sent to technical department');
+        
+                
             
             }
 
@@ -1286,9 +1293,10 @@ else{
         
 
 
-                        return redirect(route('admin.serviceOrders.serviceOrders.index'))
-                        ->with('success', 'service wa successful activated');
-            
+
+            $request_id = DB::table('serviceorderss')->where('order_i_d',$request->order_i_d)->first()->id;
+            return redirect(route('admin.serviceOrders.serviceOrders.show', [$request_id]))->with('success', 'service wa successful activated');
+    
                 
                         } // end IF kubwa
 
@@ -1333,10 +1341,9 @@ else{
             ->insert(['comment' => $comment, 'order_i_d' => $request->order_i_d, 'username' => $username]);
         
 
-
-                        return redirect(route('admin.serviceOrders.serviceOrders.index'))
-                        ->with('success', 'service was successful activated');
-            
+                        $request_id = DB::table('serviceorderss')->where('order_i_d',$request->order_i_d)->first()->id;
+                        return redirect(route('admin.serviceOrders.serviceOrders.show', [$request_id]))->with('success', 'service was successful activated');
+                
                 
                         } // end IF kubwa
 

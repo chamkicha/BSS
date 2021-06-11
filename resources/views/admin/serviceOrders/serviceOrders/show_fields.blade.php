@@ -9,6 +9,12 @@ function activated_by()
     return $user;
 } 
 
+function time_now()
+{      
+    $time = date('Y-m-d H:i:s');
+    return $time;
+} 
+
 ?>
 
 
@@ -160,7 +166,7 @@ function activated_by()
                             <form action="{{ route('admin.serviceOrders.serviceOrders.deactivate_service') }}" method = "get" id="form1"> 
                                     </br>
                                     <div >
-                                    <label for="fname">Change Customer Status:
+                                    <label for="fname">Change Service Status:
                                     <span>&nbsp;
                                         <select name="service_status" id="service_status">
                                             <option hidden selected></option>
@@ -183,6 +189,33 @@ function activated_by()
                                     <div class="form-group">
                                         <input type="hidden" id="id"name="id" class="form-control" value = "{{$serviceOrders['id']}}">
                                     </div>
+                                    
+                                    @if ($serviceOrders['service_status'] === 'Active')
+
+                                        <!-- deactivated by Field -->
+                                        <div class="form-group col-sm-12">
+                                            <input type="hidden" id="deactivated_by" name="deactivated_by" class="form-control" value="{{activated_by()}}" >
+                                        </div>
+
+                                        <!-- deactivated_at  Field -->
+                                        <div class="form-group col-sm-12">
+                                            <input type="hidden" id="deactivated_at" name="deactivated_at" class="form-control" value="{{time_now()}}" >
+                                        </div>
+
+                                     @elseif ($serviceOrders['service_status'] === 'Inactive')
+
+                                        <!-- Re_activated at Field -->
+                                        <div class="form-group col-sm-12">
+                                            <input type="hidden" id="reactivated_by" name="reactivated_by" class="form-control" value="{{activated_by()}}" >
+                                        </div>
+
+                                        <!-- Re_activated_at  Field -->
+                                        <div class="form-group col-sm-12">
+                                            <input type="hidden" id="reactivated_at" name="reactivated_at" class="form-control" value="{{time_now()}}" >
+                                        </div>
+
+                                    @endif
+
                             </form>
                     @endif
                        

@@ -347,8 +347,12 @@ use App\Models\User;
 
     function totalincome()
     {      
-        $serviceorder = DB::table('serviceinvoices')->where('deleted_at',NULL)->sum('grand_total');
-        return $serviceorder;
+       // $serviceorder = DB::table('serviceinvoices')->where('deleted_at',NULL)->sum('grand_total');
+        $totalincome_paid_amount = DB::table('paymentanddues')->where('deleted_at',NULL)->sum('paid_amount');
+        $totalincome_balance = DB::table('paymentanddues')->where('deleted_at',NULL)->sum('balance');
+        $totalincome =  $totalincome_paid_amount + $totalincome_balance;
+
+        return $totalincome;
     } 
 
     function paid()

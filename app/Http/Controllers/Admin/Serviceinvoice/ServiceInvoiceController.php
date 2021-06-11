@@ -353,7 +353,7 @@ class ServiceInvoiceController extends InfyOmBaseController
 
                 Mail::raw($content, function ($message)use ($subjects) {
                     $message->from('nidctanzania@gmail.com', 'NIDC-BSS');
-                    $message->to('jchamkicha@gmail.com')
+                    $message->to('bssadmin@nidc.co.tz')
                              ->subject($subjects)
                             ->cc('nidctanzania@gmail.com');
                 });
@@ -368,7 +368,7 @@ class ServiceInvoiceController extends InfyOmBaseController
 
                 Mail::raw($content, function ($message)use ($subjects) {
                     $message->from('nidctanzania@gmail.com', 'NIDC-BSS');
-                    $message->to('jchamkicha@gmail.com')
+                    $message->to('bssadmin@nidc.co.tz')
                              ->subject($subjects)
                             ->cc('nidctanzania@gmail.com');
                 });
@@ -774,7 +774,7 @@ class ServiceInvoiceController extends InfyOmBaseController
 
                         Mail::raw($content, function ($message)use ($subjects) {
                             $message->from('nidctanzania@gmail.com', 'NIDC-BSS');
-                            $message->to('commercial@nidc.co.tz','bahati.otaigo@nidc.co.tz','augustino.irafay@nidc.co.tz')
+                            $message->to('bssadmin@nidc.co.tz','bahati.otaigo@nidc.co.tz','augustino.irafay@nidc.co.tz','commercial@nidc.co.tz')
                                      ->subject($subjects)
                                     ->cc('nidctanzania@gmail.com');
                         });
