@@ -22,7 +22,7 @@ Servicestatus
 <section class="content">
 <div class="container">
 <div class="row">
-    <div class="col-12">
+    <div class="col-6" style= "display: block; margin-left: auto; margin-right: auto;">
      <div class="card border-primary">
             <div class="card-header bg-primary text-white">
                 <h4 class="card-title"> <i class="livicon" data-name="user" data-size="16" data-loop="true" data-c="#fff" data-hc="white"></i>

@@ -17,43 +17,49 @@
 
 @isset($invoicenumber)
     <!-- Invoice Number Field -->
-<div class="form-group col-sm-4">
+<div class="form-group col-sm-9">
     <strong> Invoice Number:</strong> {!!$invoicenumber !!}
 </div>
 
 
     <!-- payment amount Field -->
-<div class="form-group col-sm-4">
+<div class="form-group col-sm-9">
     <strong> Payment Amount (TZS):</strong> {!!number_format($paymentamount , 2) !!}
 </div>
 
 <!-- invoice number Field -->
-<div class="form-group col-sm-4">
+<div class="form-group col-sm-9">
     <input type="hidden" id="invoice_number" name="invoice_number" class="form-control" value="{{$invoicenumber}}" >
 
 </div>
 
 
 <!-- Grand total Field -->
-<div class="form-group col-sm-4">
+<div class="form-group col-sm-9">
     <input type="hidden" id="grand_total" name="grand_total" class="form-control" value="{{$paymentamount}}" >
 
 </div>
 
 <!-- cusromer_name Field -->
-<div class="form-group col-sm-4">
+<div class="form-group col-sm-9">
     <input type="hidden" id="cusromer_name" name="cusromer_name" class="form-control" value="{{$cusromer_name}}" >
 
 </div>
 
+<!-- cusromer_name Field -->
+<div class="form-group col-sm-9">
+    <input type="hidden" id="customer_no" name="customer_no" class="form-control" value="{{$customer_no}}" >
+
+</div>
+
 <!-- Invoice payment method Field -->
-<div class="form-group col-sm-4">
+<div class="form-group col-sm-9">
     <input type="hidden" id="serviceordertypes" name="serviceordertypes" class="form-control" value="{{$serviceordertypes}}" >
 
 </div>
 
 <!-- Servide Orde number Field -->
-<div class="form-group col-sm-4">
+<div class="form-group col-sm-9">
     <input type="hidden" id="service_order_no" name="service_order_no" class="form-control" value="{{$service_order_no}}" >
 
 </div>
@@ -74,9 +80,9 @@
     <!-- Customer Name Field -->
 <div class="form-group has-success">
     <div >
-        <label class="col-md-4 control-label"
+        <label class="col-md-9 control-label"
                 for="form2inputSuccess">Customer Name</label>
-        <div class="col-md-4">    
+        <div class="col-md-9">    
         
             <select name="customer_no" id="select21" class="form-control select2">
                     
@@ -98,15 +104,15 @@
 
 
 <!-- Paid Amount Field -->
-<div class="form-group col-sm-4">
+<div class="form-group col-sm-9">
     {!! Form::label('payment_amount', 'Paid Amount:') !!}
-    {!! Form::text('payment_amount', null, ['class' => 'form-control']) !!}
+    {!! Form::number('payment_amount', null, ['class' => 'form-control','step'=>'any']) !!}
 </div>
 
 
 
 <!-- Payment Type Field  -->
-<div class="form-group col-sm-4">
+<div class="form-group col-sm-9">
     <label for="select21" class="control-label">
         Payment Type:
     </label>
@@ -121,20 +127,20 @@
 </div>
 
 <!-- Payment Date Field -->
-<div class="form-group col-sm-4">
+<div class="form-group col-sm-9">
     {!! Form::label('created_at', 'Payment Date:') !!}
     {!! Form::date('created_at', null, ['class' => 'form-control']) !!}
 </div>
 
 <!-- Payment Descriptions Field -->
-<div class="form-group col-sm-4">
+<div class="form-group col-sm-9">
     {!! Form::label('payment_descriptions', 'Payment Descriptions:') !!}
     {!! Form::text('payment_descriptions', null, ['class' => 'form-control']) !!}
 </div>
 
 
 <!-- Upload Supportingdocument Field -->
-<div class="form-group col-sm-4">
+<div class="form-group col-sm-9">
     <label class="c control-label" for="form-file-input">Upload Supportingdocument:</label>
     <div class=" pad-top20 ">
         <input type="file" id="upload_supportingdocument" name="upload_supportingdocument">
@@ -143,7 +149,7 @@
 
 
 <!-- Submit Field -->
-<div class="form-group col-sm-4 text-center">
+<div class="form-group col-sm-9 text-center">
     {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}
     <a href="{!! route('admin.invoicwePayment.invoicwePayments.index') !!}" class="btn btn-secondary">Cancel</a>
 </div>

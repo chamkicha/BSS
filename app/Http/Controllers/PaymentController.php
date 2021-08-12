@@ -29,12 +29,13 @@ class PaymentController extends Controller
     public function create(Request $request)
     {
        
-        
+        //dd($request);
         $paymentmode_list = DB::table('paymenttypes')->get();
         $invoicenumber = $request->invoice_number;
         $paymentamount = $request->grand_total;
         $service_order_no = $request->service_order_no;
         $cusromer_name = $request->cusromer_name;
+        $customer_no = $request->customer_no;
         $serviceordertypes = $request->serviceordertypes;
         return view('admin.invoicwePayment.invoicwePayments.create')
                ->with('invoicenumber', $invoicenumber)
@@ -42,6 +43,7 @@ class PaymentController extends Controller
                ->with('cusromer_name', $cusromer_name)
                ->with('service_order_no', $service_order_no)
                ->with('serviceordertypes', $serviceordertypes)
+               ->with('customer_no', $customer_no)
                ->with('paymentamount', $paymentamount);
 
 
@@ -102,8 +104,6 @@ class PaymentController extends Controller
 
 
         // Payment For Prepaid update
-        
-            
         $servicestatues = DB::table('servicestatuss')->where('id','1')->get();
         $servicestatues = $servicestatues[0]->service_status_name;
         $activationdate = $request->activation_date;
@@ -117,17 +117,15 @@ class PaymentController extends Controller
         } //END IF PREPAID CUSTOMER
         else{
 
-            
-
-
         //dd($request);
         $payment_amount = $request->payment_amount;
         $payment_type = $request->payment_type;
         $payment_descriptions = $request->payment_descriptions;
         $upload_supportingdocument = $request->upload_supportingdocument;
         $invoice_number = $request->invoice_number;
-        $cusromer_name = $request->cusromer_name;
+        $customer_no = $request->customer_no;
         $grand_total = $request->grand_total;
+        $cusromer_name = DB::table('customers')->where('id',$customer_no)->first()->customername;
 
         
         // payments insert into database
@@ -138,7 +136,7 @@ class PaymentController extends Controller
                     'upload_supportingdocument' => $upload_supportingdocument,
                     'created_at' => $request->created_at,
                     'invoice_number' => $invoice_number,
-                    'cusromer_name' => $cusromer_name,
+                    'customer_no' => $customer_no,
                     'grand_total' => $grand_total,]);
 
 
@@ -152,9 +150,9 @@ class PaymentController extends Controller
         
         $paymentmode_due_details = DB::table('paymentanddues')
                     ->where('customer_name', $cusromer_name)
-                    ->get();
+                    ->first();
                     
-        $total_amount = $paymentmode_due_details[0]->total_amount;
+        $total_amount = $paymentmode_due_details->total_amount;
         $paid_amount = $payment_amount;
         
         $balance = $total_amount - $paid_amount;

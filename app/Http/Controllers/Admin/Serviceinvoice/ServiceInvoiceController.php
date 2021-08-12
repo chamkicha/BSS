@@ -151,7 +151,7 @@ class ServiceInvoiceController extends InfyOmBaseController
         $serviceInvoice = array(
             "id" => $serviceInvoice->id,
             "invoice_number" => $serviceInvoice->invoice_number,
-            "customer_no" => $serviceInvoice->customer_name,
+            "customer_no" => $serviceInvoice->customer_no,
             "invoice_created_date" => Carbon::parse($serviceInvoice->invoice_created_date)->format('d-m-Y'),
             "next_invoice_date" => Carbon::parse($serviceInvoice->next_invoice_date)->format('d-m-Y'),
             "invoice_due_date" => Carbon::parse($serviceInvoice->invoice_due_date)->format('d-m-Y'),
@@ -186,7 +186,7 @@ class ServiceInvoiceController extends InfyOmBaseController
             "t_i_n_number" => $t_i_n_number,
             "v_a_t_registration_number" => $v_a_t_registration_number,
         );
-        //dd($service_name_description);
+        //dd($serviceInvoice);
 
         if (empty($serviceInvoice)) {
             Flash::error('ServiceInvoice not found');
@@ -647,11 +647,11 @@ class ServiceInvoiceController extends InfyOmBaseController
 
     public function auto_invoice_generator(){
         $today =  date('Y-m-d');
+        //$today =  '2021-07-05';
         $invoice_details_load = DB::table('serviceinvoices')->where('next_invoice_date',$today)->get();
        
-        //dd($invoice_details_load);
-        foreach($invoice_details_load as $invoice_details)
-        {
+        //dd($today);
+        foreach($invoice_details_load as $invoice_details){
             // INVOICE creation
             $invoice_number = DB::table('serviceinvoices')->orderBy('invoice_number', 'desc')->first();
             if(is_null($invoice_number)){
@@ -729,10 +729,11 @@ class ServiceInvoiceController extends InfyOmBaseController
                 $activation_date = date('Y-m-d');
                 
                 // next_invoice_date creation
-                $payment_mode_intervals = $invoice_details->payment_mode;
-                $next_invoice_date = Carbon::parse($activation_date)->addDays($payment_mode_intervals)->format('Y-m-d');
+                $payment_mode_intervals = DB::table('serviceorderss')->where('order_i_d', $invoice_details->service_order_no)->first()->payment_mode;
+                $next_invoice_date = Carbon::parse($today)->addDays($payment_mode_intervals)->format('Y-m-d');
                 // next_invoice_date creation
-                $invoice_due_date = Carbon::parse($next_invoice_date)->addDays(4)->format('Y-m-d');
+                $invoice_due_date = Carbon::parse($today)->addDays(4)->format('Y-m-d');
+                //dd($next_invoice_date);
                 
                 $cusromer_name = $invoice_details->cusromer_name;
                 $customer_no = $invoice_details->customer_no;
@@ -743,10 +744,10 @@ class ServiceInvoiceController extends InfyOmBaseController
                 $payment_amount =$grand_total;
                 $payment_status =DB::table('paymenttypes')->where('id', '2')->get();
                 $payment_status = $payment_status[0]->payment_type_name;
-                $sub_total = $grand_total_sub_grand;
-                $tax_amount = $grand_total_vat;
+                //$sub_total = $grand_total_sub_grand;
+                //$tax_amount = $grand_total_vat;
                 $discount = $invoice_details->discount;
-                $grand_total = $grand_total;
+                ///$grand_total = $grand_total;
                 $previous_dept = $this->previous_dept($customer_no,$grand_total);
 
                 // INVOICE insert into database
@@ -756,14 +757,14 @@ class ServiceInvoiceController extends InfyOmBaseController
                         'customer_no' => $customer_no, 
                         'current_charges' => $current_charges, 
                         'service_order_no' => $service_order_no,
-                        'invoice_created_date' => $activation_date,
+                        'invoice_created_date' => $today,
                         'next_invoice_date' => $next_invoice_date,
                         'invoice_due_date' => $invoice_due_date,
                         'due_balance' => $due_balance,
                         'payment_amount' => $payment_amount,
                         'payment_status' => $payment_status,
-                        'sub_total' => $sub_total,
-                        'tax_amount' => $tax_amount,
+                        'sub_total' => $grand_total_sub_grand,
+                        'tax_amount' => $grand_total_vat,
                         'first_invoice' => 0,
                         'discount' => $discount,
                         'previous_dept' => $previous_dept,
@@ -775,6 +776,7 @@ class ServiceInvoiceController extends InfyOmBaseController
                         Mail::raw($content, function ($message)use ($subjects) {
                             $message->from('nidctanzania@gmail.com', 'NIDC-BSS');
                             $message->to('bssadmin@nidc.co.tz','bahati.otaigo@nidc.co.tz','augustino.irafay@nidc.co.tz','commercial@nidc.co.tz')
+                            //$message->to('nidctanzania@gmail.com')
                                      ->subject($subjects)
                                     ->cc('nidctanzania@gmail.com');
                         });
@@ -814,6 +816,10 @@ class ServiceInvoiceController extends InfyOmBaseController
                         } // END PAYMEND AND DUE CREATIONM
 
           }    
+
+          $product_sub_grand = array();
+          $product_vat = array();
+          $product_grand_total = array();
 
         }
     }

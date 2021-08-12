@@ -14,7 +14,11 @@
     <tbody>
     @foreach($creditNotes as $creditNote)
         <tr>
-            <td>{!! $creditNote->credit_note_no !!}</td>
+            <td>
+                <a href="{{ route('admin.creditNote.creditNotes.show', collect($creditNote)->first() ) }}">
+            {!! $creditNote->credit_note_no !!}
+                </a>
+            </td>
             <td>{!! $creditNote->created_at !!}</td>
             <td>{!! $creditNote->customer_name !!}</td>
             <td>{!! $creditNote->invoice_no !!}</td>
@@ -65,6 +69,7 @@
 
     <script>
         $('#creditNotes-table').DataTable({
+                     "order": [[0, "desc"]],
                       responsive: true,
                       pageLength: 10
                   });

@@ -2,6 +2,8 @@
 <table class="table table-striped table-bordered" id="invoicwePayments-table" width="100%">
     <thead>
      <tr>
+        <th>#ID</th>
+        <th>Customer Name</th>
         <th>Invoice Number</th>
         <th>Payment Amount</th>
         <th>Payment Type</th>
@@ -12,6 +14,14 @@
     <tbody>
     @foreach($invoicwePayments as $invoicwePayment)
         <tr>
+            <td>{{$loop->iteration}}</td>
+            <td>
+            
+                <a href="{{ route('admin.invoicwePayment.invoicwePayments.show', collect($invoicwePayment)->first() ) }}">
+                    <?php
+                    $customer_name = DB::table('customers')->where('id',$invoicwePayment->customer_no)->where('deleted_at',null)->first()->customername;
+                    print_r($customer_name);
+                    ?></a></td>
             <td>{!! $invoicwePayment->invoice_number !!}</td>
             <td>{!! $invoicwePayment->payment_amount !!}</td>
             <td>{!! $invoicwePayment->payment_type !!}</td>
@@ -61,6 +71,7 @@
 
     <script>
         $('#invoicwePayments-table').DataTable({
+                     "order": [[0, "desc"]],
                       responsive: true,
                       pageLength: 10
                   });

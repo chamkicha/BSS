@@ -39,11 +39,6 @@ class invoice_crone extends Command
     }
 
     
-    // protected $ServiceInvoiceController;
-    // public function __construct(serviceInvoiceController $ServiceInvoiceController)
-    // {
-    //    $this->ServiceInvoiceController = $ServiceInvoiceController;
-    // }
 
     /**
      * Execute the console command.

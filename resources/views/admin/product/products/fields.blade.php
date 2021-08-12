@@ -106,27 +106,27 @@ function created_by(){
                     <!-- Price( T Z S) Field -->
                     <div class="form-group col-sm-12">
                         {!! Form::label('price', 'Price( T Z S):') !!}
-                        {!! Form::text('price', null, ['class' => 'form-control']) !!}
+                        {!! Form::number('price', null, ['class' => 'form-control','step'=>'any']) !!}
                     </div>
 
                     
                     <!-- V A T(%) Field -->
                     <div class="form-group col-sm-12">
                         {!! Form::label('v_a_t', 'V A T(%):') !!}
-                        {!! Form::text('v_a_t', null, ['class' => 'form-control']) !!}
+                        {!! Form::number('v_a_t', null, ['class' => 'form-control','step'=>'any']) !!}
                     </div>  
                     
                     <!-- E D(%) Field -->
                     <div class="form-group col-sm-12">
                         {!! Form::label('e_d', 'E D(%):') !!}
-                        {!! Form::text('e_d', null, ['class' => 'form-control']) !!}
+                        {!! Form::number('e_d', null, ['class' => 'form-control','step'=>'any']) !!}
                     </div>
 
 
                     <!-- Discount(%) Field -->
                     <div class="form-group col-sm-12">
                         {!! Form::label('discount', 'Discount(%):') !!}
-                        {!! Form::text('discount', null, ['class' => 'form-control']) !!}
+                        {!! Form::number('discount', null, ['class' => 'form-control','step'=>'any']) !!}
                     </div>
 
             </div>

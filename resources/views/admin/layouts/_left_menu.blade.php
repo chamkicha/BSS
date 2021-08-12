@@ -57,7 +57,7 @@
             <li class="{{ Request::is('admin/invoicwePayment/invoicwePayments*') ? 'active' : '' }}">
                 <a href="{!! route('admin.invoicwePayment.invoicwePayments.index') !!}">
                 <i class="fa fa-angle-double-right"></i>
-                        Payments
+                        Payments/Invoices
                 </a>
             </li>
 

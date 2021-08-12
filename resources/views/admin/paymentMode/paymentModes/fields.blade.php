@@ -6,8 +6,8 @@
 
 <!-- Payment Interval Field -->
 <div class="form-group col-sm-12">
-    {!! Form::label('payment_interval', 'Payment Interval:') !!}
-    {!! Form::text('payment_interval', null, ['class' => 'form-control']) !!}
+    {!! Form::label('payment_interval', 'Payment Interval (Days):') !!}
+    {!! Form::number('payment_interval', null, ['class' => 'form-control']) !!}
 </div>
 
 <!-- Description Field -->

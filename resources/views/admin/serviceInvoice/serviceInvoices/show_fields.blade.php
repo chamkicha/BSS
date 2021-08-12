@@ -286,6 +286,13 @@ function get_signature_by()
 
                                         </div>
 
+                                        
+                                        <!-- Payment amount Field -->
+                                        <div class="form-group col-sm-12">
+                                            <input type="hidden" id="customer_no" name="customer_no" class="form-control" value="{{$serviceInvoice['customer_no'] }}" >
+
+                                        </div>
+
 
                                         @if($serviceInvoice['payment_status'] !== 'Fully')
                                         <button type="submit" class="btn btn_marTop button-alignment btn-info"

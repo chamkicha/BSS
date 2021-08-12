@@ -12,7 +12,11 @@
     <tbody>
     @foreach($paymentAndDues as $paymentAndDue)
         <tr>
-            <td>{!! $paymentAndDue->customer_name !!}</td>
+            <td>
+                <a href="{{ route('admin.paymentAndDue.paymentAndDues.show', collect($paymentAndDue)->first() ) }}">
+            {!! $paymentAndDue->customer_name !!}
+                </a>
+            </td>
             <td>{!! number_format($paymentAndDue->total_amount,2) !!}</td>
             <td>{!! number_format($paymentAndDue->paid_amount,2) !!}</td>
             <td>{!! number_format($paymentAndDue->balance,2) !!}</td>

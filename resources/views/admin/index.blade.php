@@ -17,6 +17,10 @@ NIDC
 <meta name="_token" content="{{ csrf_token() }}">
 <link rel="stylesheet" type="text/css"
     href="{{ asset('vendors/bootstrap-datetime-picker/css/bootstrap-datetimepicker.min.css') }}">
+    
+
+<link href="{{ asset('vendors/iCheck/css/all.css') }}" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="{{ asset('css/buttons.css') }}" />
 
 @stop
 
@@ -168,85 +172,71 @@ NIDC
         </div>
     </div>
     <!--/row-->
-    <div class="row">
-        <div class="col-md-6 col-sm-6 col-lg-6 col-xl-8 col-12 my-3">
+    </br>
+    </br>
             <div class="card card-border">
                 <div class="card-header">
                     <span>
                         <i class="livicon" data-name="dashboard" data-size="20" data-loop="true" data-c="#F89A14"
                             data-hc="#F89A14"></i>
-                        Realtime Server Load
-                        <small>- Load on the Server</small>
+                        QUICK LINKS
                     </span>
                 </div>
-                <div class="card-body">
-                    <div id="realtimechart" style="height:350px;"></div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6 col-sm-6 col-lg-6 col-xl-4 col-12 my-3">
-            <div class="card blue_gradiant_bg">
-                <div class="card-header">
-                    <span class=" card_font">
-                        <i class="livicon" data-name="linechart" data-size="16" data-loop="true" data-c="#fff"
-                            data-hc="white"></i>
-                        Server Stats
-                        <small>- Monthly Report</small>
-                    </span>
-                </div>
-                <div class="card-body">
                     <div class="row">
-                        <div class="col-sm-6 col-md-6 col-lg-6 col-12">
-                            <div class="sparkline-chart">
-                                <div class="number" id="sparkline_bar"></div>
-                                <h3 class="title">Network</h3>
+                        <div class="col-md-6 col-12">
+                            <div class="list-group">
+                                <a href="{!! route('admin.serviceOrders.serviceOrders.create') !!}" class="list-group-item facebook-like">
+                                    <p class="float-right">
+                                        <i class="fab fa fa-tasks f"></i>
+                                    </p>
+                                    <h4 class="list-group-item-heading "><b> 
+                                    <?php 
+                                    $serviceorder = DB::table('serviceorderss')->where('deleted_at',null)->count(); 
+                                    print_r($serviceorder);?>
+                                    </b></h4>
+                                    <p class="list-group-item-text">CREATE SERVICE ORDER</p>
+                                </a>
+                                <a href="{!! route('admin.customer.customers.create') !!}" class="list-group-item twitter">
+                                    <p class="float-right">
+                                        <i class="fab fa fa-user-plus f"></i>
+                                    </p>
+                                    <h4 class="list-group-item-heading " ><b>
+                                                                <?php
+                                                                $customers = DB::table('customers')->where('deleted_at',null)->count();
+                                                                print_r($customers);
+                                                                ?></b></h4>
+                                    <p class="list-group-item-text ">CREATE CUSTOMER</p>
+                                </a>
                             </div>
                         </div>
-                        <div class="margin-bottom-10 visible-sm"></div>
-                        <div class="margin-bottom-10 visible-sm"></div>
-                        <div class="col-sm-6">
-                            <div class="sparkline-chart">
-                                <div class="number" id="sparkline_line"></div>
-                                <h3 class="title">Load Rate</h3>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- BEGIN Percentage monitor -->
-            <div class="card green_gradiante_bg">
-                <div class="card-header">
-                    <span class=" card_font">
-                        <i class="livicon" data-name="spinner-six" data-size="16" data-loop="false" data-c="#fff"
-                            data-hc="white"></i>
-                        Result vs Target
-                    </span>
-                </div>
-                <div class="card-body nopadmar">
-                    <div class="row">
-                        <div class="col-sm-6 text-center">
-                            <h4 class="small-heading">Sales</h4>
-                            <span class="chart cir chart-widget-pie widget-easy-pie-1" data-percent="45"><span
-                                    class="percent">45</span>
-                            </span>
-                        </div>
-                        <!-- /.col-sm-4 -->
-                        <div class="col-sm-6 text-center">
-                            <h4 class="small-heading">Reach</h4>
-                            <span class="chart cir chart-widget-pie widget-easy-pie-3" data-percent="25">
-                                <span class="percent">25</span>
-                            </span>
-                        </div>
-                        <!-- /.col-sm-4 -->
-                    </div>
+                        <div class="col-md-6 col-12">
+                            <div class="list-group">
+                                <a href="{!! route('admin.product.products.create') !!}" class="list-group-item tumblr">
+                                    <p class="float-right">
+                                        <i class="fab fa fa-server f"></i>
+                                    </p>
+                                    <h4 class="list-group-item-heading "><b><?php
+                                                        $products = DB::table('products')->count();
+                                                        print_r($products);
+                                                        ?></b></h4>
+                                    <p class="list-group-item-text">CREATE PRODUCT</p>
+                                </a>
+                                <a href="{!! route('admin.invoicwePayment.invoicwePayments.create') !!}" class="list-group-item linkedin">
+                                    <p class="float-right">
+                                        <i class="fab fa fa-university f"></i>
+                                    </p>
+                                    <h4 class="list-group-item-heading" ><b>
+                                    <?php
+                                    $invoicwepayments = DB::table('invoicwepayments')->where('deleted_at',null)->sum('payment_amount');
+                                    print_r(number_format($invoicwepayments,2));
+                                    ?></b></h4>
+                                    <p class="list-group-item-text ">CREATE PAYMENT</p>
+                                </a>
 
-                    <!-- /.row -->
-                </div>
-                <!-- /.card-body -->
-            </div>
-            <!-- END BEGIN Percentage monitor-->
-        </div>
-    </div>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
 </section>
 <div class="modal fade" id="editConfirmModal" tabindex="-1" role="dialog">
     <div class="modal-dialog">
@@ -273,6 +263,8 @@ NIDC
 <script type="text/javascript" src="{{ asset('vendors/moment/js/moment.min.js') }}"></script>
 <script type="text/javascript"
     src="{{ asset('vendors/bootstrap-datetime-picker/js/bootstrap-datetimepicker.min.js') }}"></script>
+    
+<script src="{{ asset('js/pages/custom_buttons.js') }}"></script>
 
 <!-- EASY PIE CHART JS -->
 <script src="{{ asset('vendors/bower-jquery-easyPieChart/js/easypiechart.min.js') }}"></script>

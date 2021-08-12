@@ -65,6 +65,7 @@ class InvoicwePaymentController extends InfyOmBaseController
      */
     public function store(CreateInvoicwePaymentRequest $request)
     {
+        //dd($request);
         $input = $request->all();
 
         $invoicwePayment = $this->invoicwePaymentRepository->create($input);
