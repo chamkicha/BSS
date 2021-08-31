@@ -774,3 +774,33 @@ Route::get('revenuePerCustomerReports/{revenuePerCustomerReports}', ['as'=> 'rev
 Route::get('revenuePerCustomerReports/{revenuePerCustomerReports}/edit', ['as'=> 'revenuePerCustomerReports.edit', 'uses' => 'Revenuepercustomerreport\RevenuePerCustomerReportController@edit']);
 
 });
+
+
+Route::group(array('prefix' => 'admin/invoiceDublication/','namespace' => 'Admin','middleware' => 'admin','as'=>'admin.invoiceDublication.'), function () {
+
+Route::get('invoiceDublications', ['as'=> 'invoiceDublications.index', 'uses' => 'Invoicedublication\InvoiceDublicationController@index']);
+Route::post('invoiceDublications', ['as'=> 'invoiceDublications.store', 'uses' => 'Invoicedublication\InvoiceDublicationController@store']);
+Route::get('invoiceDublications/create', ['as'=> 'invoiceDublications.create', 'uses' => 'Invoicedublication\InvoiceDublicationController@create']);
+Route::put('invoiceDublications/{invoiceDublications}', ['as'=> 'invoiceDublications.update', 'uses' => 'Invoicedublication\InvoiceDublicationController@update']);
+Route::patch('invoiceDublications/{invoiceDublications}', ['as'=> 'invoiceDublications.update', 'uses' => 'Invoicedublication\InvoiceDublicationController@update']);
+Route::get('invoiceDublications/{id}/delete', ['as' => 'invoiceDublications.delete', 'uses' => 'Invoicedublication\InvoiceDublicationController@getDelete']);
+Route::get('invoiceDublications/{id}/confirm-delete', ['as' => 'invoiceDublications.confirm-delete', 'uses' => 'Invoicedublication\InvoiceDublicationController@getModalDelete']);
+Route::get('invoiceDublications/{invoiceDublications}', ['as'=> 'invoiceDublications.show', 'uses' => 'Invoicedublication\InvoiceDublicationController@show']);
+Route::get('invoiceDublications/{invoiceDublications}/edit', ['as'=> 'invoiceDublications.edit', 'uses' => 'Invoicedublication\InvoiceDublicationController@edit']);
+
+});
+
+
+Route::group(array('prefix' => 'admin/invoiceDublication/','namespace' => 'Admin','middleware' => 'admin','as'=>'admin.invoiceDublication.'), function () {
+
+Route::get('invoiceDublicationCreates', ['as'=> 'invoiceDublicationCreates.index', 'uses' => 'Invoicedublication\InvoiceDublicationCreateController@index']);
+Route::post('invoiceDublicationCreates', ['as'=> 'invoiceDublicationCreates.store', 'uses' => 'Invoicedublication\InvoiceDublicationCreateController@store']);
+Route::get('invoiceDublicationCreates/create', ['as'=> 'invoiceDublicationCreates.create', 'uses' => 'Invoicedublication\InvoiceDublicationCreateController@create']);
+Route::put('invoiceDublicationCreates/{invoiceDublicationCreates}', ['as'=> 'invoiceDublicationCreates.update', 'uses' => 'Invoicedublication\InvoiceDublicationCreateController@update']);
+Route::patch('invoiceDublicationCreates/{invoiceDublicationCreates}', ['as'=> 'invoiceDublicationCreates.update', 'uses' => 'Invoicedublication\InvoiceDublicationCreateController@update']);
+Route::get('invoiceDublicationCreates/{id}/delete', ['as' => 'invoiceDublicationCreates.delete', 'uses' => 'Invoicedublication\InvoiceDublicationCreateController@getDelete']);
+Route::get('invoiceDublicationCreates/{id}/confirm-delete', ['as' => 'invoiceDublicationCreates.confirm-delete', 'uses' => 'Invoicedublication\InvoiceDublicationCreateController@getModalDelete']);
+Route::get('invoiceDublicationCreates/{invoiceDublicationCreates}', ['as'=> 'invoiceDublicationCreates.show', 'uses' => 'Invoicedublication\InvoiceDublicationCreateController@show']);
+Route::get('invoiceDublicationCreates/{invoiceDublicationCreates}/edit', ['as'=> 'invoiceDublicationCreates.edit', 'uses' => 'Invoicedublication\InvoiceDublicationCreateController@edit']);
+
+});

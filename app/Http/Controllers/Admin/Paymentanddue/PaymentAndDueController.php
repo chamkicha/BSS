@@ -77,6 +77,7 @@ class PaymentAndDueController extends InfyOmBaseController
                             ->insert(['customer_name' => $request->customer_name,
                                     'total_amount' => $grand_total_due,
                                     'balance' => $grand_total_due,
+                                    'paid_amount' => $grand_total_due,
                                     'customer_no' => $customer_no,]);
                                     
         Flash::success('PaymentAndDue saved successfully.');
@@ -92,13 +93,15 @@ class PaymentAndDueController extends InfyOmBaseController
             $grand_total1 = $request->total_amount;
             $grand_total4 = $grand_total1 + $grand_total2;
             $balance = $grand_total3[0]->balance;
-            $balance = $balance + $grand_total1;
+            $balance = $balance - $grand_total1;
+            $paid_amount = $grand_total3[0]->paid_amount + $grand_total1;
             
             
             $bill_creation = DB::table('paymentanddues')
                                 ->where('customer_no', $customer_no)
                                 ->update(['total_amount' => $grand_total4,
-                                        'balance' => $balance]);
+                                    'paid_amount' => $paid_amount,
+                                    'balance' => $balance]);
 
             Flash::success('PaymentAndDue saved successfully.');
     

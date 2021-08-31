@@ -38,16 +38,11 @@
                 @if($serviceInvoice->payment_status === 'Fully')
 
                     <h5 style="color:green; ">PAID</h5>
-                @endif
 
-                @if($serviceInvoice->payment_status === 'Not Paid')
+                @elseif($serviceInvoice->payment_status === 'Not Paid')
 
                     <h5 style="color:red;  ">NOT PAID</h5>
-                @endif
 
-                @if($serviceInvoice->payment_status === 'Fully')
-
-                    <h5 style="color:orange;  ">PARTIALLY PAID</h5>
                 @endif
             
             </td>

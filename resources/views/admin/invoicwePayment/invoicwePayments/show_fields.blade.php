@@ -116,6 +116,7 @@
 
                                 <div class="text-left" style="padding-top: 10px;">
                                         <p><strong>Received at: {!! \Carbon\Carbon::parse($invoicwePayment->created_at)->format('d-M-y') !!}</strong></p>
+                                        <p><strong>Receipt No: RCP_NIDC00{!! $invoicwePayment->id !!}</strong></p>
                                  </div>
 
                                 <div class="text-center" style="padding-top: 10px;">

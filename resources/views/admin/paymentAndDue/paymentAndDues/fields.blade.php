@@ -44,7 +44,7 @@
                 <!-- Total Amount Field -->
             <div class="form-group col-sm-12">
                 {!! Form::label('total_amount', 'Total Amount:') !!}
-                {!! Form::text('total_amount', null, ['class' => 'form-control']) !!}
+                {!! Form::number('total_amount', null, ['class' => 'form-control' ,'step'=>'any']) !!}
             </div>
             
             <!-- Submit Field -->

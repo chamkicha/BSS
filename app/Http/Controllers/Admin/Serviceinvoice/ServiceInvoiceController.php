@@ -262,7 +262,20 @@ class ServiceInvoiceController extends InfyOmBaseController
 
        public function getDelete($id = null)
        {
-           $sample = ServiceInvoice::destroy($id);
+           //dd($id);
+            $invoice_details = DB::table('serviceinvoices')->where('id', $id)->first();
+
+            $payment_due_update = DB::table('paymentanddues')->where('customer_no', $invoice_details->customer_no)->first();
+            $total_amount = $payment_due_update->total_amount - $invoice_details->grand_total;
+            $balance = $payment_due_update->balance - $invoice_details->grand_total;
+
+            $payment_due_update_db = DB::table('paymentanddues')->where('customer_no', $invoice_details->customer_no)
+                  ->update(['total_amount' => $total_amount, 
+                          'balance' => $balance, ]);
+
+
+
+            $sample = ServiceInvoice::destroy($id);
 
            // Redirect to the group management page
            return redirect(route('admin.serviceInvoice.serviceInvoices.index'))->with('success', Lang::get('message.success.delete'));
@@ -770,7 +783,7 @@ class ServiceInvoiceController extends InfyOmBaseController
                         'previous_dept' => $previous_dept,
                         'grand_total' => $grand_total]);
 
-                        $subjects = 'Invoice '.$invoice_number. ' generated for '.$cusromer_name.' from '.Carbon::parse($activation_date)->format('d-m-Y').' to '.Carbon::parse($next_invoice_date)->format('d-m-Y');
+                        $subjects = '(AUTOMATIC) Invoice '.$invoice_number. ' generated for '.$cusromer_name.' from '.Carbon::parse($activation_date)->format('d-m-Y').' to '.Carbon::parse($next_invoice_date)->format('d-m-Y');
                         $content = 'Please login to BSS (10.60.83.218) to check the Invoice generated';
 
                         Mail::raw($content, function ($message)use ($subjects) {

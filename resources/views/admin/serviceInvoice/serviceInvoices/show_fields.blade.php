@@ -113,7 +113,7 @@ function get_signature_by()
                                         <strong>VRN:</strong> 10-000002-S<br>
                                         <strong>Tax Invoice No.:</strong> {!! $serviceInvoice['invoice_number'] !!}<br>
                                         <strong>Bill Period:</strong> {!! $serviceInvoice['invoice_created_date'] !!} &nbsp;<strong>to</strong> &nbsp;{!! $serviceInvoice['next_invoice_date'] !!}<br>
-                                        <strong>Due Date:</strong> {!! $serviceInvoice['invoice_due_date'] !!} <br>
+                                        {{--  <strong>Due Date:</strong> {!! $serviceInvoice['invoice_due_date'] !!} <br>  --}}
 
                                         @if(!empty($serviceInvoice['qrcode_path']))
 
@@ -451,16 +451,13 @@ function get_signature_by()
                                         @if($serviceInvoice['payment_status'] === 'Fully')
 
                                             <h2 style="color:green; ">PAID</h2>
-                                        @endif
+                                        
 
-                                        @if($serviceInvoice['payment_status'] === 'Not Paid')
+                                        @elseif($serviceInvoice['payment_status'] === 'Not Paid')
 
                                             <h2 style="color:red;  ">NOT PAID</h2>
-                                        @endif
+                                        
 
-                                        @if($serviceInvoice['payment_status'] === 'Fully')
-
-                                            <h2 style="color:orange;  ">PARTIALLY PAID</h2>
                                         @endif
 
                                         </form><!-- form get signature add end -->
