@@ -34,44 +34,7 @@ class RevenuePerCustomerReportController extends InfyOmBaseController
     public function index(Request $request)
     {
 
-        $customers = DB::table('customers')->get();
-        foreach($customers as $customer){
-            $client_product = DB::table('serviceinvoices')->where('customer_no',$customer->id)->where('deleted_at',null)->get();
-
-            if($client_product->count() != 0){
-            
-            foreach($client_product as $client_products){
-                //$excise_dutys[] = 0;
-                 $v_a_ts[] = $client_products->tax_amount;
-                 $amount_without_vats[] = $client_products->sub_total;
-                 $otal_with_vats[] = $client_products->grand_total;
-                
-            }
-
-             $excise_duty = 0;
-             $v_a_t = array_sum($v_a_ts);
-             $amount_without_vat = array_sum($amount_without_vats);
-             $total_with_vat = array_sum($otal_with_vats);
-             }else{
-
-            
-            $excise_duty = 0;
-            $v_a_t = 0;
-            $amount_without_vat = 0;
-            $total_with_vat = 0;
-
-             }
-            $revenuePerCustomerReports[]=array(
-                'id' => $customer->id,
-                'customer_id' => $customer->id,
-                'customer_name' => $customer->customername,
-                'customer_type' => $customer->customer_type,
-                'excise_duty' => $excise_duty,
-                'v_a_t' => $v_a_t,
-                'amount_without_vat' => $amount_without_vat,
-                'total_with_vat' => $total_with_vat,
-            );
-        }
+        $revenuePerCustomerReports = DB::table('customers')->where('deleted_at',null)->get();
         //dd($revenuePerCustomerReports);
         return view('admin.revenuePerCustomerReport.revenuePerCustomerReports.index')
             ->with('revenuePerCustomerReports', $revenuePerCustomerReports);

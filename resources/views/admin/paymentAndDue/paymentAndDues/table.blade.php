@@ -2,10 +2,11 @@
 <table class="table table-striped table-bordered" id="paymentAndDues-table" width="100%">
     <thead>
      <tr>
+        <th>Customer No</th>
         <th>Customer Name</th>
-        <th>Total Amount</th>
         <th>Paid Amount</th>
         <th>Balance</th>
+        <th>Total Amount</th>
         <th >Action</th>
      </tr>
     </thead>
@@ -14,16 +15,32 @@
         <tr>
             <td>
                 <a href="{{ route('admin.paymentAndDue.paymentAndDues.show', collect($paymentAndDue)->first() ) }}">
-            {!! $paymentAndDue->customer_name !!}
+            
+                <?php
+                    $customer_number = DB::table('customers')->where('id', $paymentAndDue->customer_no)->first()->customer_no;
+                    print_r($customer_number);
+                    ?>
                 </a>
             </td>
-            <td>{!! number_format($paymentAndDue->total_amount,2) !!}</td>
+            
+            <td>
+                <a href="{{ route('admin.paymentAndDue.paymentAndDues.show', collect($paymentAndDue)->first() ) }}">
+                {!! $paymentAndDue->customer_name !!}
+                </a>
+            </td>
             <td>{!! number_format($paymentAndDue->paid_amount,2) !!}</td>
             <td>{!! number_format($paymentAndDue->balance,2) !!}</td>
+            
+            <td>
+                <?php
+                $total_maount = $paymentAndDue->paid_amount + $paymentAndDue->balance;
+                print_r(number_format($total_maount,2));
+                ?></td>
             <td>
                  <a href="{{ route('admin.paymentAndDue.paymentAndDues.show', collect($paymentAndDue)->first() ) }}">
                      <i class="livicon" data-name="info" data-size="18" data-loop="true" data-c="#428BCA" data-hc="#428BCA" title="view paymentAndDue"></i>
                  </a>
+            @if (Sentinel::inRole('admin'))
                  <a href="{{ route('admin.paymentAndDue.paymentAndDues.edit', collect($paymentAndDue)->first() ) }}">
                      <i class="livicon" data-name="edit" data-size="18" data-loop="true" data-c="#428BCA" data-hc="#428BCA" title="edit paymentAndDue"></i>
                  </a>
@@ -31,6 +48,7 @@
                      <i class="livicon" data-name="remove-alt" data-size="18" data-loop="true" data-c="#f56954" data-hc="#f56954" title="delete paymentAndDue"></i>
 
                  </a>
+            @endif
             </td>
         </tr>
     @endforeach
@@ -65,6 +83,7 @@
 
     <script>
         $('#paymentAndDues-table').DataTable({
+                     "order": [[4, "desc"]],
                       responsive: true,
                       pageLength: 10
                   });

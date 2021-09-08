@@ -804,3 +804,18 @@ Route::get('invoiceDublicationCreates/{invoiceDublicationCreates}', ['as'=> 'inv
 Route::get('invoiceDublicationCreates/{invoiceDublicationCreates}/edit', ['as'=> 'invoiceDublicationCreates.edit', 'uses' => 'Invoicedublication\InvoiceDublicationCreateController@edit']);
 
 });
+
+
+Route::group(array('prefix' => 'admin/previousBalanceAdjust/','namespace' => 'Admin','middleware' => 'admin','as'=>'admin.previousBalanceAdjust.'), function () {
+
+Route::get('previousBalanceAdjusts', ['as'=> 'previousBalanceAdjusts.index', 'uses' => 'Previousbalanceadjust\PreviousBalanceAdjustController@index']);
+Route::post('previousBalanceAdjusts', ['as'=> 'previousBalanceAdjusts.store', 'uses' => 'Previousbalanceadjust\PreviousBalanceAdjustController@store']);
+Route::get('previousBalanceAdjusts/create', ['as'=> 'previousBalanceAdjusts.create', 'uses' => 'Previousbalanceadjust\PreviousBalanceAdjustController@create']);
+Route::put('previousBalanceAdjusts/{previousBalanceAdjusts}', ['as'=> 'previousBalanceAdjusts.update', 'uses' => 'Previousbalanceadjust\PreviousBalanceAdjustController@update']);
+Route::patch('previousBalanceAdjusts/{previousBalanceAdjusts}', ['as'=> 'previousBalanceAdjusts.update', 'uses' => 'Previousbalanceadjust\PreviousBalanceAdjustController@update']);
+Route::get('previousBalanceAdjusts/{id}/delete', ['as' => 'previousBalanceAdjusts.delete', 'uses' => 'Previousbalanceadjust\PreviousBalanceAdjustController@getDelete']);
+Route::get('previousBalanceAdjusts/{id}/confirm-delete', ['as' => 'previousBalanceAdjusts.confirm-delete', 'uses' => 'Previousbalanceadjust\PreviousBalanceAdjustController@getModalDelete']);
+Route::get('previousBalanceAdjusts/{previousBalanceAdjusts}', ['as'=> 'previousBalanceAdjusts.show', 'uses' => 'Previousbalanceadjust\PreviousBalanceAdjustController@show']);
+Route::get('previousBalanceAdjusts/{previousBalanceAdjusts}/edit', ['as'=> 'previousBalanceAdjusts.edit', 'uses' => 'Previousbalanceadjust\PreviousBalanceAdjustController@edit']);
+
+});

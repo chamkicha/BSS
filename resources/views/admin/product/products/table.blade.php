@@ -5,12 +5,7 @@
         <th>Product No</th>
         <th>Product Name</th>
         <th>Product Description</th>
-        <th>Product Unit</th>
-        <th>Product Type</th>
-        <th>V A T(TZS)</th>
-        <th>Price( TZS)</th>
         <th>Grand Total</th>
-        <th>Created By</th>
         <th >Action</th>
      </tr>
     </thead>
@@ -25,17 +20,12 @@
                 </a>
             </td>
             <td>{!! $product->description !!}</td>
-            <td>{!! $product->product_unit !!}</td>
-            <td>{!! $product->product_type !!}</td>
-            <td>{!! number_format($product->vat_amount,2) !!}</td>
-            <td>{!! number_format($product->price,2) !!}</td>
             <td>{!! number_format($product->grand_total,2) !!}</td>
-            <td>{!! $product->created_by !!}</td>
             <td>
                  <a href="{{ route('admin.product.products.show', collect($product)->first() ) }}">
                      <i class="livicon" data-name="info" data-size="18" data-loop="true" data-c="#428BCA" data-hc="#428BCA" title="view product"></i>
                  </a>
-                 @if (Sentinel::inRole('admin') or Sentinel::inRole('commercial-manager'))
+                 @if (Sentinel::inRole('admin'))
 
                  <a href="{{ route('admin.product.products.edit', collect($product)->first() ) }}">
                      <i class="livicon" data-name="edit" data-size="18" data-loop="true" data-c="#428BCA" data-hc="#428BCA" title="edit product"></i>

@@ -19,6 +19,7 @@ use App\Models\Product\Product;
 use DB;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+use Sentinel;
 use Mail;
 
 
@@ -647,6 +648,11 @@ class ServiceOrdersController extends InfyOmBaseController
        public function getDelete($id = null)
        {
            $sample = ServiceOrders::destroy($id);
+
+
+
+           $username = Sentinel::getUser()->full_name;
+           activity('SERVICE ORDER DELEATION ID.  '. $id)->log('Deleted by '.$username);
 
            // Redirect to the group management page
            return redirect(route('admin.serviceOrders.serviceOrders.index'))->with('success', Lang::get('message.success.delete'));

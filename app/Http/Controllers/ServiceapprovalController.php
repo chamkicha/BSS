@@ -1458,7 +1458,7 @@ public function customer_report_revenue($clientreport)
     public function invoice_creatred_email_sent($invoice_number,$activation_date,$cusromer_name)
     {
 
-        $mail_subjects = 'Invoice '.$invoice_number . ' for customer ' . $cusromer_name . ' was created on '.$activation_date ;
+        $mail_subjects = '(MANNUAL) Invoice '.$invoice_number . ' for customer ' . $cusromer_name . ' was created on '.$activation_date ;
         $mail_content = 'Please login to BSS (10.60.83.218) to take action for the invoice generated of Customer'.$cusromer_name;
 
         Mail::raw($mail_content, function ($message)use ($mail_subjects,$nexthandler_email) {

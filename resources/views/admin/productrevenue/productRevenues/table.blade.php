@@ -98,7 +98,23 @@
             <td>{!! $productRevenue->vat_amount !!}</td>
             <td>{!! $productRevenue->ed_amount !!}</td>
             <td>{!! $productRevenue->grand_total !!}</td>
-            <td>{!! $productRevenue->grand_total !!}</td>
+            <td>
+                <?php
+                $invoice_products = DB::table('invoice_product')->where('product_id', $productRevenue->id)->get();
+                foreach($invoice_products as $invoice_product){
+                $product_invoice = DB::table('serviceinvoices')->where('invoice_number', $invoice_product->invoice_no)->first();
+                  if(!is_null($product_invoice)){
+                                if(is_null($product_invoice->deleted_at)){
+                                    $total_maount[] = $invoice_product->amount;
+                                }
+                    }
+                }
+                $total_maounts = array_sum($total_maount);
+                $total_maount = array();
+
+
+                print_r(number_format($total_maounts,2));
+                ?></td>
         </tr>
     @endforeach
     </tbody>
@@ -144,9 +160,10 @@
 
     <script>
         $('#productRevenues-table').DataTable({
+                      "order": [[5, "desc"]],
                       responsive: true,
                       dom: 'Bfrtip',
-                      pageLength: 10,
+                      pageLength: 30,
                       
                         buttons: [
                             'copy', 'csv', 'excel', 'pdf', 'print'

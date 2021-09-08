@@ -142,7 +142,7 @@
                                     </div>
                                     
                                 </div>
-                                <p style="padding-left: 15px;"><strong>The sum of TZS {!! $invoicwePayment->payment_amount !!} ({!! $payment_amount_spell !!} only).</strong></p>
+                                <p style="padding-left: 15px;"><strong>The sum of TZS {!! number_format($invoicwePayment->payment_amount,2) !!} ({!! $payment_amount_spell !!} only).</strong></p>
                                 <br>
                                 <br>
                                 <br>

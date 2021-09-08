@@ -34,8 +34,8 @@ class ProductRevenueController extends InfyOmBaseController
     public function index(Request $request)
     {
         $productRevenues = DB::table('products')->get();
-        $this->productRevenueRepository->pushCriteria(new RequestCriteria($request));
-        $productRevenues1 = $this->productRevenueRepository->all();
+        // $this->productRevenueRepository->pushCriteria(new RequestCriteria($request));
+        // $productRevenues1 = $this->productRevenueRepository->all();
         return view('admin.productrevenue.productRevenues.index')
             ->with('productRevenues', $productRevenues);
     }

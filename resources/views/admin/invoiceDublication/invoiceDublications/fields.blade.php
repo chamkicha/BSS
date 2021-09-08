@@ -41,7 +41,7 @@
                         @endforeach
                     </optgroup>
                 </select>
-                <span style="color: red">@error('invoice_no'){{'The customer name field is required.'}}@enderror</span>
+                <span style="color: red">@error('invoice_no'){{'Invoice Number is required.'}}@enderror</span>
             </div>
         </div>
     </div>
@@ -55,7 +55,7 @@
             
             <div class="col-md-5">    
                 {!! Form::date('invoice_creation_date', null, ['class' => 'form-control']) !!} 
-                <span style="color: red">@error('invoice_no'){{'The customer name field is required.'}}@enderror</span>
+                <span style="color: red">@error('invoice_creation_date'){{'New Invoice Creation Date is required.'}}@enderror</span>
             </div>
         </div>
     </div>
@@ -69,7 +69,7 @@
             
             <div class="col-md-5">    
                 {!! Form::date('next_invoice_date', null, ['class' => 'form-control']) !!} 
-                <span style="color: red">@error('invoice_no'){{'The customer name field is required.'}}@enderror</span>
+                <span style="color: red">@error('next_invoice_date'){{'Next Invoice Date is required.'}}@enderror</span>
             </div>
         </div>
     </div>

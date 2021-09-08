@@ -28,6 +28,7 @@
                  <a href="{{ route('admin.creditNote.creditNotes.show', collect($creditNote)->first() ) }}">
                      <i class="livicon" data-name="info" data-size="18" data-loop="true" data-c="#428BCA" data-hc="#428BCA" title="view creditNote"></i>
                  </a>
+            @if (Sentinel::inRole('admin'))
                  <a href="{{ route('admin.creditNote.creditNotes.edit', collect($creditNote)->first() ) }}">
                      <i class="livicon" data-name="edit" data-size="18" data-loop="true" data-c="#428BCA" data-hc="#428BCA" title="edit creditNote"></i>
                  </a>
@@ -35,6 +36,7 @@
                      <i class="livicon" data-name="remove-alt" data-size="18" data-loop="true" data-c="#f56954" data-hc="#f56954" title="delete creditNote"></i>
 
                  </a>
+            @endif
             </td>
         </tr>
     @endforeach

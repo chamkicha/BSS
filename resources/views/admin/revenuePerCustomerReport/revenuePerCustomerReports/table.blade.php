@@ -4,20 +4,26 @@
         <th>Customer Id</th>
         <th>Customer Name</th>
         <th>Customer Type</th>
-        {{--  <th>Excise Duty</th>  --}}
-        <th>V A T</th>
-        <th>Total With Vat</th>
+        <th>Dept (TZS)</th>
+        <th>Total Amount (TZS)</th>
      </tr>
     </thead>
     <tbody>
     @foreach($revenuePerCustomerReports as $revenuePerCustomerReport)
         <tr>
-            <td>{!! $revenuePerCustomerReport['customer_id'] !!}</td>
-            <td>{!! $revenuePerCustomerReport['customer_name'] !!}</td>
-            <td>{!! $revenuePerCustomerReport['customer_type'] !!}</td>
-            {{--  <td>{!! $revenuePerCustomerReport['excise_duty'] !!}</td>  --}}
-            <td>{!! $revenuePerCustomerReport['v_a_t'] !!}</td>
-            <td>{!! $revenuePerCustomerReport['total_with_vat'] !!}</td>
+            <td>{!! $revenuePerCustomerReport->customer_no !!}</td>
+            <td>{!! $revenuePerCustomerReport->customername !!}</td>
+            <td>{!! $revenuePerCustomerReport->customer_type !!}</td>
+            <td>
+                <?php
+                $total_dept_maount = DB::table('paymentanddues')->where('customer_no', $revenuePerCustomerReport->id)->where('deleted_at',null)->sum('balance');
+                print_r(number_format($total_dept_maount,2));
+                ?></td>
+            <td>
+                <?php
+                $total_maount = DB::table('serviceinvoices')->where('customer_no', $revenuePerCustomerReport->id)->where('deleted_at',null)->sum('grand_total');
+                print_r(number_format($total_maount,2));
+                ?></td>
             
         </tr>
     @endforeach
@@ -46,8 +52,9 @@
 
     <script>
                   $('#revenuePerCustomerReports-table').DataTable({
+                      "order": [[4, "desc"]],
                       responsive: true,
-                      pageLength: 10,
+                      pageLength: 30,
                       dom: 'Bfrtip',
                         buttons: [
                             'copy', 'csv', 'excel', 'pdf', 'print'

@@ -5,16 +5,17 @@
         <th>#ID</th>
         <th>Customer Name</th>
         <th>Invoice Number</th>
-        <th>Payment Amount</th>
         <th>Payment Type</th>
         <th>Payment Descriptions</th>
+        <th>Payment Amount</th>
         <th >Action</th>
      </tr>
     </thead>
     <tbody>
     @foreach($invoicwePayments as $invoicwePayment)
         <tr>
-            <td>{{$loop->iteration}}</td>
+            {{--  <td>{{$loop->iteration}}</td>  --}}
+            <td>RCP_NIDC00{!! $invoicwePayment->id !!}</td>
             <td>
             
                 <a href="{{ route('admin.invoicwePayment.invoicwePayments.show', collect($invoicwePayment)->first() ) }}">
@@ -23,13 +24,14 @@
                     print_r($customer_name);
                     ?></a></td>
             <td>{!! $invoicwePayment->invoice_number !!}</td>
-            <td>{!! $invoicwePayment->payment_amount !!}</td>
             <td>{!! $invoicwePayment->payment_type !!}</td>
             <td>{!! $invoicwePayment->payment_descriptions !!}</td>
+            <td>{!! number_format($invoicwePayment->payment_amount,2) !!}</td>
             <td>
                  <a href="{{ route('admin.invoicwePayment.invoicwePayments.show', collect($invoicwePayment)->first() ) }}">
                      <i class="livicon" data-name="info" data-size="18" data-loop="true" data-c="#428BCA" data-hc="#428BCA" title="view invoicwePayment"></i>
                  </a>
+            @if (Sentinel::inRole('admin'))
                  <a href="{{ route('admin.invoicwePayment.invoicwePayments.edit', collect($invoicwePayment)->first() ) }}">
                      <i class="livicon" data-name="edit" data-size="18" data-loop="true" data-c="#428BCA" data-hc="#428BCA" title="edit invoicwePayment"></i>
                  </a>
@@ -37,6 +39,7 @@
                      <i class="livicon" data-name="remove-alt" data-size="18" data-loop="true" data-c="#f56954" data-hc="#f56954" title="delete invoicwePayment"></i>
 
                  </a>
+            @endif
             </td>
         </tr>
     @endforeach

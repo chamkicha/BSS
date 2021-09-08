@@ -16,6 +16,7 @@ use Response;
 use Carbon\Carbon;
 use Mail;
 use DB;
+use Sentinel;
 use Illuminate\Support\Str;
 
 class ServiceInvoiceController extends InfyOmBaseController
@@ -276,6 +277,12 @@ class ServiceInvoiceController extends InfyOmBaseController
 
 
             $sample = ServiceInvoice::destroy($id);
+            
+
+
+            $username = Sentinel::getUser()->full_name;
+            activity('(INVOICE DELETED) INVOICE NO.  '. $invoice_details->invoice_number)->log('Deleted by '.$username);
+
 
            // Redirect to the group management page
            return redirect(route('admin.serviceInvoice.serviceInvoices.index'))->with('success', Lang::get('message.success.delete'));

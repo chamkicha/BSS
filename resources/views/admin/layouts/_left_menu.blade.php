@@ -57,7 +57,7 @@
             <li class="{{ Request::is('admin/invoicwePayment/invoicwePayments*') ? 'active' : '' }}">
                 <a href="{!! route('admin.invoicwePayment.invoicwePayments.index') !!}">
                 <i class="fa fa-angle-double-right"></i>
-                        Payments/Invoices
+                        Payments/Receipts
                 </a>
             </li>
 
@@ -291,10 +291,10 @@
 
 
     
-    <li {!! (Request::is('admin/productrevenue/productRevenues*') || Request::is('admin/agingAnalysisReport/aginganalysisreports*') || Request::is('admin/revenuePerCustomerReport/revenuePerCustomerReports*') || Request::is('admin/agingAnalysisReport/agingAnalysisReports*') ? 'class="active"' : '' ) !!}>
+    <li {!! (Request::is('admin/previousBalanceAdjust/previousBalanceAdjusts*') || Request::is('admin/productrevenue/productRevenues*') || Request::is('admin/agingAnalysisReport/aginganalysisreports*') || Request::is('admin/revenuePerCustomerReport/revenuePerCustomerReports*') || Request::is('admin/agingAnalysisReport/agingAnalysisReports*') ? 'class="active"' : '' ) !!}>
         <a href="#">
             <i class="livicon" data-name="gears" data-size="18" data-c="#418BCA" data-hc="#418BCA" data-loop="true"></i>
-            <span class="title">Modification</span>
+            <span class="title">Adjustments</span>
             <span class="fa arrow"></span>
         </a>
         <ul class="sub-menu">
@@ -302,6 +302,14 @@
                 <a href="{{ route('admin.invoiceDublication.invoiceDublications.create') }}">
                     <i class="fa fa-angle-double-right"></i>
                     Invoice Dublications
+                </a>
+            </li>
+        </ul>
+        <ul class="sub-menu">
+            <li {!! (Request::is('admin/previousBalanceAdjust/previousBalanceAdjusts*') ? 'class="active" id="active"' : '' ) !!}>
+                <a href="{{ route('admin.previousBalanceAdjust.previousBalanceAdjusts.create') }}">
+                    <i class="fa fa-angle-double-right"></i>
+                    Previous Balance
                 </a>
             </li>
         </ul>

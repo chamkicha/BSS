@@ -29,6 +29,7 @@
                  <a href="{{ route('admin.customer.customers.show', collect($customer)->first() ) }}">
                      <i class="livicon" data-name="info" data-size="18" data-loop="true" data-c="#428BCA" data-hc="#428BCA" title="view customer"></i>
                  </a>
+            @if (Sentinel::inRole('admin'))
                  <a href="{{ route('admin.customer.customers.edit', collect($customer)->first() ) }}">
                      <i class="livicon" data-name="edit" data-size="18" data-loop="true" data-c="#428BCA" data-hc="#428BCA" title="edit customer"></i>
                  </a>
@@ -36,6 +37,7 @@
                      <i class="livicon" data-name="remove-alt" data-size="18" data-loop="true" data-c="#f56954" data-hc="#f56954" title="delete customer"></i>
 
                  </a>
+            @endif
             </td>
         </tr>
     @endforeach

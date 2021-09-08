@@ -15,6 +15,7 @@ use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
 use DB;
 use Carbon\Carbon;
+use Sentinel;
 use Mail;
 
 
@@ -66,7 +67,10 @@ class InvoiceDublicationController extends InfyOmBaseController
     {
         $invoice_details = DB::table('serviceinvoices')->where('id' , $request->invoice_no)->first();
 
-
+            $this->validate($request, ['invoice_no'  => 'required',
+                                       'invoice_creation_date'  => 'required',
+                                       'next_invoice_date'  => 'required'
+                                       ]);
 
             // INVOICE creation
             $invoice_number = DB::table('serviceinvoices')->orderBy('invoice_number', 'desc')->first();
@@ -186,9 +190,13 @@ class InvoiceDublicationController extends InfyOmBaseController
                         'previous_dept' => $previous_dept,
                         'grand_total' => $grand_total]);
 
-                        $subjects = 'Invoice '.$invoice_number. ' generated for '.$cusromer_name.' from '.Carbon::parse($request->invoice_creation_date)->format('d-m-Y').' to '.Carbon::parse($request->next_invoice_date)->format('d-m-Y');
+                        $subjects = '(DUBLICATE)Invoice '.$invoice_number. ' generated for '.$cusromer_name.' from '.Carbon::parse($request->invoice_creation_date)->format('d-m-Y').' to '.Carbon::parse($request->next_invoice_date)->format('d-m-Y');
                         $content = 'Please login to BSS (10.60.83.218) to check the Invoice generated';
 
+
+                        $username = Sentinel::getUser()->full_name;
+                        activity('INVOICE DUBLICATION INVOICE NO.  '. $invoice_number)->log('Created by '.$username);
+            
                         Mail::raw($content, function ($message)use ($subjects) {
                             $message->from('nidctanzania@gmail.com', 'NIDC-BSS');
                             $message->to('bssadmin@nidc.co.tz','bahati.otaigo@nidc.co.tz','augustino.irafay@nidc.co.tz','commercial@nidc.co.tz')
