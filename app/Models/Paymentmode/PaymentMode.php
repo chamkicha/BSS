@@ -16,6 +16,7 @@ class PaymentMode extends Model
     public $fillable = [
         'payment_mode_name',
         'payment_interval',
+        'monthly_count',
         'description'
     ];
 
@@ -27,6 +28,7 @@ class PaymentMode extends Model
     protected $casts = [
         'payment_mode_name' => 'string',
         'payment_interval' => 'string',
+        'monthly_count' => 'string',
         'description' => 'string'
     ];
 

@@ -3,7 +3,7 @@
     <thead>
      <tr>
         <th>Payment Mode Name</th>
-        <th>Payment Interval</th>
+        <th>Payment Interval(Monthly)</th>
         <th>Description</th>
         <th >Action</th>
      </tr>
@@ -12,7 +12,7 @@
     @foreach($paymentModes as $paymentMode)
         <tr>
             <td>{!! $paymentMode->payment_mode_name !!}</td>
-            <td>{!! $paymentMode->payment_interval !!}</td>
+            <td>{!! $paymentMode->monthly_count !!}</td>
             <td>{!! $paymentMode->description !!}</td>
             <td>
                  <a href="{{ route('admin.paymentMode.paymentModes.show', collect($paymentMode)->first() ) }}">
@@ -59,6 +59,7 @@
 
     <script>
         $('#paymentModes-table').DataTable({
+                     "order": [[1, "asc"]],
                       responsive: true,
                       pageLength: 10
                   });

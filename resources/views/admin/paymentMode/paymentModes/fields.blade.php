@@ -6,6 +6,12 @@
 
 <!-- Payment Interval Field -->
 <div class="form-group col-sm-12">
+    {!! Form::label('monthly_count', 'Payment Interval (Month):') !!}
+    {!! Form::number('monthly_count', null, ['class' => 'form-control']) !!}
+</div>
+
+<!-- Payment Interval Field -->
+<div class="form-group col-sm-12">
     {!! Form::label('payment_interval', 'Payment Interval (Days):') !!}
     {!! Form::number('payment_interval', null, ['class' => 'form-control']) !!}
 </div>

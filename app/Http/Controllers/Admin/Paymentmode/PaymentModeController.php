@@ -58,6 +58,14 @@ class PaymentModeController extends InfyOmBaseController
      */
     public function store(CreatePaymentModeRequest $request)
     {
+
+        $this->validate($request, [
+            'payment_mode_name'  => 'required',
+            'monthly_count' => 'required',
+            'payment_interval' => 'required',
+            
+        ]);
+
         $input = $request->all();
 
         $paymentMode = $this->paymentModeRepository->create($input);
